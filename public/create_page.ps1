@@ -29,7 +29,7 @@ param (
 # 
 if (-not ($overwriteAll -eq $true)) {
 
-  # sikrer at filerne ikke findes i forvejen.
+  # sikrer at filerne ikke findes i forvejen. Ny tilføjelse
 
   # ----- PHP ----- #
   if ((Test-Path -Path ".\$pagename.php") -and (-not $overwritePHP -eq $true)) 
