@@ -2,7 +2,7 @@
 # PowerShell -ExecutionPolicy Bypass -File .\create_page.ps1
 
 # Det her script løser problemet med at skulle oprette en side på en mere konsistent måde.
-# Løser ikke autoomatisk tilføjelse af header (pille)
+# Løser ikke autoomatisk tilføjelse af header (pille). Men problemet løses ved hjælp af javascript _b_header.js
 
 [CmdletBinding()]
 param (
@@ -165,40 +165,57 @@ echo `"\n`$tabs<!-- `$filename -->\n\n\n\n`";
 echo `"`$tabs<!-- `$filename -->\n`";
 echo file_get_contents(`"`$filename`");
 echo `"\n`$tabs<!-- `$filename -->\n\n\n\n`";" `
-| Out-File -Encoding ascii -FilePath ".\$pagename.php" -NoNewline
+  | Out-File -Encoding ascii -FilePath ".\$pagename.php" -NoNewline
+bash -c "chown www-data:www-data ./$pagename.php && chmod 655 ./$pagename.php"
+
 # ----- PHP ----- #
 
 
 
 # ----- HTML ----- #
+$thisPageElementName = "_ab_head-$pagename.html"
+
 Write-Host
 "  <title>$pagename</title>
   <link rel='preconnect' href='https://fonts.gstatic.com'>
   <link href='https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;1,100&display=swap' rel='stylesheet'>
   <link href='./css/_c_main-$pagename.css' rel='stylesheet'/>" `
-| Out-File -Encoding ascii -FilePath ".\_ab_head-$pagename.html" -NoNewline
+  | Out-File -Encoding ascii -FilePath ".\$thisPageElementName" -NoNewline
+bash -c "chown www-data:www-data ./$thisPageElementName && chmod 655 ./$thisPageElementName"
 
 
+$thisPageElementName = "_c_main-$pagename.html"
 Write-Host
 "  <main id='main'>      
 
   </main>" `
-| Out-File -Encoding ascii -FilePath ".\_c_main-$pagename.html" -NoNewline 
+  | Out-File -Encoding ascii -FilePath "$thisPageElementName" -NoNewline 
 
+
+$thisPageElementName = "_eb_foot-$pagename.html"
 Write-Host
 "<script src='./js/_c_main-$pagename.js'></script>" `
-| Out-File -Encoding ascii -FilePath ".\_eb_foot-$pagename.html" -NoNewline
+  | Out-File -Encoding ascii -FilePath ".\$thisPageElementName" -NoNewline
+bash -c "chown www-data:www-data ./$thisPageElementName && chmod 655 ./$thisPageElementName"
+
 
 # ----- HTML ----- #
 
 # ----- CSS ----- #
+$thisPageElementName = "_c_main-$pagename.css"
 Write-Host
 "body {
   
-}" | Out-File -Encoding ascii -FilePath ".\css\_c_main-$pagename.css" -NoNewline
+}" | Out-File -Encoding ascii -FilePath ".\css\$thisPageElementName" -NoNewline
+bash -c "chown www-data:www-data ./css/$thisPageElementName && chmod 655 ./css/$thisPageElementName"
+
+
 # ----- CSS ----- #
 
 # ----- JS ----- #
+$thisPageElementName  = "_c_main-$pagename.js"
 Write-Host
-"console.log('Hello World from _c_main-$pagename.js')" | Out-File -Encoding ascii -FilePath ".\js\_c_main-$pagename.js" -NoNewline
+"console.log('Hello World from _c_main-$pagename.js')" `
+  | Out-File -Encoding ascii -FilePath ".\js\$thisPageElementName" -NoNewline
+bash -c "chown www-data:www-data ./js/$thisPageElementName && chmod 655 ./js/$thisPageElementName"
 # ----- JS ----- #
