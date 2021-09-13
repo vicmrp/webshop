@@ -48,7 +48,9 @@ param (
 
 # Pagename variabler
 $contentFolder = $pagename
-$index "index.php"
+$index = "index.php"
+$javascript = "script.js"
+$style = "style.css"
 
 
 
@@ -204,19 +206,19 @@ bash -c "chmod 655 ./$contentFolder/$index"
 
 
 # ----- HTML ----- #
-$thisPageElementName = "head-$pagename.html"
+$thisPageElementName = "$pagename.html"
 
 Write-Host
 "  <title>$pagename</title>
   <link rel='preconnect' href='https://fonts.gstatic.com'>
   <link href='https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;1,100&display=swap' rel='stylesheet'>
-  <link href='./main-$pagename.css' rel='stylesheet'/>" `
+  <link href='./$pagename.css' rel='stylesheet'/>" `
   | Out-File -Encoding ascii -FilePath ".\$contentFolder\$thisPageElementName" -NoNewline
 bash -c "chown www-data:www-data ./$contentFolder/$thisPageElementName"
 bash -c "chmod 655 ./$contentFolder/$thisPageElementName"
 
 
-$thisPageElementName = "main-$pagename.html"
+$thisPageElementName = "index.html"
 Write-Host
 "  <main id='main'>      
 
@@ -238,7 +240,7 @@ $thisPageElementName = "$pagename.css"
 Write-Host
 "body {
   
-}" | Out-File -Encoding ascii -FilePath ".\css\$thisPageElementName" -NoNewline
+}" | Out-File -Encoding ascii -FilePath ".\$contentFolder\$thisPageElementName" -NoNewline
 bash -c "chown www-data:www-data ./$contentFolder/$thisPageElementName && chmod 655 ./$contentFolder/$thisPageElementName"
 
 
@@ -248,7 +250,7 @@ bash -c "chown www-data:www-data ./$contentFolder/$thisPageElementName && chmod 
 $thisPageElementName  = "$pagename.js"
 Write-Host
 "console.log('Hello World from $pagename.js')" `
-  | Out-File -Encoding ascii -FilePath ".\js\$thisPageElementName" -NoNewline
+  | Out-File -Encoding ascii -FilePath ".\$contentFolder\$thisPageElementName" -NoNewline
   bash -c "chown www-data:www-data ./$contentFolder/$thisPageElementName && chmod 655 ./$contentFolder/$thisPageElementName"
 # ----- JS ----- #
 
