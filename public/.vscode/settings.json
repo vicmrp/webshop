@@ -1,0 +1,20 @@
+{
+    // Specifies the color theme used in the workbench.
+    "workbench.colorTheme": "Default Dark+",
+    "liveServer.settings.port": 5502,
+    "[JavaScript]": {
+        "editor.tabSize": 2
+    },
+    "[html]": {
+        "editor.tabSize": 2
+    },
+    "[css]": {
+        "editor.tabSize": 2
+    },
+    "[powershell]": {
+        "editor.tabSize": 2
+    },
+    "[php]": {
+        "editor.tabSize": 2
+    }
+}

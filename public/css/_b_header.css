@@ -1,0 +1,72 @@
+/* Et skal kun bruge en - altså et id må kun bruges til et element */
+/* som udgangspunkt bruger man class'er til at style med og id til at scriptet med. */ 
+
+._header_header {
+    width: 100%;
+    height:80px;
+    display: block;
+    background-color: #101010;
+}
+
+._header_inner_header{
+    width: 1000px;
+    height: 100%;
+    display: block;
+    margin: 0 auto;
+} 
+
+._header_logo_container{
+    height: 100%;
+    display: table;
+    float: left;
+    cursor: default;
+}
+
+._header_logo_container h1{
+    color: white;
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    font-family: 'Montserrat';
+    font-size: 32px;
+    font-weight: 200;
+}
+
+._header_logo_container h1 span{
+    font-weight: 800;
+}
+
+._header_navigation{
+    float: right;
+    height: 100%;
+}
+
+._header_navigation a{
+    height: 100%;
+    display: table;
+    float: left;
+    padding: 0px 20px;
+}
+
+._header_navigation a:last-child{
+    padding-right: 0px;;
+} 
+
+._header_navigation a li{
+    display: table-cell;
+    vertical-align: middle;
+    height: 100%;
+    color: white;
+    font-family: 'Montserrat';
+    font-size: 16px;
+}
+
+._header_navigation a:hover {
+    font-weight:bold;
+    cursor: default;
+}
+
+._header_navigation a li:hover {
+    font-weight: bold;
+    cursor: default;
+}

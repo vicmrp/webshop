@@ -1,0 +1,282 @@
+body {
+  /* Positioning */
+
+  /* Display & Box Model */
+
+  /* Color */
+  width: 100vw;
+  background-color: bisque;
+  
+  /* Text */
+
+  /* Other */
+}
+
+main {
+  /* Positioning */
+  justify-content: center;
+
+  /* align-items: center; */
+
+  /* Display & Box Model */
+  display: flex;
+  width: 100vw;
+  height: calc(100vh - 80px); /* -20 fordi at headeren er 80 høj */
+  
+  /* Color */
+  background-color: rgb(0, 174, 255);
+  /* Text */
+
+  /* Other */
+}
+
+._main-createpc-container {
+    /* Positioning */
+
+    /* justify-content: center; */
+
+    /* align-items: center; */
+
+    /* Display & Box Model */
+    height: calc(100vh - 80px);
+    width:1600px;
+    border-width: 0;
+
+    /* Color */
+    background-color: rgb(226, 224, 224);
+    
+    /* background-color: aqua; */
+
+    /* Text */
+
+    /* Other */
+
+}
+
+
+
+
+
+/* ----- ----- ----- */
+._main-createpc-form-outer-container {
+    /* Positioning */
+    position: relative;
+
+    /* Display & Box Model */
+    width: 100%;
+    height: 400px;
+    /* padding: 5px; */
+    
+    /* Color */
+    background-color: aqua;
+
+    /* Text */
+
+    /* Other */
+}
+
+._main-createpc-form-checkboxes-outer {
+    /* Positioning */
+    
+    /* Display & Box Model */
+    width: 90px;
+    height: 400px;
+    float: left;
+    display: block;
+
+    /* Color */
+    background-color: purple;
+    opacity: 1;
+
+    /* Text */
+
+    /* Other */
+}
+
+._main-createpc-form-checkboxes-outer input {
+  display: block;
+  
+  margin-left: auto;
+  margin-right: auto;
+  /* margin-top: 20px; */
+  height: 20px;
+}
+
+._main-createpc-form-checkboxes-inner {
+  /* float: right; */
+  text-align: center;
+  /* margin-top: 20px; */
+  
+}
+
+
+
+._main-createpc-form-checkbox-all {
+    background-color: burlywood;
+    height: 40px
+}
+    
+._main-createpc-form-checkboxes-required {
+  /* margin-top: 20px; */
+}
+
+._main-createpc-form-checkboxes-required input {
+  margin-top: 20px;
+}
+
+._main-createpc-form-checkboxes-clearfix {
+  clear: both;
+}
+
+._main-createpc-form-checkboxes-optional {
+
+}
+
+._main-createpc-form-checkboxes-optional input {
+  margin-top: 20px;
+}
+
+._main-createpc-form-outer {
+  /* Positioning */
+  
+  /* Display & Box Model */
+  display: block;
+  height: 380px;
+  width: calc(1000px - 80px - 40px);
+  float: left;
+
+  /* Color */
+  background-color: blue;  
+
+  /* Text */
+
+  /* Other */
+}
+
+._main-createpc-form-inner {
+  /* margin-left: auto;
+  margin-right: auto; */
+  margin-top: 40px;
+  /* margin-top: 10px; */
+}
+
+._main-createpc-form-inner input{
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  height: 20px;
+}
+
+._main-createpc-form-required {
+    /* Positioning */
+  
+    /* Display & Box Model */
+  
+    /* Color */
+    background-color: grey;
+  
+    /* Text */
+  
+    /* Other */
+}
+
+._main-createpc-form-optional {
+    /* Positioning */
+  
+    /* Display & Box Model */
+  
+    /* Color */
+    background-color: greenyellow;
+  
+    /* Text */
+  
+    /* Other */
+}
+
+._main-createpc-form-submit-button {
+    /* Positioning */
+
+  /* Display & Box Model */
+
+  /* Color */
+  background-color: yellow;
+
+  /* Text */
+
+  /* Other */
+}
+/* ----- ----- ----- */
+
+
+._main-createpc-form-clearfix {
+  clear: both;
+}
+
+/* ----- ----- ----- */
+._main-createpc-list-pc-outer-container {
+  /* background-color: blue; */
+  width: 100%;
+  height: calc(1009px - 400px);
+  /* background-color: black; */
+  /* overflow: scroll; */
+}
+
+._main-createpc-list-pc {
+  /* Positioning */
+
+  /* Display & Box Model */
+
+  /* Color */
+
+  /* Text */
+
+  /* Other */
+}
+
+._main-createpc-list-pc > div {
+  /* Positioning */
+  border: 2px solid red;
+  border-radius: 5px;
+
+  /* Display & Box Model */
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px;
+
+  /* Color */
+  background-color: yellow;
+
+  /* Text */
+
+  /* Other */
+}
+
+._main-createpc-list-pc-table-header {
+  width: 100%;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  cursor: default;
+}
+
+._main-createpc-list-pc-table {
+  width: 100%;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  cursor: default;
+}
+
+._main-createpc-list-pc-table tr td {
+  
+}
+
+
+._main-createpc-list-pc-table-edit {
+  background-color: rgb(212, 212, 212) ;
+  /* opacity: 0.1; */
+  color: black;
+  cursor: default;
+}
+
+._main-createpc-list-pc-table-edit:hover {
+  background-color: rgb(163, 163, 163);
+}
