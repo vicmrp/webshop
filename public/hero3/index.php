@@ -1,10 +1,10 @@
 <?php
 
-// php scriptet echo'er en fil struktur som gør at du har en konsistent header og footer i pa din side
+// php scriptet echo'er en fil struktur som g?r at du har en konsistent header og footer i pa din side
 
 
 // ----- head ----- //
-  // head-start.html indenholder default værdier
+  // head-start.html indenholder default v?rdier
   // head-hero.html hero content
   // head-end.html  
 // ----- head ----- //
@@ -20,7 +20,7 @@
 // ----- foot ----- //
 
 // denne variable er navnet pa php filen.
-$page="hero3";
+// $fileNameOfThisFile="hero3";
 
 // fil lokationer
 $gLocation = "../global/html";
@@ -28,48 +28,48 @@ $lLocation = ".";
 
 // alle fil navn i variabler
 // ----- head ----- //
-  $gheadStart = "head-start.html";
-  $lhead = "head.html";
-  $gheadEnd = "head-end.html";
+  $gHeadStart = "head-start.html";
+  $lHead = "head.html";
+  $gHeadEnd = "head-end.html";
 // ----- head ----- //
     // ----- body -----//
       // ----- header ----- //
-        $gheader = "header.html";
+        $gHeader = "header.html";
       // ----- header ----- //
 
       // ----- hero (pagename) ----- //
-        $lmain = "main.html";
+        $lMain = "main.html";
       // ----- hero (pagename) ----- //
 
       // ----- footer ----- //
-        $gfooter = "footer.html";
+        $gFooter = "footer.html";
       // ----- footer ----- //
     // ----- body -----//
 // ----- foot ----- //
-  $gfootStart = "foot-start.html";
-  $lfoot = "foot.html";
-  $gfoodEnd = "foot-end.html";
+  $gFootStart = "foot-start.html";
+  $lFoot = "foot.html";
+  $gFoodEnd = "foot-end.html";
 // ----- foot ----- //
 
 // ------ Denne del echo'er hele html siden ------ //
   // ----- head ----- //
     // head-start
     $tabs="";
-    $contentLocation="$gLocation/$gheadStart";
+    $contentLocation="$gLocation/$gHeadStart";
     echo "$tabs<!-- $contentLocation -->\n";
     echo file_get_contents("$contentLocation");
     echo "\n$tabs<!-- $contentLocation -->\n\n\n\n";
 
     // head
     $tabs="\t";
-    $contentLocation="$lLocation/$lhead";
+    $contentLocation="$lLocation/$lHead";
     echo "$tabs<!-- $contentLocation -->\n";
     echo file_get_contents("$contentLocation");
     echo "\n$tabs<!-- $contentLocation -->\n\n\n\n";
 
     // head-end
     $tabs="";
-    $contentLocation="$gLocation/$gheadEnd";
+    $contentLocation="$gLocation/$gHeadEnd";
     echo "$tabs<!-- $contentLocation -->\n";
     echo file_get_contents("$contentLocation");
     echo "\n$tabs<!-- $contentLocation -->\n\n\n\n";
@@ -80,7 +80,7 @@ $lLocation = ".";
       // ----- header ----- //
       // header
         $tabs="\t";
-        $contentLocation="$gLocation/$gheader";
+        $contentLocation="$gLocation/$gHeader";
         echo "$tabs<!-- $contentLocation -->\n";
         echo file_get_contents("$contentLocation");
         echo "\n$tabs<!-- $contentLocation -->\n\n\n\n";
@@ -89,7 +89,7 @@ $lLocation = ".";
       // ----- main ----- //
       // hero
         $tabs="\t";
-        $contentLocation="$lLocation/$lmain";
+        $contentLocation="$lLocation/$lMain";
         echo "$tabs<!-- $contentLocation -->\n";
         echo file_get_contents("$contentLocation");
         echo "\n$tabs<!-- $contentLocation -->\n\n\n\n";
@@ -98,7 +98,7 @@ $lLocation = ".";
       // ----- footer ----- //
       // footer
         $tabs="\t";
-        $contentLocation="$gLocation/$gfooter";
+        $contentLocation="$gLocation/$gFooter";
         echo "$tabs<!-- $contentLocation -->\n";
         echo file_get_contents("$contentLocation");
         echo "\n$tabs<!-- $contentLocation -->\n\n\n\n";
@@ -108,21 +108,21 @@ $lLocation = ".";
   // ----- foot ----- //
     // foot-start
     $tabs="";
-    $contentLocation="$gLocation/$gfootStart";
+    $contentLocation="$gLocation/$gFootStart";
     echo "$tabs<!-- $contentLocation -->\n";
     echo file_get_contents("$contentLocation");
     echo "\n$tabs<!-- $contentLocation -->\n\n\n\n";
 
     // foot
     $tabs="";
-    $contentLocation="$lLocation/$lfoot";
+    $contentLocation="$lLocation/$lFoot";
     echo "$tabs<!-- $contentLocation -->\n";
     echo file_get_contents("$contentLocation");
     echo "\n$tabs<!-- $contentLocation -->\n\n\n\n";
 
     // foot-end
     $tabs="";
-    $contentLocation="$gLocation/$gfoodEnd";
+    $contentLocation="$gLocation/$gFoodEnd";
     echo "$tabs<!-- $contentLocation -->\n";
     echo file_get_contents("$contentLocation");
     echo "\n$tabs<!-- $contentLocation -->\n\n\n\n";
