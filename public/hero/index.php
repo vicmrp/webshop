@@ -20,7 +20,7 @@
 // ----- foot ----- //
 
 // denne variable er navnet pa php filen.
-// $fileNameOfThisFile="hero3";
+// $fileNameOfThisFile="hero";
 
 // fil lokationer
 $gLocation = "../global/html";

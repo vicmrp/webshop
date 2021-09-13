@@ -315,7 +315,7 @@ Write-Host
   "    <title>$pagename</title>
     <link rel='preconnect' href='https://fonts.gstatic.com'>
     <link href='https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;1,100&display=swap' rel='stylesheet'>
-    <link href='./$pagename.css' rel='stylesheet'/>" `
+    <link href='./style.css' rel='stylesheet'/>" `
   | Out-File -Encoding ascii -FilePath "$locationRelativToThisScript\$contentFolderName\$thisPageElementName" -NoNewline
 
 
@@ -329,7 +329,7 @@ Write-Host
 
 $thisPageElementName = "foot.html"
 Write-Host
-"<script src='./$pagename.js'></script>" `
+"<script src='./script.js'></script>" `
   | Out-File -Encoding ascii -FilePath "$locationRelativToThisScript\$contentFolderName\$thisPageElementName" -NoNewline
 
 
@@ -349,7 +349,6 @@ $thisPageElementName  = "script.js"
 Write-Host
 "console.log('Hello World from $pagename.js')" `
   | Out-File -Encoding ascii -FilePath "$locationRelativToThisScript\$contentFolderName\$thisPageElementName" -NoNewline
-  # bash -c "chown www-data:www-data ./$contentFolderName/$thisPageElementName && chmod 655 ./$contentFolderName/$thisPageElementName"
 # ----- JS ----- #
 
 # Korrigere rettigheder for den nye lokale mappe

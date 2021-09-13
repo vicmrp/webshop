@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "createpc",
+            "name": "hero",
             "type": "pwa-chrome",
             "request": "launch",            
-            "url": "http://equip.byg.dtu.dk/createpc.php",
+            "url": "https://steengede.com/hero/",
             "webRoot": "${workspaceFolder}"
         },
         {
