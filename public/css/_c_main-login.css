@@ -1,0 +1,246 @@
+body {
+  /* Positioning */
+
+  /* Display & Box Model */
+
+  /* Color */
+  width: 100vw;
+  
+  /* Text */
+
+  /* Other */
+}
+
+main {
+  /* Positioning */
+  justify-content: center;
+  align-items: center;
+
+  /* Display & Box Model */
+  display: flex;
+  width: 100vw;
+  height: calc(100vh - 80px);
+  
+  /* Color */
+  background-color: orange;
+  /* Text */
+
+  /* Other */
+}
+
+a {
+  /* Positioning */
+
+  /* Display & Box Model */
+
+  /* Color */
+  color: rgb(1, 230, 1);
+
+  /* Text */
+  text-decoration: none;
+
+  /* Other */
+}
+
+
+._main-login_flex-container {
+  /* Positioning */
+  position: relative;
+
+  /* Display & Box Model */
+  width: 400px;
+  height: 400px;
+  display: flex;    
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  /* Color */
+  background-color: white;
+
+  /* Text */
+
+  /* Other */
+  box-shadow: 0px 10px 20px #2b2a2a;
+}
+
+._main-login_inner_fixed {
+  /* Positioning */
+  position: relative;
+
+  /* Display & Box Model */
+  width: 100%;
+  height: content;
+  display: flex;    
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+    
+}
+
+#_main-login_username {
+
+  /* Positioning */
+
+  /* Display & Box Model */
+  margin-top: 50px;
+
+  /* Color */
+  color:black;
+
+  /* Text */
+
+  /* Other */
+
+}
+
+#_main-login_password {
+  /* Positioning */
+
+  /* Display & Box Model */
+
+  /* Color */
+  color:black;
+
+  /* Text */
+
+  /* Other */
+}
+
+._main-login_form-elements {
+  /* Positioning */
+
+  /* Display & Box Model */
+  height: 40px;
+  width:80%;
+  margin-top: 20px;
+  border-width: 0;
+  padding-left: 20px;
+
+  /* Color */
+  background-color: rgb(226, 224, 224);
+
+  /* Text */
+
+  /* Other */
+
+}
+
+
+._main-login_login-button {
+  /* Positioning */
+
+  /* Display & Box Model */
+  padding-left: 0px;
+  /* margin-bottom: 20px; */
+  margin-top: 30px;
+  /* Color */
+  background-color: rgb(1, 230, 1);
+  color: white;
+
+  /* Text */
+
+  /* Other */
+}
+
+._main-login_login-button:hover {
+  /* Positioning */
+
+  /* Display & Box Model */
+  padding-left: 0px;
+  /* margin-bottom: 20px; */
+  margin-top: 30px;
+  /* Color */
+  background-color: green;
+  color: white;
+
+  /* Text */
+
+  /* Other */
+  cursor: pointer;
+}
+
+._main-login_inner_remaining {
+  /* Positioning */
+  height: 180px;
+  width: 100%;
+  /* Display & Box Model */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Color */
+  width: 100vw;
+  
+  /* Text */
+
+  /* Other */
+}
+
+#_main-login_resultbox {
+    
+}
+
+#_main-login_result-error-msg {
+  text-align: center;
+  cursor: pointer;
+  display: none;
+}
+
+#_main-login_result-infobox {
+/* Positioning */
+  width: 180px;
+  top: 235px;
+  right: 0;
+  left:0;
+  position: absolute;    
+
+  /* Display & Box Model */
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px;
+  display: none;
+
+  /* Color */
+  
+  /* Text */
+
+  /* Other */
+  cursor:default;
+  border-style: solid;
+}
+
+#_main-login_loader {
+  /* Positioning */
+
+  /* Display & Box Model */
+  width: 40px;
+  height: 40px;
+  border: 6px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 6px solid #3498db;
+  display: none;
+
+  /* margin-top: 60px; */
+
+  /* Color */
+
+  /* Text */
+
+  /* Other */
+  animation: _main-login_spin 2s linear infinite;
+}
+
+@keyframes _main-login_spin {
+  /* Positioning */
+
+  /* Display & Box Model */
+
+  /* Color */
+
+  /* Text */
+
+  /* Other */
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

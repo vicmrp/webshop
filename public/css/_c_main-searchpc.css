@@ -1,0 +1,29 @@
+body {
+  /* Positioning */
+
+  /* Display & Box Model */
+
+  /* Color */
+  width: 100vw;
+  
+  /* Text */
+
+  /* Other */
+}
+
+main {
+  /* Positioning */
+  justify-content: center;
+  align-items: center;
+
+  /* Display & Box Model */
+  display: flex;
+  width: 100vw;
+  height: calc(100vh - 80px);
+  
+  /* Color */
+  background-color: rgb(0, 217, 255);
+  /* Text */
+
+  /* Other */
+}

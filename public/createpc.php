@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// denne variable er navnet p?? php filen.
+// denne variable er navnet pa php filen.
 $page="createpc";
 
 
