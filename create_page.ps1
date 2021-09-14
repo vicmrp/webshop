@@ -107,64 +107,7 @@ $lLocation = ".";
   $gFoodEnd = "foot-end.html";
 # // ----- foot ----- //
 
-
-
-
-# # put alle sider i en mappe 
-# if (-not ($overwriteAll -eq $true)) {
-
-#   # sikrer at filerne ikke findes i forvejen. Ny tilføjelse fra github
-
-#   # ----- PHP ----- #
-#   if ((Test-Path -Path ".\$pagename.php") -and (-not $overwritePHP -eq $true)) 
-#   { 
-#     Write-Warning "Filen: .\$pagename.php findes allerede."
-#     Write-Warning "Hvis du vil overskrive filen sa tilfoj '-overwritePHP `$true' eller '-overwriteAll `$true'"
-#     exit 1
-#   }
-#   # ----- PHP ----- #
-
-#   # ----- HTML ----- #
-#   if ((Test-Path -Path ".\_ab_head-$pagename.html") -and (-not $overwriteHTML -eq $true)) {
-#     Write-Warning "Filen: .\_ab_head-$pagename.html findes allerede."
-#     Write-Warning "Hvis du vil overskrive filen sa tilfoj '-overwriteHTML `$true' eller '-overwriteAll `$true'"
-#     exit 1
-#   }
-
-#   if ((Test-Path -Path ".\_c_main-$pagename.html") -and (-not $overwriteHTML -eq $true)) {
-#     Write-Warning "Filen: .\_c_main-$pagename.html findes allerede."
-#     Write-Warning "Hvis du vil overskrive filen sa tilfoj '-overwriteHTML `$true' eller '-overwriteAll `$true'"
-#     exit 1
-#   }
-
-#   if ((Test-Path -Path ".\_eb_foot-$pagename.html") -and (-not $overwriteHTML -eq $true)) {
-#     Write-Warning "Filen: .\_eb_foot-$pagename.html findes allerede."
-#     Write-Warning "Hvis du vil overskrive filen sa tilfoj '-overwriteHTML `$true' eller '-overwriteAll `$true'"
-#     exit 1
-#   }
-#   # ----- HTML ----- #
-
-#   # ----- CSS ----- #
-#   if ((Test-Path -Path ".\css\_c_main-$pagename.css") -and (-not $overwriteCSS -eq $true)) {
-#     Write-Warning "Filen: .\css\_c_main-$pagename.css findes allerede."
-#     Write-Warning "Hvis du vil overskrive filen sa tilfoj '-overwriteCSS `$true' eller '-overwriteAll `$true'"
-#     exit 1
-#   }
-#   # ----- CSS ----- #
-
-#   # ----- JS ----- #
-#   if ((Test-Path -Path ".\js\_c_main-$pagename.js") -and (-not $overwriteJS -eq $true)) {
-#     Write-Warning "Filen: .\js\_c_main-$pagename.js findes allerede."
-#     Write-Warning "Hvis du vil overskrive filen sa tilfoj '-overwriteJS `$true' eller '-overwriteAll `$true'"
-#     exit 1
-#   }
-#   # ----- JS ----- #
-# }
-
-
-
 # Laver komponenter
-
 # ----- Folder ----- #
 bash -c "mkdir $locationRelativToThisScript/$lLocation/$contentFolderName"
 # ----- Folder ----- #
@@ -203,27 +146,27 @@ Write-Host
 
 // alle fil navn i variabler
 // ----- head ----- //
-  `$gHeadStart = `"head-start.html`";
-  `$lHead = `"head.html`";
-  `$gHeadEnd = `"head-end.html`";
+  `$gHeadStart = `"$gHeadStart`";
+  `$lHead = `"$lHead`";
+  `$gHeadEnd = `"$gHeadEnd`";
 // ----- head ----- //
     // ----- body -----//
       // ----- header ----- //
-        `$gHeader = `"header.html`";
+        `$gHeader = `"$gHeader`";
       // ----- header ----- //
 
       // ----- hero (pagename) ----- //
-        `$lMain = `"main.html`";
+        `$lMain = `"$lMain`";
       // ----- hero (pagename) ----- //
 
       // ----- footer ----- //
-        `$gFooter = `"footer.html`";
+        `$gFooter = `"$gFooter`";
       // ----- footer ----- //
     // ----- body -----//
 // ----- foot ----- //
-  `$gFootStart = `"foot-start.html`";
-  `$lFoot = `"foot.html`";
-  `$gFoodEnd = `"foot-end.html`";
+  `$gFootStart = `"$gFootStart`";
+  `$lFoot = `"$lFoot`";
+  `$gFoodEnd = `"$gFoodEnd`";
 // ----- foot ----- //
 
 // ------ Denne del echo'er hele html siden ------ //

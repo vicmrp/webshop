@@ -10,13 +10,6 @@
             "request": "launch",            
             "url": "https://steengede.com/hero/",
             "webRoot": "${workspaceFolder}"
-        },
-        {
-            "name": "login",
-            "request": "launch",
-            "type": "pwa-chrome",
-            "url": "http://equip.byg.dtu.dk/login.php",
-            "webRoot": "${workspaceFolder}"
         }
     ]
 }

@@ -16,4 +16,5 @@ window.onload = async function () {
         document.getElementById("footer").style.display = ""
       })()
 
+      sleepCallback(2, 'Hello World')
 }

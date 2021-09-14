@@ -12,8 +12,12 @@ function httpRequest(method, url, body, callback) {
     xhttp.send(body);
 }
 
+// void sletmig
 function testDebug(x) {
-    x = x + x
-    console.log(x)
-    return x
+    console.log(x.responseText)
+}
+
+// slet mig
+function sleepCallback(seconds, message) {
+    httpRequest("GET", `https://steengede.com/test/sleep.php?sleep=${seconds}&msg=${message}`, null, testDebug)
 }
