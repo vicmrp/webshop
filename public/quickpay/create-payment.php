@@ -27,6 +27,9 @@ $createPaymentResponse = shell_exec("curl -u ':$apiKey' -H 'content-type:applica
 $createPaymentResponseObj = json_decode($createPaymentResponse);
 $createPaymentID = $createPaymentResponseObj->id;
 
+// put ned i en fil
+file_put_contents("../../secret/flow_example/createPaymentResponse.json", $createPaymentResponse);
+
 // Put 'id' og 'merchant_id' i database. Disse data vil vcallbackurl.php så bruge til at håndtere et køb!
 
 // Lav payment link
@@ -35,7 +38,9 @@ $createPaymentLinkObj = json_decode($createPaymentLinkResponse);
 echo $createPaymentLinkObj->url;
 
 
-// Sammel disse værdier op senere. for så at generere et 
+// put ned i en fil
+// file_put_contents("../../secret/flow_example/createPaymentResponse.json", $createPaymentResponse);
+// file_put_contents("../../secret/flow_example/createPaymentLinkResponse.json", $createPaymentLinkResponse);
 
 
 ?>

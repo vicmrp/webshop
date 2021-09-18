@@ -1,0 +1,41 @@
+[{
+        "orders_id": 1,
+        
+        "items": [
+            {
+                "books_id": 1,
+                "price": 25000,
+                "productQuantity": 1
+            },
+            {
+                "books_id": 2,
+                "price": 15000,
+                "productQuantity": 1
+            }
+        ],
+        "deliveryAddress": {
+            "countryCode": "DK",
+            "city": "Vejby",
+            "streetName": "Tuehusvej",
+            "streetNumber": "1",
+            "postalCode": "3210",
+            "additionalDescription": null
+        },
+        "customerInfo": {
+            "address" : {
+                "countryCode": "DK",
+                "city": "Charlottenlund",
+                "streetName": "Øresundshøj",
+                "streetNumber": "3A",
+                "postalCode": "2920",
+                "floor": null, 
+                "door" : null,
+                "additionalDescription": null,
+                "proposalTextforslagstekst": "Øresundshøj 3A, 2920 Charlottenlund"
+            },
+            "quickpay": {
+                
+            }
+        }
+    }
+]

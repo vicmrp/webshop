@@ -17,6 +17,7 @@ if ($checksum == $_SERVER["HTTP_QUICKPAY_CHECKSUM_SHA256"]) {
   // Hent info om varen ordren og put den i en fil kaldet varenummeret, herefter vedhæft filen til mailen
   
   // echo $request_body;
+  file_put_contents("../../secret/flow_example/quickpay_callback.json", $request_body);
 }
 
 

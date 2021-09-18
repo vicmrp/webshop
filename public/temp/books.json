@@ -1,0 +1,50 @@
+[{
+    "books_id": 1,
+    "title": "Steens roman",
+    "pages": 250,
+    "price": 25000,
+    "stock": 100,
+    "author": {
+        "id": 1,
+        "firstName": "Steen",
+        "middleName": null,
+        "lastName": "Gede"
+    }
+},
+{
+    "books_id": 2,
+    "title": "Steens selvbiografi",
+    "pages": 400,
+    "price": 15000,
+    "stock": 100,
+    "author": {
+        "id": 1,
+        "firstName": "Steen",
+        "middleName": null,
+        "lastName": "Gede"
+    }
+}
+] 
+
+
+"data": {
+    "id": "40eb1f85-a140-4581-e044-0003ba298018",
+    "status": 1,
+    "darstatus": 3,
+    "vejkode": "5286",
+    "vejnavn": "Margrethepladsen",
+    "adresseringsvejnavn": "Margrethepladsen",
+    "husnr": "4",
+    "etage": null,
+    "dør": null,
+    "supplerendebynavn": null,
+    "postnr": "8000",
+    "postnrnavn": "Aarhus C",
+    "stormodtagerpostnr": null,
+    "stormodtagerpostnrnavn": null,
+    "kommunekode": "0751",
+    "adgangsadresseid": "0a3f5096-91d3-32b8-e044-0003ba298018",
+    "x": 10.19630111,
+    "y": 56.15308845,
+    "href": "https://api.dataforsyningen.dk/adresser/40eb1f85-a140-4581-e044-0003ba298018"
+}
