@@ -3,11 +3,11 @@
 
 
 
-// --- bruger input --- //
+// --- bruger/maskin input --- //
 // Variable input fra brugeren - baseret pa av-cables.dk kundeoplysningsformular 
 $userAddressInput = 'Øresundshøj 3a, 2920'; // Vejnavn + husnummer - Vinkelvej 12d, 3tv
 $userPostalCodeInput = null; // Postnummer - 2800
-// --- bruger input --- //
+// --- bruger/maskin input --- //
 
 
 
