@@ -2,6 +2,7 @@
 
 
 // Dokumentation - https://learn.quickpay.net/tech-talk/api/callback/#callback
+// Se et callback eksempel secret/flow_example/3_quickpay_callback.json
 // Denne funktions inputs kommer fra quickpay nr en kunde har betalt
 
 

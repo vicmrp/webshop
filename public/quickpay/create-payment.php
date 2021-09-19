@@ -1,46 +1,77 @@
 <?php
-
-// Step 1 er at lave et payment url som henviser brugeren til betaling.
-// Nar betalingen er gennemført kommer der en callback som fortæller om betalingen er gennemført.
-// 
-// sa rækkefølgen er saledes
-// create-payment
-// callback
-// authorize-payment
-
-
 require '../library.php';
 
+// Dokumentation - https://learn.quickpay.net/tech-talk/guides/payments/#create-a-new-payment
+// 1. Create a new payment
+// 2. Authorize payment using a link
+// (ikke i brug endnu) 3. Check payment status - kan eventuelt kaldes af callback.php
+
+
+// Filens/funktionens eksistensgrundlag.
+//
+// Denne funktion retunere et paymenlink og skal fødes med argumenterne
+// params (price, orderID)
+
+
+
+
+
+
+
+
+// --- bruger/maskin input --- //
 $price = 80000;
 $orderID = strtolower(generateRandomString(12));
-$apiKey = file_get_contents('../../secret/quickpay_apikey');
+// --- bruger/maskin input --- //
 
-// Der indsendes en liste med varernumre og antal, i følgende format. (varenummer, antal, varenummer, antal, varenummer, antal)
-// Der akumeleres så hvor meget varende skal koste til sammen, og der bliver lavet en ordre seddel, med vareummere og antal.
 
+
+
+
+
+
+
+
+// --- Create a new payment --- //
+// Dokumentation se retureksempel secret/flow_example/1_quickpay_createPaymentResponse.json
 
 // Create payment and put information into database generateRandomString(8)
 // Det her id er som du laver, og skal bruge som reference til at hænge en ordre op pa den i db.
 
+// url parametre og vars
+$apiKey = file_get_contents('../../secret/quickpay_apikey');
+$orderID = $orderID;
 
 $createPaymentResponse = shell_exec("curl -u ':$apiKey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X POST -d '{\"order_id\":\"$orderID\",\"currency\":\"dkk\"}' https://api.quickpay.net/payments 2> /dev/null");
 $createPaymentResponseObj = json_decode($createPaymentResponse);
-$createPaymentID = $createPaymentResponseObj->id;
 
-// put ned i en fil
-// file_put_contents("../../secret/flow_example/createPaymentResponse.json", $createPaymentResponse);
+// retunere payment id, men skal mske valideres først?
+$createPaymentResponseObj->id;
+// --- Create a new payment --- //
 
-// Put 'id' og 'merchant_id' i database. Disse data vil vcallbackurl.php så bruge til at håndtere et køb!
 
-// Lav payment link
-$createPaymentLinkResponse = shell_exec("curl -u ':$apiKey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X PUT -d '{\"amount\":\"$price\"}' https://api.quickpay.net/payments/$createPaymentID/link 2> /dev/null");
+
+
+
+
+
+
+
+// --- Lav payment link --- //
+// Dokumentation se retureksempel secret/flow_example/2_quickpay_createPaymentLinkResponse.json
+
+// url parametetre
+// payment_id
+$payment_id = $createPaymentResponseObj->id;
+$price = $price;
+
+
+$createPaymentLinkResponse = shell_exec("curl -u ':$apiKey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X PUT -d '{\"amount\":\"$price\"}' https://api.quickpay.net/payments/$payment_id/link 2> /dev/null");
 $createPaymentLinkObj = json_decode($createPaymentLinkResponse);
+
+// retuner payment link
 echo $createPaymentLinkObj->url;
 
-
-// put ned i en fil
-// file_put_contents("../../secret/flow_example/createPaymentResponse.json", $createPaymentResponse);
-// file_put_contents("../../secret/flow_example/createPaymentLinkResponse.json", $createPaymentLinkResponse);
-
+// --- Lav payment link --- //
 
 ?>

@@ -25,26 +25,3 @@
     }
 }
 ] 
-
-
-"data": {
-    "id": "40eb1f85-a140-4581-e044-0003ba298018",
-    "status": 1,
-    "darstatus": 3,
-    "vejkode": "5286",
-    "vejnavn": "Margrethepladsen",
-    "adresseringsvejnavn": "Margrethepladsen",
-    "husnr": "4",
-    "etage": null,
-    "dør": null,
-    "supplerendebynavn": null,
-    "postnr": "8000",
-    "postnrnavn": "Aarhus C",
-    "stormodtagerpostnr": null,
-    "stormodtagerpostnrnavn": null,
-    "kommunekode": "0751",
-    "adgangsadresseid": "0a3f5096-91d3-32b8-e044-0003ba298018",
-    "x": 10.19630111,
-    "y": 56.15308845,
-    "href": "https://api.dataforsyningen.dk/adresser/40eb1f85-a140-4581-e044-0003ba298018"
-}

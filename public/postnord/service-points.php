@@ -1,12 +1,23 @@
 <?php
 
+// Filens/funktionens eksistensgrundlag.
+//
+// retunere et antal servicepoints.
+// skal fødes med 'bruger/maskin input'
+
+
+
+
+
+
 
 
 
 // --- bruger/maskin input --- //
-// Variable input fra brugeren - baseret pa av-cables.dk kundeoplysningsformular 
-$userAddressInput = 'Øresundshøj 3a, 2920'; // Vejnavn + husnummer - Vinkelvej 12d, 3tv
-$userPostalCodeInput = null; // Postnummer - 2800
+// Variable input fra brugeren - baseret pa av-cables.dk kundeoplysningsformular
+$number_of_service_points = 10;
+$user_address_input = 'Lundevej 15, 3210 Vejby'; // Vejnavn + husnummer - Vinkelvej 12d, 3tv - Øresundshøj 3a, 2920 - Lundevej 15, 3210 Vejby
+$user_postal_code_input = null; // Postnummer - 2800
 // --- bruger/maskin input --- //
 
 
@@ -18,9 +29,9 @@ $userPostalCodeInput = null; // Postnummer - 2800
 
 
 // --- dawa vask addresse --- //
-$betegnelse = urlencode("$userAddressInput" . ", " . "$userPostalCodeInput");
-$dawaResponse = shell_exec("curl --location --request GET 'https://api.dataforsyningen.dk/datavask/adresser?betegnelse=$betegnelse' 2> /dev/null");
-$dawaSanitizedAddress = json_decode($dawaResponse);
+$betegnelse = urlencode("$user_address_input" . ", " . "$user_postal_code_input");
+$dawa_response = shell_exec("curl --location --request GET 'https://api.dataforsyningen.dk/datavask/adresser?betegnelse=$betegnelse' 2> /dev/null");
+$dawa_sanitized_address = json_decode($dawa_response);
 // --- dawa vask addresse --- //
 
 
@@ -38,18 +49,18 @@ $dawaSanitizedAddress = json_decode($dawaResponse);
 
 
 // Tager dawas retur objekt og putter dem ind i relevante fælter i postnord request
-$countryCode = 'DK';
-$agreementCountry = 'DK';
-$city = urlencode($dawaSanitizedAddress->resultater[0]->adresse->postnrnavn);
-$postalCode = urlencode($dawaSanitizedAddress->resultater[0]->adresse->postnr);
-$streetName = urlencode($dawaSanitizedAddress->resultater[0]->adresse->adresseringsvejnavn);
-$streetNumber = urlencode($dawaSanitizedAddress->resultater[0]->adresse->husnr);
-$numberOfServicePoints = urlencode(10);
+$country_code = 'DK';
+$agreement_country = 'DK';
+$city = urlencode($dawa_sanitized_address->resultater[0]->adresse->postnrnavn);
+$postal_code = urlencode($dawa_sanitized_address->resultater[0]->adresse->postnr);
+$street_name = urlencode($dawa_sanitized_address->resultater[0]->adresse->adresseringsvejnavn);
+$street_number = urlencode($dawa_sanitized_address->resultater[0]->adresse->husnr);
+$number_of_service_points = urlencode(10);
 
 
 
 $apikey = file_get_contents('../../secret/postnord_apikey');
-$url = "https://api2.postnord.com/rest/businesslocation/v5/servicepoints/nearest/byaddress?apikey=$apikey&returnType=json&countryCode=$countryCode&agreementCountry=$agreementCountry&city=$city&postalCode=$postalCode&streetName=$streetName&streetNumber=$streetNumber&numberOfServicePoints=$numberOfServicePoints&srId=EPSG:4326&context=optionalservicepoint&responseFilter=public";
+$url = "https://api2.postnord.com/rest/businesslocation/v5/servicepoints/nearest/byaddress?apikey=$apikey&returnType=json&countryCode=$country_code&agreementCountry=$agreement_country&city=$city&postalCode=$postal_code&streetName=$street_name&streetNumber=$street_number&numberOfServicePoints=$number_of_service_points&srId=EPSG:4326&context=optionalservicepoint&responseFilter=public";
 
 // Returnere et json objekt med lokale service points
 $json = shell_exec("curl --location --request GET '$url' 2> /dev/null"); // navigere stderr 2> /dev/null
