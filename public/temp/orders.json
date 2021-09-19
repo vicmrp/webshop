@@ -33,9 +33,17 @@
                 "additionalDescription": null,
                 "proposalTextforslagstekst": "Øresundshøj 3A, 2920 Charlottenlund"
             },
-            "quickpay": {
-                
+            "contactInformation": {
+                "email":"",
+                "phone": ""
             }
+        },
+        "quickpay": {
+            "id":  267814821,
+            "merchant_id":  103619,
+            "order_id":  "bwj5tunxcw6d",
+            "accepted":  true,
+            "type":  "Payment"
         }
     }
 ]
