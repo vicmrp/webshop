@@ -28,7 +28,7 @@ $createPaymentResponseObj = json_decode($createPaymentResponse);
 $createPaymentID = $createPaymentResponseObj->id;
 
 // put ned i en fil
-file_put_contents("../../secret/flow_example/createPaymentResponse.json", $createPaymentResponse);
+// file_put_contents("../../secret/flow_example/createPaymentResponse.json", $createPaymentResponse);
 
 // Put 'id' og 'merchant_id' i database. Disse data vil vcallbackurl.php så bruge til at håndtere et køb!
 
