@@ -23,7 +23,7 @@ $apiKey = file_get_contents('../../secret/quickpay_apikey');
 // Det her id er som du laver, og skal bruge som reference til at hænge en ordre op pa den i db.
 
 
-$createPaymentResponse = shell_exec("curl -u ':$apiKey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X POST -d '{\"order_id\":\"$orderID\",\"currency\":\"dkk\"}' https://api.quickpay.net/payments");
+$createPaymentResponse = shell_exec("curl -u ':$apiKey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X POST -d '{\"order_id\":\"$orderID\",\"currency\":\"dkk\"}' https://api.quickpay.net/payments 2> /dev/null");
 $createPaymentResponseObj = json_decode($createPaymentResponse);
 $createPaymentID = $createPaymentResponseObj->id;
 
@@ -33,7 +33,7 @@ file_put_contents("../../secret/flow_example/createPaymentResponse.json", $creat
 // Put 'id' og 'merchant_id' i database. Disse data vil vcallbackurl.php så bruge til at håndtere et køb!
 
 // Lav payment link
-$createPaymentLinkResponse = shell_exec("curl -u ':$apiKey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X PUT -d '{\"amount\":\"$price\"}' https://api.quickpay.net/payments/$createPaymentID/link");
+$createPaymentLinkResponse = shell_exec("curl -u ':$apiKey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X PUT -d '{\"amount\":\"$price\"}' https://api.quickpay.net/payments/$createPaymentID/link 2> /dev/null");
 $createPaymentLinkObj = json_decode($createPaymentLinkResponse);
 echo $createPaymentLinkObj->url;
 
