@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__.'/../dawa/datavask.php';
 
 // Filens/funktionens eksistensgrundlag.
 //
@@ -8,16 +9,17 @@
 
 
 
-
-
-
-
+function postnord_getServicePoints(
+$user_address_input, 
+$user_postal_code_input = null, 
+$number_of_service_points = 10
+){
 
 // --- bruger/maskin input --- //
 // Variable input fra brugeren - baseret pa av-cables.dk kundeoplysningsformular
-$number_of_service_points = 10;
-$user_address_input = 'Lundevej 15, 3210 Vejby'; // Vejnavn + husnummer - Vinkelvej 12d, 3tv - Øresundshøj 3a, 2920 - Lundevej 15, 3210 Vejby
-$user_postal_code_input = null; // Postnummer - 2800
+// $number_of_service_points = 10;
+// $user_address_input = 'Lundevej 15, 3210 Vejby'; // Vejnavn + husnummer - Vinkelvej 12d, 3tv - Øresundshøj 3a, 2920 - Lundevej 15, 3210 Vejby
+// $user_postal_code_input = null; // Postnummer - 2800
 // --- bruger/maskin input --- //
 
 
@@ -29,9 +31,10 @@ $user_postal_code_input = null; // Postnummer - 2800
 
 
 // --- dawa vask addresse --- //
-$betegnelse = urlencode("$user_address_input" . ", " . "$user_postal_code_input");
-$dawa_response = shell_exec("curl --location --request GET 'https://api.dataforsyningen.dk/datavask/adresser?betegnelse=$betegnelse' 2> /dev/null");
-$dawa_sanitized_address = json_decode($dawa_response);
+$dawa_sanitized_address = json_decode(datavask($user_address_input, $user_postal_code_input));
+// $betegnelse = urlencode("$user_address_input" . ", " . "$user_postal_code_input");
+// $dawa_response = shell_exec("curl --location --request GET 'https://api.dataforsyningen.dk/datavask/adresser?betegnelse=$betegnelse' 2> /dev/null");
+// $dawa_sanitized_address = json_decode($dawa_response);
 // --- dawa vask addresse --- //
 
 
@@ -59,11 +62,17 @@ $number_of_service_points = urlencode(10);
 
 
 
-$apikey = file_get_contents('../../secret/postnord_apikey');
+$apikey = file_get_contents('../../../secret/postnord_apikey');
 $url = "https://api2.postnord.com/rest/businesslocation/v5/servicepoints/nearest/byaddress?apikey=$apikey&returnType=json&countryCode=$country_code&agreementCountry=$agreement_country&city=$city&postalCode=$postal_code&streetName=$street_name&streetNumber=$street_number&numberOfServicePoints=$number_of_service_points&srId=EPSG:4326&context=optionalservicepoint&responseFilter=public";
 
 // Returnere et json objekt med lokale service points
 $json = shell_exec("curl --location --request GET '$url' 2> /dev/null"); // navigere stderr 2> /dev/null
 
-echo json_encode(json_decode($json), JSON_PRETTY_PRINT);
+return json_encode(json_decode($json), JSON_PRETTY_PRINT);
 // --- Hent service points --- //
+}
+
+
+// echo postnord_getServicePoints("Vinkelvej 12D, 3tv", 2800, 1);
+
+// echo __DIR__;

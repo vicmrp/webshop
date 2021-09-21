@@ -12,7 +12,7 @@ function sign($base, $private_key) {
 }
 
 $request_body = file_get_contents("php://input");
-$privateKey = file_get_contents('../../secret/quickpay_privatkey');
+$privateKey = file_get_contents('../../../secret/quickpay_privatkey');
 $checksum     = sign($request_body, $privateKey);
 
 

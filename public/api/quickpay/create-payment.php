@@ -1,5 +1,5 @@
 <?php
-require '../library.php';
+require '../../library.php';
 
 // Dokumentation - https://learn.quickpay.net/tech-talk/guides/payments/#create-a-new-payment
 // 1. Create a new payment
