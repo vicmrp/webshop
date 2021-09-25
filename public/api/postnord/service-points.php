@@ -10,9 +10,9 @@ require_once __DIR__.'/../dawa/datavask.php';
 
 
 function postnord_getServicePoints(
-$user_address_input, 
-$user_postal_code_input = null, 
-$number_of_service_points = 10
+  $user_address_input, 
+  $user_postal_code_input = null, 
+  $number_of_service_points = 10
 ){
 
 // --- bruger/maskin input --- //
@@ -62,7 +62,7 @@ $number_of_service_points = urlencode(10);
 
 
 
-$apikey = file_get_contents('../../../secret/postnord_apikey');
+$apikey = file_get_contents(__DIR__ .'/../../../secret/postnord_apikey');
 $url = "https://api2.postnord.com/rest/businesslocation/v5/servicepoints/nearest/byaddress?apikey=$apikey&returnType=json&countryCode=$country_code&agreementCountry=$agreement_country&city=$city&postalCode=$postal_code&streetName=$street_name&streetNumber=$street_number&numberOfServicePoints=$number_of_service_points&srId=EPSG:4326&context=optionalservicepoint&responseFilter=public";
 
 // Returnere et json objekt med lokale service points
@@ -71,8 +71,3 @@ $json = shell_exec("curl --location --request GET '$url' 2> /dev/null"); // navi
 return json_encode(json_decode($json), JSON_PRETTY_PRINT);
 // --- Hent service points --- //
 }
-
-
-// echo postnord_getServicePoints("Vinkelvej 12D, 3tv", 2800, 1);
-
-// echo __DIR__;

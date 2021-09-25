@@ -1,0 +1,1232 @@
+
+{
+    "servicePointInformationResponse": {
+        "customerSupports": [
+            {
+                "country": "DK",
+                "customerSupportPhoneNo": "+4570111230"
+            }
+        ],
+        "servicePoints": [
+            {
+                "name": "N\u00e6rboks Min K\u00f8bmand R\u00e5geleje - Kr\u00e6ver Postnord App",
+                "servicePointId": "105169",
+                "phoneNoToCashRegister": null,
+                "routingCode": null,
+                "handlingOffice": null,
+                "locationDetail": "Den gr\u00e5 N\u00e6rboks st\u00e5r til h\u00f8jre for indgangen til Min K\u00f8bmand ved siden af hjertestarter",
+                "routeDistance": 349,
+                "pickup": {
+                    "cashOnDelivery": null,
+                    "products": [
+                        {
+                            "name": "Parcel",
+                            "timeSlots": {
+                                "availableForPickupStandard": [],
+                                "availableForPickupEarlyCollect": []
+                            }
+                        }
+                    ],
+                    "heavyGoodsProducts": []
+                },
+                "visitingAddress": {
+                    "countryCode": "DK",
+                    "city": "Vejby",
+                    "streetName": "Tuehusvej",
+                    "streetNumber": "1",
+                    "postalCode": "3210",
+                    "additionalDescription": null
+                },
+                "deliveryAddress": {
+                    "countryCode": "DK",
+                    "city": "Vejby",
+                    "streetName": "Tuehusvej",
+                    "streetNumber": "1",
+                    "postalCode": "3210",
+                    "additionalDescription": null
+                },
+                "notificationArea": {
+                    "postalCodes": [
+                        "3210"
+                    ]
+                },
+                "coordinates": [
+                    {
+                        "countryCode": "DK",
+                        "northing": 56.0958356,
+                        "easting": 12.171661,
+                        "srId": "EPSG:4326"
+                    }
+                ],
+                "openingHours": {
+                    "specialDates": [],
+                    "postalServices": [
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Monday",
+                            "closeTime": "23:59",
+                            "closeDay": "Monday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Tuesday",
+                            "closeTime": "23:59",
+                            "closeDay": "Tuesday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Wednesday",
+                            "closeTime": "23:59",
+                            "closeDay": "Wednesday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Thursday",
+                            "closeTime": "23:59",
+                            "closeDay": "Thursday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Friday",
+                            "closeTime": "23:59",
+                            "closeDay": "Friday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Saturday",
+                            "closeTime": "23:59",
+                            "closeDay": "Saturday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Sunday",
+                            "closeTime": "23:59",
+                            "closeDay": "Sunday"
+                        }
+                    ]
+                },
+                "type": {
+                    "groupTypeId": 2,
+                    "groupTypeName": "Service box",
+                    "boxType": {
+                        "label": "N\u00e6rboks",
+                        "id": 2,
+                        "located": null,
+                        "pickupRequirements": []
+                    }
+                }
+            },
+            {
+                "name": "Posthus Superbrugsen",
+                "servicePointId": "3233",
+                "phoneNoToCashRegister": null,
+                "routingCode": null,
+                "handlingOffice": null,
+                "locationDetail": null,
+                "routeDistance": 3793,
+                "pickup": {
+                    "cashOnDelivery": null,
+                    "products": [
+                        {
+                            "name": "Letters Big",
+                            "timeSlots": {
+                                "availableForPickupStandard": [],
+                                "availableForPickupEarlyCollect": []
+                            }
+                        },
+                        {
+                            "name": "Parcel",
+                            "timeSlots": {
+                                "availableForPickupStandard": [],
+                                "availableForPickupEarlyCollect": []
+                            }
+                        }
+                    ],
+                    "heavyGoodsProducts": []
+                },
+                "visitingAddress": {
+                    "countryCode": "DK",
+                    "city": "Gr\u00e6sted",
+                    "streetName": "Peter Hildes Vej",
+                    "streetNumber": "2",
+                    "postalCode": "3230",
+                    "additionalDescription": null
+                },
+                "deliveryAddress": {
+                    "countryCode": "DK",
+                    "city": "Gr\u00e6sted",
+                    "streetName": "Peter Hildes Vej",
+                    "streetNumber": "2",
+                    "postalCode": "3230",
+                    "additionalDescription": null
+                },
+                "notificationArea": {
+                    "postalCodes": [
+                        "3230"
+                    ]
+                },
+                "coordinates": [
+                    {
+                        "countryCode": "DK",
+                        "northing": 56.085834,
+                        "easting": 12.213675,
+                        "srId": "EPSG:4326"
+                    }
+                ],
+                "openingHours": {
+                    "specialDates": [
+                        {
+                            "reason": "Christmas Day",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Boxing Day",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Easter Monday",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Whit Monday",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Ascension Day",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Good Friday",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "New Years Day",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Pinsedag",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Easter Sunday",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Maundy Thursday",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Grundlovsdag",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        }
+                    ],
+                    "postalServices": [
+                        {
+                            "openTime": "07:00",
+                            "openDay": "Monday",
+                            "closeTime": "20:00",
+                            "closeDay": "Monday"
+                        },
+                        {
+                            "openTime": "07:00",
+                            "openDay": "Tuesday",
+                            "closeTime": "20:00",
+                            "closeDay": "Tuesday"
+                        },
+                        {
+                            "openTime": "07:00",
+                            "openDay": "Wednesday",
+                            "closeTime": "20:00",
+                            "closeDay": "Wednesday"
+                        },
+                        {
+                            "openTime": "07:00",
+                            "openDay": "Thursday",
+                            "closeTime": "20:00",
+                            "closeDay": "Thursday"
+                        },
+                        {
+                            "openTime": "07:00",
+                            "openDay": "Friday",
+                            "closeTime": "20:00",
+                            "closeDay": "Friday"
+                        },
+                        {
+                            "openTime": "07:00",
+                            "openDay": "Saturday",
+                            "closeTime": "20:00",
+                            "closeDay": "Saturday"
+                        },
+                        {
+                            "openTime": "08:00",
+                            "openDay": "Sunday",
+                            "closeTime": "20:00",
+                            "closeDay": "Sunday"
+                        }
+                    ]
+                },
+                "type": {
+                    "groupTypeId": 1,
+                    "groupTypeName": "Service agent"
+                }
+            },
+            {
+                "name": "N\u00e6rboks Superbrugsen Blistrup - Kr\u00e6ver Postnord App",
+                "servicePointId": "106029",
+                "phoneNoToCashRegister": null,
+                "routingCode": null,
+                "handlingOffice": null,
+                "locationDetail": "Den gr\u00e5 N\u00e6rboks st\u00e5r udenfor til h\u00f8jre for indgangen til SuperBrugsen",
+                "routeDistance": 3793,
+                "pickup": {
+                    "cashOnDelivery": null,
+                    "products": [
+                        {
+                            "name": "Parcel",
+                            "timeSlots": {
+                                "availableForPickupStandard": [],
+                                "availableForPickupEarlyCollect": []
+                            }
+                        }
+                    ],
+                    "heavyGoodsProducts": []
+                },
+                "visitingAddress": {
+                    "countryCode": "DK",
+                    "city": "Gr\u00e6sted",
+                    "streetName": "Peter Hildes Vej",
+                    "streetNumber": "2",
+                    "postalCode": "3230",
+                    "additionalDescription": null
+                },
+                "deliveryAddress": {
+                    "countryCode": "DK",
+                    "city": "Gr\u00e6sted",
+                    "streetName": "Peter Hildes Vej",
+                    "streetNumber": "2",
+                    "postalCode": "3230",
+                    "additionalDescription": null
+                },
+                "notificationArea": {
+                    "postalCodes": [
+                        "3230"
+                    ]
+                },
+                "coordinates": [
+                    {
+                        "countryCode": "DK",
+                        "northing": 56.0856319,
+                        "easting": 12.2134398,
+                        "srId": "EPSG:4326"
+                    }
+                ],
+                "openingHours": {
+                    "specialDates": [],
+                    "postalServices": [
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Monday",
+                            "closeTime": "23:59",
+                            "closeDay": "Monday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Tuesday",
+                            "closeTime": "23:59",
+                            "closeDay": "Tuesday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Wednesday",
+                            "closeTime": "23:59",
+                            "closeDay": "Wednesday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Thursday",
+                            "closeTime": "23:59",
+                            "closeDay": "Thursday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Friday",
+                            "closeTime": "23:59",
+                            "closeDay": "Friday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Saturday",
+                            "closeTime": "23:59",
+                            "closeDay": "Saturday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Sunday",
+                            "closeTime": "23:59",
+                            "closeDay": "Sunday"
+                        }
+                    ]
+                },
+                "type": {
+                    "groupTypeId": 2,
+                    "groupTypeName": "Service box",
+                    "boxType": {
+                        "label": "N\u00e6rboks",
+                        "id": 2,
+                        "located": null,
+                        "pickupRequirements": []
+                    }
+                }
+            },
+            {
+                "name": "Posthus Circle K",
+                "servicePointId": "3211",
+                "phoneNoToCashRegister": null,
+                "routingCode": null,
+                "handlingOffice": null,
+                "locationDetail": null,
+                "routeDistance": 4669,
+                "pickup": {
+                    "cashOnDelivery": null,
+                    "products": [
+                        {
+                            "name": "Letters Big",
+                            "timeSlots": {
+                                "availableForPickupStandard": [],
+                                "availableForPickupEarlyCollect": []
+                            }
+                        },
+                        {
+                            "name": "Parcel",
+                            "timeSlots": {
+                                "availableForPickupStandard": [],
+                                "availableForPickupEarlyCollect": []
+                            }
+                        }
+                    ],
+                    "heavyGoodsProducts": []
+                },
+                "visitingAddress": {
+                    "countryCode": "DK",
+                    "city": "Vejby",
+                    "streetName": "R\u00e5gelejevej",
+                    "streetNumber": "1",
+                    "postalCode": "3210",
+                    "additionalDescription": null
+                },
+                "deliveryAddress": {
+                    "countryCode": "DK",
+                    "city": "Vejby",
+                    "streetName": "R\u00e5gelejevej",
+                    "streetNumber": "1",
+                    "postalCode": "3210",
+                    "additionalDescription": null
+                },
+                "notificationArea": {
+                    "postalCodes": [
+                        "0",
+                        "3210",
+                        "3220"
+                    ]
+                },
+                "coordinates": [
+                    {
+                        "countryCode": "DK",
+                        "northing": 56.066779,
+                        "easting": 12.139962,
+                        "srId": "EPSG:4326"
+                    }
+                ],
+                "openingHours": {
+                    "specialDates": [
+                        {
+                            "reason": "Christmas Day",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Boxing Day",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Easter Monday",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Whit Monday",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Ascension Day",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Good Friday",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "New Years Day",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Pinsedag",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Easter Sunday",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Maundy Thursday",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        },
+                        {
+                            "reason": "Grundlovsdag",
+                            "openTime": "Tjek for \u00e5bningstid p\u00e5 det enkelte posthus",
+                            "isClosed": false,
+                            "closeTime": " "
+                        }
+                    ],
+                    "postalServices": [
+                        {
+                            "openTime": "08:00",
+                            "openDay": "Monday",
+                            "closeTime": "22:00",
+                            "closeDay": "Monday"
+                        },
+                        {
+                            "openTime": "08:00",
+                            "openDay": "Tuesday",
+                            "closeTime": "22:00",
+                            "closeDay": "Tuesday"
+                        },
+                        {
+                            "openTime": "08:00",
+                            "openDay": "Wednesday",
+                            "closeTime": "22:00",
+                            "closeDay": "Wednesday"
+                        },
+                        {
+                            "openTime": "08:00",
+                            "openDay": "Thursday",
+                            "closeTime": "22:00",
+                            "closeDay": "Thursday"
+                        },
+                        {
+                            "openTime": "08:00",
+                            "openDay": "Friday",
+                            "closeTime": "22:00",
+                            "closeDay": "Friday"
+                        },
+                        {
+                            "openTime": "08:00",
+                            "openDay": "Saturday",
+                            "closeTime": "22:00",
+                            "closeDay": "Saturday"
+                        },
+                        {
+                            "openTime": "08:00",
+                            "openDay": "Sunday",
+                            "closeTime": "22:00",
+                            "closeDay": "Sunday"
+                        }
+                    ]
+                },
+                "type": {
+                    "groupTypeId": 1,
+                    "groupTypeName": "Service agent"
+                }
+            },
+            {
+                "name": "N\u00e6rboks Coop365 Smidstrup - Kr\u00e6ver Postnord App",
+                "servicePointId": "106193",
+                "phoneNoToCashRegister": null,
+                "routingCode": null,
+                "handlingOffice": null,
+                "locationDetail": "Den gr\u00e5 N\u00e6rboks st\u00e5r placeret udenfor butikken ved flaskeindleveringen til h\u00f8jre for indgangen",
+                "routeDistance": 5565,
+                "pickup": {
+                    "cashOnDelivery": null,
+                    "products": [
+                        {
+                            "name": "Parcel",
+                            "timeSlots": {
+                                "availableForPickupStandard": [],
+                                "availableForPickupEarlyCollect": []
+                            }
+                        }
+                    ],
+                    "heavyGoodsProducts": []
+                },
+                "visitingAddress": {
+                    "countryCode": "DK",
+                    "city": "Gilleleje",
+                    "streetName": "Smidstrup Strandvej",
+                    "streetNumber": "65",
+                    "postalCode": "3250",
+                    "additionalDescription": null
+                },
+                "deliveryAddress": {
+                    "countryCode": "DK",
+                    "city": "Gilleleje",
+                    "streetName": "Smidstrup Strandvej",
+                    "streetNumber": "65",
+                    "postalCode": "3250",
+                    "additionalDescription": null
+                },
+                "notificationArea": {
+                    "postalCodes": [
+                        "3250"
+                    ]
+                },
+                "coordinates": [
+                    {
+                        "countryCode": "DK",
+                        "northing": 56.115467,
+                        "easting": 12.2374703,
+                        "srId": "EPSG:4326"
+                    }
+                ],
+                "openingHours": {
+                    "specialDates": [],
+                    "postalServices": [
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Monday",
+                            "closeTime": "23:59",
+                            "closeDay": "Monday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Tuesday",
+                            "closeTime": "23:59",
+                            "closeDay": "Tuesday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Wednesday",
+                            "closeTime": "23:59",
+                            "closeDay": "Wednesday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Thursday",
+                            "closeTime": "23:59",
+                            "closeDay": "Thursday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Friday",
+                            "closeTime": "23:59",
+                            "closeDay": "Friday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Saturday",
+                            "closeTime": "23:59",
+                            "closeDay": "Saturday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Sunday",
+                            "closeTime": "23:59",
+                            "closeDay": "Sunday"
+                        }
+                    ]
+                },
+                "type": {
+                    "groupTypeId": 2,
+                    "groupTypeName": "Service box",
+                    "boxType": {
+                        "label": "N\u00e6rboks",
+                        "id": 2,
+                        "located": null,
+                        "pickupRequirements": []
+                    }
+                }
+            },
+            {
+                "name": "N\u00e6rboks Spar Tisvildeleje - Kr\u00e6ver Postnord App",
+                "servicePointId": "105166",
+                "phoneNoToCashRegister": null,
+                "routingCode": null,
+                "handlingOffice": null,
+                "locationDetail": "Den gr\u00e5 N\u00e6rboks er placeret bagerst p\u00e5 Spars parkeringsplads",
+                "routeDistance": 8105,
+                "pickup": {
+                    "cashOnDelivery": null,
+                    "products": [
+                        {
+                            "name": "Parcel",
+                            "timeSlots": {
+                                "availableForPickupStandard": [],
+                                "availableForPickupEarlyCollect": []
+                            }
+                        }
+                    ],
+                    "heavyGoodsProducts": []
+                },
+                "visitingAddress": {
+                    "countryCode": "DK",
+                    "city": "Tisvildeleje",
+                    "streetName": "Hovedgaden",
+                    "streetNumber": "53",
+                    "postalCode": "3220",
+                    "additionalDescription": null
+                },
+                "deliveryAddress": {
+                    "countryCode": "DK",
+                    "city": "Tisvildeleje",
+                    "streetName": "Hovedgaden",
+                    "streetNumber": "53",
+                    "postalCode": "3220",
+                    "additionalDescription": null
+                },
+                "notificationArea": {
+                    "postalCodes": [
+                        "3220"
+                    ]
+                },
+                "coordinates": [
+                    {
+                        "countryCode": "DK",
+                        "northing": 56.0596434,
+                        "easting": 12.0748604,
+                        "srId": "EPSG:4326"
+                    }
+                ],
+                "openingHours": {
+                    "specialDates": [],
+                    "postalServices": [
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Monday",
+                            "closeTime": "23:59",
+                            "closeDay": "Monday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Tuesday",
+                            "closeTime": "23:59",
+                            "closeDay": "Tuesday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Wednesday",
+                            "closeTime": "23:59",
+                            "closeDay": "Wednesday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Thursday",
+                            "closeTime": "23:59",
+                            "closeDay": "Thursday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Friday",
+                            "closeTime": "23:59",
+                            "closeDay": "Friday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Saturday",
+                            "closeTime": "23:59",
+                            "closeDay": "Saturday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Sunday",
+                            "closeTime": "23:59",
+                            "closeDay": "Sunday"
+                        }
+                    ]
+                },
+                "type": {
+                    "groupTypeId": 2,
+                    "groupTypeName": "Service box",
+                    "boxType": {
+                        "label": "N\u00e6rboks",
+                        "id": 2,
+                        "located": null,
+                        "pickupRequirements": []
+                    }
+                }
+            },
+            {
+                "name": "N\u00e6rboks Meny Gr\u00e6sted Hovedgade - Kr\u00e6ver Postnord App",
+                "servicePointId": "105242",
+                "phoneNoToCashRegister": null,
+                "routingCode": null,
+                "handlingOffice": null,
+                "locationDetail": "Den gr\u00e5 N\u00e6rboks st\u00e5r for enden af kundevogne til h\u00f8jre for indgangen til Meny.",
+                "routeDistance": 9448,
+                "pickup": {
+                    "cashOnDelivery": null,
+                    "products": [
+                        {
+                            "name": "Parcel",
+                            "timeSlots": {
+                                "availableForPickupStandard": [],
+                                "availableForPickupEarlyCollect": []
+                            }
+                        }
+                    ],
+                    "heavyGoodsProducts": []
+                },
+                "visitingAddress": {
+                    "countryCode": "DK",
+                    "city": "Gr\u00e6sted",
+                    "streetName": "Gr\u00e6sted Hovedgade",
+                    "streetNumber": "25",
+                    "postalCode": "3230",
+                    "additionalDescription": null
+                },
+                "deliveryAddress": {
+                    "countryCode": "DK",
+                    "city": "Gr\u00e6sted",
+                    "streetName": "Gr\u00e6sted Hovedgade",
+                    "streetNumber": "25",
+                    "postalCode": "3230",
+                    "additionalDescription": null
+                },
+                "notificationArea": {
+                    "postalCodes": [
+                        "3230"
+                    ]
+                },
+                "coordinates": [
+                    {
+                        "countryCode": "DK",
+                        "northing": 56.0654103,
+                        "easting": 12.2861703,
+                        "srId": "EPSG:4326"
+                    }
+                ],
+                "openingHours": {
+                    "specialDates": [],
+                    "postalServices": [
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Monday",
+                            "closeTime": "23:59",
+                            "closeDay": "Monday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Tuesday",
+                            "closeTime": "23:59",
+                            "closeDay": "Tuesday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Wednesday",
+                            "closeTime": "23:59",
+                            "closeDay": "Wednesday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Thursday",
+                            "closeTime": "23:59",
+                            "closeDay": "Thursday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Friday",
+                            "closeTime": "23:59",
+                            "closeDay": "Friday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Saturday",
+                            "closeTime": "23:59",
+                            "closeDay": "Saturday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Sunday",
+                            "closeTime": "23:59",
+                            "closeDay": "Sunday"
+                        }
+                    ]
+                },
+                "type": {
+                    "groupTypeId": 2,
+                    "groupTypeName": "Service box",
+                    "boxType": {
+                        "label": "N\u00e6rboks",
+                        "id": 2,
+                        "located": null,
+                        "pickupRequirements": []
+                    }
+                }
+            },
+            {
+                "name": "Posthus Meny",
+                "servicePointId": "3232",
+                "phoneNoToCashRegister": null,
+                "routingCode": null,
+                "handlingOffice": null,
+                "locationDetail": null,
+                "routeDistance": 9448,
+                "pickup": {
+                    "cashOnDelivery": null,
+                    "products": [
+                        {
+                            "name": "Letters Big",
+                            "timeSlots": {
+                                "availableForPickupStandard": [],
+                                "availableForPickupEarlyCollect": []
+                            }
+                        },
+                        {
+                            "name": "Parcel",
+                            "timeSlots": {
+                                "availableForPickupStandard": [],
+                                "availableForPickupEarlyCollect": []
+                            }
+                        },
+                        {
+                            "name": "Recommended letter",
+                            "timeSlots": {
+                                "availableForPickupStandard": [],
+                                "availableForPickupEarlyCollect": []
+                            }
+                        },
+                        {
+                            "name": "Value shipment",
+                            "timeSlots": {
+                                "availableForPickupStandard": [],
+                                "availableForPickupEarlyCollect": []
+                            }
+                        }
+                    ],
+                    "heavyGoodsProducts": []
+                },
+                "visitingAddress": {
+                    "countryCode": "DK",
+                    "city": "Gr\u00e6sted",
+                    "streetName": "Gr\u00e6sted Hovedgade",
+                    "streetNumber": "25",
+                    "postalCode": "3230",
+                    "additionalDescription": null
+                },
+                "deliveryAddress": {
+                    "countryCode": "DK",
+                    "city": "Gr\u00e6sted",
+                    "streetName": "Gr\u00e6sted Hovedgade",
+                    "streetNumber": "25",
+                    "postalCode": "3230",
+                    "additionalDescription": null
+                },
+                "notificationArea": {
+                    "postalCodes": [
+                        "3230"
+                    ]
+                },
+                "coordinates": [
+                    {
+                        "countryCode": "DK",
+                        "northing": 56.065212,
+                        "easting": 12.28555,
+                        "srId": "EPSG:4326"
+                    }
+                ],
+                "openingHours": {
+                    "specialDates": [],
+                    "postalServices": [
+                        {
+                            "openTime": "09:00",
+                            "openDay": "Monday",
+                            "closeTime": "19:00",
+                            "closeDay": "Monday"
+                        },
+                        {
+                            "openTime": "09:00",
+                            "openDay": "Tuesday",
+                            "closeTime": "19:00",
+                            "closeDay": "Tuesday"
+                        },
+                        {
+                            "openTime": "09:00",
+                            "openDay": "Wednesday",
+                            "closeTime": "19:00",
+                            "closeDay": "Wednesday"
+                        },
+                        {
+                            "openTime": "09:00",
+                            "openDay": "Thursday",
+                            "closeTime": "19:00",
+                            "closeDay": "Thursday"
+                        },
+                        {
+                            "openTime": "09:00",
+                            "openDay": "Friday",
+                            "closeTime": "19:00",
+                            "closeDay": "Friday"
+                        },
+                        {
+                            "openTime": "08:00",
+                            "openDay": "Saturday",
+                            "closeTime": "17:00",
+                            "closeDay": "Saturday"
+                        },
+                        {
+                            "openTime": "08:00",
+                            "openDay": "Sunday",
+                            "closeTime": "17:00",
+                            "closeDay": "Sunday"
+                        }
+                    ]
+                },
+                "type": {
+                    "groupTypeId": 1,
+                    "groupTypeName": "Service agent"
+                }
+            },
+            {
+                "name": "N\u00e6rboks Lidl Vestergade - Kr\u00e6ver Postnord App",
+                "servicePointId": "105175",
+                "phoneNoToCashRegister": null,
+                "routingCode": null,
+                "handlingOffice": null,
+                "locationDetail": "Den gr\u00e5 N\u00e6rboks st\u00e5r ved indk\u00f8bsvognene p\u00e5 Lidls parkeringsplads.",
+                "routeDistance": 9453,
+                "pickup": {
+                    "cashOnDelivery": null,
+                    "products": [
+                        {
+                            "name": "Parcel",
+                            "timeSlots": {
+                                "availableForPickupStandard": [],
+                                "availableForPickupEarlyCollect": []
+                            }
+                        }
+                    ],
+                    "heavyGoodsProducts": []
+                },
+                "visitingAddress": {
+                    "countryCode": "DK",
+                    "city": "Helsinge",
+                    "streetName": "Vestergade",
+                    "streetNumber": "6",
+                    "postalCode": "3200",
+                    "additionalDescription": null
+                },
+                "deliveryAddress": {
+                    "countryCode": "DK",
+                    "city": "Helsinge",
+                    "streetName": "Vestergade",
+                    "streetNumber": "6",
+                    "postalCode": "3200",
+                    "additionalDescription": null
+                },
+                "notificationArea": {
+                    "postalCodes": [
+                        "3200"
+                    ]
+                },
+                "coordinates": [
+                    {
+                        "countryCode": "DK",
+                        "northing": 56.0227769,
+                        "easting": 12.1956214,
+                        "srId": "EPSG:4326"
+                    }
+                ],
+                "openingHours": {
+                    "specialDates": [],
+                    "postalServices": [
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Monday",
+                            "closeTime": "23:59",
+                            "closeDay": "Monday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Tuesday",
+                            "closeTime": "23:59",
+                            "closeDay": "Tuesday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Wednesday",
+                            "closeTime": "23:59",
+                            "closeDay": "Wednesday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Thursday",
+                            "closeTime": "23:59",
+                            "closeDay": "Thursday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Friday",
+                            "closeTime": "23:59",
+                            "closeDay": "Friday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Saturday",
+                            "closeTime": "23:59",
+                            "closeDay": "Saturday"
+                        },
+                        {
+                            "openTime": "00:00",
+                            "openDay": "Sunday",
+                            "closeTime": "23:59",
+                            "closeDay": "Sunday"
+                        }
+                    ]
+                },
+                "type": {
+                    "groupTypeId": 2,
+                    "groupTypeName": "Service box",
+                    "boxType": {
+                        "label": "N\u00e6rboks",
+                        "id": 2,
+                        "located": null,
+                        "pickupRequirements": []
+                    }
+                }
+            },
+            {
+                "name": "Posthus Silvan Gr\u00e6sted",
+                "servicePointId": "3231",
+                "phoneNoToCashRegister": null,
+                "routingCode": null,
+                "handlingOffice": null,
+                "locationDetail": null,
+                "routeDistance": 9479,
+                "pickup": {
+                    "cashOnDelivery": null,
+                    "products": [],
+                    "heavyGoodsProducts": []
+                },
+                "visitingAddress": {
+                    "countryCode": "DK",
+                    "city": "Gr\u00e6sted",
+                    "streetName": "Gr\u00e6sted Stationsvej",
+                    "streetNumber": "78",
+                    "postalCode": "3230",
+                    "additionalDescription": null
+                },
+                "deliveryAddress": {
+                    "countryCode": "DK",
+                    "city": "Gr\u00e6sted",
+                    "streetName": "Gr\u00e6sted Stationsvej",
+                    "streetNumber": "78",
+                    "postalCode": "3230",
+                    "additionalDescription": null
+                },
+                "notificationArea": {
+                    "postalCodes": [
+                        "3230"
+                    ]
+                },
+                "coordinates": [
+                    {
+                        "countryCode": "DK",
+                        "northing": 56.071985,
+                        "easting": 12.285981,
+                        "srId": "EPSG:4326"
+                    }
+                ],
+                "openingHours": {
+                    "specialDates": [],
+                    "postalServices": [
+                        {
+                            "openTime": "09:00",
+                            "openDay": "Monday",
+                            "closeTime": "18:00",
+                            "closeDay": "Monday"
+                        },
+                        {
+                            "openTime": "09:00",
+                            "openDay": "Tuesday",
+                            "closeTime": "18:00",
+                            "closeDay": "Tuesday"
+                        },
+                        {
+                            "openTime": "09:00",
+                            "openDay": "Wednesday",
+                            "closeTime": "18:00",
+                            "closeDay": "Wednesday"
+                        },
+                        {
+                            "openTime": "09:00",
+                            "openDay": "Thursday",
+                            "closeTime": "18:00",
+                            "closeDay": "Thursday"
+                        },
+                        {
+                            "openTime": "09:00",
+                            "openDay": "Friday",
+                            "closeTime": "18:00",
+                            "closeDay": "Friday"
+                        },
+                        {
+                            "openTime": "09:00",
+                            "openDay": "Saturday",
+                            "closeTime": "17:00",
+                            "closeDay": "Saturday"
+                        },
+                        {
+                            "openTime": "09:00",
+                            "openDay": "Sunday",
+                            "closeTime": "17:00",
+                            "closeDay": "Sunday"
+                        }
+                    ]
+                },
+                "type": {
+                    "groupTypeId": 1,
+                    "groupTypeName": "Service agent"
+                }
+            }
+        ]
+    }
+}
