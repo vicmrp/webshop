@@ -23,18 +23,18 @@ use vezit\classes as C;
 
 
 // Customer
-$c_address = new Customer\Address(null, null, null, null);
-$c_contact = new Customer\Contact(null, null);
-$c_company = new Customer\Company(null, null);
-$c_customer = new Customer\Customer(null, $c_contact, $c_address, $c_company);
+$c_address = new Customer\Address("Vinkelvej", "12d 3tv", "2800", "KGS. Lyngby");
+$c_contact = new Customer\Contact("26129604", "victor.reipur@gmail.com");
+$c_company = new Customer\Company('10007933', 'SGUPS v/Steen Gede');
+$c_customer = new Customer\Customer("Victor Reipur", $c_contact, $c_address, $c_company);
 
 // Shipment
-$s_address = new Shipment\Address(null, null, null, null);
-$s_shipment = new Shipment\Shipment(null, null, null);
+$s_address = new Shipment\Address('Jernbanepladsen', '49', '2800', 'KGS. LYNGBY');
+$s_shipment = new Shipment\Shipment('12312123', false, $s_address);
 
 // Order
-$o_order_payment = new Order_Status\Payment(null, null, null);
-$o_order_email = new Order_Status\Email(null, null);
+$o_order_payment = new Order_Status\Payment(true, "DKK", 3280);
+$o_order_email = new Order_Status\Email(true, true);
 $o_order_status = new Order_Status\Order_Status($o_order_payment, $o_order_email);
 
 $o_order_item_1 = new Order_Status\Order_Item("cat6 UTP Dataudtag RJ45 1-stik - Hvid", "77632", 2320, 6);
@@ -46,8 +46,6 @@ $o_order = new Order\Order('1234id', $o_order_status, $o_list_order_item);
 $session = new C\Session('12345678', $c_customer, $s_shipment, $o_order);
 
 echo json_encode($session, JSON_PRETTY_PRINT) . PHP_EOL;
-
-
 
 
 
