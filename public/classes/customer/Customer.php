@@ -8,7 +8,7 @@ class Customer implements \JsonSerializable {
   private $company;
 
 
-  public function __construct(string $fullname, $contact, $address, $company) {
+  public function __construct($fullname, $contact, $address, $company) {
     $this->fullname = $fullname;
     $this->contact = $contact;
     $this->address = $address;
