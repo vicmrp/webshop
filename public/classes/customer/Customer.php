@@ -15,6 +15,26 @@ class Customer implements \JsonSerializable {
     $this->company = $company;
   }
 
+  public function set_fullname($fullname)
+  {
+    $this->fullname = $fullname;
+  }
+
+  public function set_contact($contact)
+  {
+    $this->contact = $contact;
+  }
+
+  public function set_address($address)
+  {
+    $this->address = $address;
+  }
+
+  public function set_company($company)
+  {
+    $this->company = $company;
+  }
+
   // Includes private properties in json_encode()
   public function jsonSerialize()
   {

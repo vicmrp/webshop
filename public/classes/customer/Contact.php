@@ -10,6 +10,16 @@ class Contact implements \JsonSerializable {
     $this->email = $email;
   }
 
+  public function set_phone($phone)
+  {
+    $this->phone = $phone;
+  }
+
+  public function set_email($email)
+  {
+    $this->email = $email;
+  }
+
   // Includes private properties in json_encode()
   public function jsonSerialize()
   {

@@ -1,0 +1,11 @@
+
+Nar kunden tilgar hjemmesiden skal der oprettes en session variable
+home
+echo 
+
+nar kunden har tilføjet varer i kurven
+
+
+
+Hvis at du kan lave et sessions objekt som følger kunden. Nar kunden har betalt skal kunden modtage en confirmation email.
+Sessionen skal gemmes her i mappen. Men i virkeligheden skal det gemmes i databasen.

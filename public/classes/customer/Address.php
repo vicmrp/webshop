@@ -15,6 +15,26 @@ class Address implements \JsonSerializable {
     $this->city = $city;
   }
 
+  public function set_street_name($street_name)
+  {
+    $this->street_name = $street_name;
+  }
+
+  public function set_street_number($street_number)
+  {
+    $this->street_number = $street_number;
+  }
+
+  public function set_postal_code($postal_code)
+  {
+    $this->postal_code = $postal_code;
+  }
+
+  public function set_city($city)
+  {
+    $this->city = $city;
+  }
+
   // Includes private properties in json_encode()
   public function jsonSerialize()
   {
