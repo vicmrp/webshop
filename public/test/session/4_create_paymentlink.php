@@ -1,25 +1,9 @@
 <?php
-// Customer
-require '../../classes/customer/Address.php';
-require '../../classes/customer/Company.php';
-require '../../classes/customer/Contact.php';
-require '../../classes/customer/Customer.php';
-// Shipment
-require '../../classes/shipment/Address.php';
-require '../../classes/shipment/Shipment.php';
-// Order
-require '../../classes/order/Order.php';
-require '../../classes/order/Order_Item.php';
-require '../../classes/order/order_status/Email.php';
-require '../../classes/order/order_status/Order_Status.php';
-require '../../classes/order/order_status/Payment.php';
-// API
-require '../../classes/api/quickpay/Quickpay.php';
+// ----- global ----- //
+require __DIR__.'/../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
-// Session
-require '../../classes/Session.php';
 // Namespaces
-use vezit\classes\api\quickpay as Quickpay;
+use vezit\classes\session\quickpay as Quickpay;
 
 session_start();
 

@@ -1,25 +1,14 @@
 <?php
-// Customer
-require '../../classes/customer/Address.php';
-require '../../classes/customer/Company.php';
-require '../../classes/customer/Contact.php';
-require '../../classes/customer/Customer.php';
-// Shipment
-require '../../classes/shipment/Address.php';
-require '../../classes/shipment/Shipment.php';
-// Order
-require '../../classes/order/Order.php';
-require '../../classes/order/Order_Item.php';
-require '../../classes/order/order_status/Email.php';
-require '../../classes/order/order_status/Order_Status.php';
-require '../../classes/order/order_status/Payment.php';
-// Session
-require '../../classes/Session.php';
-use vezit\classes\customer as Customer;
-use vezit\classes\shipment as Shipment;
-use vezit\classes\order as Order;
-use vezit\classes\order\order_status as Order_Status;
-use vezit\classes as C;
+// ----- global ----- //
+require __DIR__.'/../../global-requirements.php'; // _from_top_folder().
+
+
+
+use vezit\classes\session\customer as Customer;
+use vezit\classes\session\shipment as Shipment;
+use vezit\classes\session\order as Order;
+use vezit\classes\session\order\order_status as Order_Status;
+use vezit\classes\session as C;
 
 
 session_start();

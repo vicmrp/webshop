@@ -1,5 +1,5 @@
 <?php
-namespace vezit\classes\customer;
+namespace vezit\classes\session\customer;
 
 class Contact implements \JsonSerializable {
   private $phone;

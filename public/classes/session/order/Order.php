@@ -1,5 +1,5 @@
 <?php
-namespace vezit\classes\order;
+namespace vezit\classes\session\order;
 
 class Order implements \JsonSerializable {
 

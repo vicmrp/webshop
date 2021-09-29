@@ -1,5 +1,5 @@
 <?php
-namespace vezit\classes;
+namespace vezit\classes\session;
 
 class Session implements \JsonSerializable {
   private $session_id;

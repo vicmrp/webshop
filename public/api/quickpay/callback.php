@@ -6,7 +6,7 @@ require __DIR__.'/../../global-requirements.php';
 require _from_top_folder().'/classes/api/quickpay/Quickpay.php';
 
 // ----- Namespace ----- //
-use vezit\classes\api\quickpay;
+// use vezit\classes\api\quickpay;
 
 
 $request_body = file_get_contents("php://input");

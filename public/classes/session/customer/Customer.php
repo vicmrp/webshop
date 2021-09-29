@@ -1,5 +1,5 @@
 <?php
-namespace vezit\classes\customer;
+namespace vezit\classes\session\customer;
 
 class Customer implements \JsonSerializable {
   private $fullname;

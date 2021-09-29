@@ -1,5 +1,5 @@
 <?php
-namespace vezit\classes\shipment;
+namespace vezit\classes\session\shipment;
 
 class Shipment implements \JsonSerializable {
   public $tracking_number;

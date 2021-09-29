@@ -1,5 +1,5 @@
 <?php
-namespace vezit\classes\shipment;
+namespace vezit\classes\session\shipment;
 
 class Address implements \JsonSerializable {
   public $street_name;
