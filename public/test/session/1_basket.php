@@ -52,7 +52,8 @@ $o_order = new Order\Order('1234id', null, $o_list_order_item);
 
 // Session
 // __construct($session_id, $customer, $shipment, $order)
-$session = new C\Session('123213678', null, null, $o_order);
+$session_id = strval(rand(1000000,9999999));
+$session = new C\Session($session_id, null, null, $o_order);
 $_SESSION["session"] = $session;
 
 echo json_encode($session, JSON_PRETTY_PRINT) . PHP_EOL;

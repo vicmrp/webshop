@@ -21,7 +21,7 @@ require '../../library.php';
 
 // --- bruger/maskin input --- //
 $price = 80000;
-$orderID = strtolower(generateRandomString(12));
+$orderID = strtolower(_generate_random_string(12));
 // --- bruger/maskin input --- //
 
 
@@ -35,7 +35,7 @@ $orderID = strtolower(generateRandomString(12));
 // --- Create a new payment --- //
 // Dokumentation se retureksempel secret/flow_example/1_quickpay_createPaymentResponse.json
 
-// Create payment and put information into database generateRandomString(8)
+// Create payment and put information into database _generate_random_string(8)
 // Det her id er som du laver, og skal bruge som reference til at hænge en ordre op pa den i db.
 
 // url parametre og vars

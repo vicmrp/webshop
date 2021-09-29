@@ -3,9 +3,12 @@ namespace vezit\classes;
 
 class Session implements \JsonSerializable {
   private $session_id;
+  // -- subclasses -- //
   public $customer;
   public $shipment;
   public $order;
+  public $quickpay;
+  // -- subclasses -- //
 
   public function __construct($session_id, $customer, $shipment, $order) {
     $this->session_id = $session_id;
@@ -18,6 +21,12 @@ class Session implements \JsonSerializable {
   {
     $this->session_id = $session_id;
   }
+
+  public function get_session_id()
+  {
+    return $this->session_id;
+  }
+
 
   public function set_customer($customer)
   {
@@ -32,6 +41,11 @@ class Session implements \JsonSerializable {
   public function set_order($order)
   {
     $this->order = $order;
+  }
+
+  public function set_quickpay($quickpay)
+  {
+    $this->quickpay = $quickpay;
   }
 
   // Includes private properties in json_encode()

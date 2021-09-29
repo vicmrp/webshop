@@ -1,31 +1,61 @@
 <?php
+// ----- global ----- //
+require __DIR__.'/../../global-requirements.php';
+
+// ----- Requirements ----- //
+require _from_top_folder().'/classes/api/quickpay/Quickpay.php';
+
+// ----- Namespace ----- //
+use vezit\classes\api\quickpay;
+
+
+$request_body = file_get_contents("php://input");
+$privateKey = file_get_contents('../../../secret/quickpay_privatkey');
+
+$quickpay = new Quickpay();
+
+var_dump($quickpay);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Dokumentation - https://learn.quickpay.net/tech-talk/api/callback/#callback
 // Se et callback eksempel secret/flow_example/3_quickpay_callback.json
 // Denne funktions inputs kommer fra quickpay nr en kunde har betalt
 
+// function sign($base, $private_key) {
+//   return hash_hmac("sha256", $base, $private_key);
+// }
 
+// $request_body = file_get_contents("php://input");
+// $privateKey = file_get_contents('../../../secret/quickpay_privatkey');
+// $checksum     = sign($request_body, $privateKey);
 
-function sign($base, $private_key) {
-  return hash_hmac("sha256", $base, $private_key);
-}
-
-$request_body = file_get_contents("php://input");
-$privateKey = file_get_contents('../../../secret/quickpay_privatkey');
-$checksum     = sign($request_body, $privateKey);
-
-
-if ($checksum == $_SERVER["HTTP_QUICKPAY_CHECKSUM_SHA256"]) {
-  // Handter betaling
+// if ($checksum == $_SERVER["HTTP_QUICKPAY_CHECKSUM_SHA256"]) {
+//   file_put_contents('./test.json', $request_body);
+//   // Handter betaling
   
-  // Hvis betalingen er gennemført sa gem ordre og lokation samt send email til køber
+//   // Hvis betalingen er gennemført sa gem ordre og lokation samt send email til køber
   
-  // Request is authenticated
+//   // Request is authenticated
 
-  // Hent info om varerordren og put den i en fil kaldet varenummeret, herefter vedhæft filen til mailen.
+//   // Hent info om varerordren og put den i en fil kaldet varenummeret, herefter vedhæft filen til mailen.
 
-}
+// }
 
 
 
