@@ -1,20 +1,25 @@
 <?php
 // ----- global ----- //
-require __DIR__.'/../../global-requirements.php';
-
-// ----- Requirements ----- //
-require _from_top_folder().'/classes/api/quickpay/Quickpay.php';
+require_once __DIR__.'/global-requirements.php';
 
 // ----- Namespace ----- //
-// use vezit\classes\api\quickpay;
+use vezit\classes\api as Api;
 
 
 $request_body = file_get_contents("php://input");
-$privateKey = file_get_contents('../../../secret/quickpay_privatkey');
+$privateKey = file_get_contents(_from_top_folder().'/../secret/quickpay_privatkey');
 
-$quickpay = new Quickpay();
+// file_put_contents('callback_success.json', $request_body);
 
-var_dump($quickpay);
+
+
+// $quickpay = new Quickpay();
+
+$api = new Api\Api();
+
+$result = $api->quickpay->get_callback($request_body, $privateKey);
+
+file_put_contents('callback_success.json', $result);
 
 
 

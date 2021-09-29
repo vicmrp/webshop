@@ -1,6 +1,10 @@
 <?php
 namespace vezit\classes\session;
 
+require_once __DIR__.'/../../global-requirements.php';
+
+use vezit\classes\session\quickpay as Quickpay;
+
 class Session implements \JsonSerializable {
   private $session_id;
   // -- subclasses -- //
@@ -15,6 +19,8 @@ class Session implements \JsonSerializable {
     $this->customer = $customer;
     $this->shipment = $shipment;
     $this->order = $order;
+
+    $this->quickpay = new Quickpay\Quickpay();
   }
 
   public function set_session_id($session_id)
@@ -26,7 +32,6 @@ class Session implements \JsonSerializable {
   {
     return $this->session_id;
   }
-
 
   public function set_customer($customer)
   {
