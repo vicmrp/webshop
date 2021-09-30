@@ -1,18 +1,32 @@
 <?php
 namespace vezit\classes\session\customer;
 
+
+
+require_once __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_folder().'/
+
+
+use vezit\classes\session\customer\address as Address;
+use vezit\classes\session\customer\contact as Contact;
+use vezit\classes\session\customer\company as Company;
+
+
 class Customer implements \JsonSerializable {
-  private $fullname;
-  private $contact;
+
+
+  // -- subclasses -- //
   private $address;
+  private $contact;
   private $company;
+  // -- subclasses -- //
 
+  // public function __construct($fullname, $contact, $address, $company) {
+  public function __construct() {
 
-  public function __construct($fullname, $contact, $address, $company) {
-    $this->fullname = $fullname;
-    $this->contact = $contact;
-    $this->address = $address;
-    $this->company = $company;
+    $this->address = new Address\Address();
+    $this->contact = new Contact\Contact();
+    $this->company = new Company\Company();
+
   }
 
   public function set_fullname($fullname)

@@ -1,15 +1,13 @@
 <?php
-namespace vezit\classes\session\order\order_status;
+namespace vezit\classes\session\order\order_status\payment;
 
 class Payment implements \JsonSerializable {
   private $accepted;
   private $currency;
   private $amount;
 
-  public function __construct($accepted, $currency, $amount) {
-    $this->accepted = $accepted;
-    $this->currency = $currency;
-    $this->amount = $amount;
+  public function __construct() {
+
   }
 
   // Includes private properties in json_encode()

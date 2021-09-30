@@ -1,14 +1,13 @@
 <?php
-namespace vezit\classes\session\customer;
+namespace vezit\classes\session\customer\company;
 
 class Company implements \JsonSerializable {
 
   private $cvr_number;
   private $company_name;
 
-  public function __construct($cvr_number, $company_name) {
-    $this->cvr_number = $cvr_number;
-    $this->company_name = $company_name;
+  public function __construct() {
+
   }
 
   public function set_cvr_number($cvr_number)

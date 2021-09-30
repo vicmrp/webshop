@@ -4,17 +4,19 @@ require_once __DIR__.'/../../global-requirements.php'; // _from_top_folder().
 
 
 
-use vezit\classes\session\customer as Customer;
-use vezit\classes\session\shipment as Shipment;
-use vezit\classes\session\order as Order;
-use vezit\classes\session\order\order_status as Order_Status;
+// use vezit\classes\session\customer as Customer;
+// use vezit\classes\session\shipment as Shipment;
+// use vezit\classes\session\order as Order;
+// use vezit\classes\session\order\order_status as Order_Status;
 use vezit\classes\session as Session;
 
 
 session_start();
 
 $session = null;
-$test = new Session\Session(null, null, null, null);
+$test = new Session\Session();
+echo json_encode($test, JSON_PRETTY_PRINT);
+
 // Skal forstille at du har puttet ting i din kurv
 
 // // Basket

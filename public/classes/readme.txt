@@ -4,3 +4,7 @@ mappe struktur som afspejler dette.
 
 
 Det vil atsa sige at en klasse har altid sin egen mappe
+
+
+Session.php
+session objektet repræsentere alt den data som vedrøre kundens session fra start til slut (salg)

@@ -1,13 +1,20 @@
 <?php
-namespace vezit\classes\session\customer;
+namespace vezit\classes\session\customer\contact;
+
+
+
+require_once __DIR__.'/../../../../global-requirements.php'; // __DIR__._from_top_folder().'/
+
+
+
+
 
 class Contact implements \JsonSerializable {
   private $phone;
   private $email;
 
-  public function __construct($phone, $email) {
-    $this->phone = $phone;
-    $this->email = $email;
+  public function __construct() {
+
   }
 
   public function set_phone($phone)

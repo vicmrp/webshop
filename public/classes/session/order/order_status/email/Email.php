@@ -1,13 +1,13 @@
 <?php
-namespace vezit\classes\session\order\order_status;
+namespace vezit\classes\session\order\order_status\email;
+
 
 class Email implements \JsonSerializable {
   private $confirmation_sent;
   private $invoice_sent;
 
-  public function __construct($confirmation_sent, $invoice_sent) {
-    $this->confirmation_sent = $confirmation_sent;
-    $this->invoice_sent = $invoice_sent;
+  public function __construct() {
+
   }
 
   public function set_confirmation_sent($confirmation_sent)

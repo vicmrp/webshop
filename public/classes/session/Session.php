@@ -3,24 +3,29 @@ namespace vezit\classes\session;
 
 require_once __DIR__.'/../../global-requirements.php';
 
-use vezit\classes\session\quickpay as Quickpay;
+use vezit\classes\session\customer as Customer;
+use vezit\classes\session\order as Order;
+use vezit\classes\session\shipment as Shipment;
 
 class Session implements \JsonSerializable {
+
+  
   private $session_id;
   // -- subclasses -- //
   public $customer;
-  public $shipment;
   public $order;
-  public $quickpay;
+  public $shipment;
   // -- subclasses -- //
 
-  public function __construct($session_id, $customer, $shipment, $order) {
-    $this->session_id = $session_id;
-    $this->customer = $customer;
-    $this->shipment = $shipment;
-    $this->order = $order;
+  public function __construct() {
+  
 
-    $this->quickpay = new Quickpay\Quickpay();
+
+    // -- subclasses -- //
+    $this->customer = new Customer\Customer();
+    $this->order = new Order\Order();
+    $this->shipment = new Shipment\Shipment();
+    // -- subclasses -- //
   }
 
   public function set_session_id($session_id)

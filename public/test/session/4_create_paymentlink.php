@@ -3,7 +3,7 @@
 require __DIR__.'/../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
 // Namespaces
-use vezit\classes\session\quickpay as Quickpay;
+
 
 session_start();
 

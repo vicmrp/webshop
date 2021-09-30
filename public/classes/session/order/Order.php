@@ -1,5 +1,10 @@
 <?php
 namespace vezit\classes\session\order;
+require_once __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_folder().'/
+
+use vezit\classes\session\order\order_item as Order_Item;
+use vezit\classes\session\order\order_status as Order_Status;
+
 
 class Order implements \JsonSerializable {
 
@@ -7,10 +12,9 @@ class Order implements \JsonSerializable {
   private $order_status;
   private $order_item;
   
-  public function __construct($order_id, $order_status, $order_item) {
-    $this->order_id = $order_id;
-    $this->order_status = $order_status;
-    $this->order_item = $order_item;
+  public function __construct() {
+    $this->order_item =  new Order_Item\Order_Item();
+    $this->order_status = new Order_Status\Order_Status();
   }
 
   public function set_order_id($order_id)

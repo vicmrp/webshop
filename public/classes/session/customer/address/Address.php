@@ -1,5 +1,5 @@
 <?php
-namespace vezit\classes\session\customer;
+namespace vezit\classes\session\customer\address;
 
 class Address implements \JsonSerializable {
 
@@ -8,11 +8,8 @@ class Address implements \JsonSerializable {
   private $postal_code;
   private $city;
 
-  public function __construct($street_name, $street_number, $postal_code, $city) {
-    $this->street_name = $street_name;
-    $this->street_number = $street_number;
-    $this->postal_code = $postal_code;
-    $this->city = $city;
+  public function __construct() {
+
   }
 
   public function set_street_name($street_name)
