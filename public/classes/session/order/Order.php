@@ -9,11 +9,11 @@ use vezit\classes\session\order\order_status as Order_Status;
 class Order implements \JsonSerializable {
 
   private $order_id;
-  private $order_status;
-  private $order_item;
+  public $order_status;
+  private $order_item = array();
   
   public function __construct() {
-    $this->order_item =  new Order_Item\Order_Item();
+    // $this->order_item = array(); // new Order_Item\Order_Item();
     $this->order_status = new Order_Status\Order_Status();
   }
 
@@ -37,9 +37,10 @@ class Order implements \JsonSerializable {
     return $this->order_status;
   }
 
-  public function set_order_item($order_item)
+  public function set_order_item(object $order_item)
   {
-    $this->order_item = $order_item;
+    // skubber et objekt ind i arrayen af typen Order_Item
+    array_push($this->order_item, $order_item);
   }
 
   public function get_order_item()

@@ -18,8 +18,7 @@ class Shipment implements \JsonSerializable {
   // Includes private properties in json_encode()
   public function jsonSerialize()
   {
-      $vars = get_object_vars($this);
-
-      return $vars;
+    $vars = get_object_vars($this);
+    return $vars;
   }
 }

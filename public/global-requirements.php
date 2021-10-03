@@ -15,3 +15,5 @@ require_once _from_top_folder().'/classes/session/order/order_status/Order_Statu
 require_once _from_top_folder().'/classes/session/order/order_status/payment/Payment.php';
 require_once _from_top_folder().'/classes/session/Session.php';
 require_once _from_top_folder().'/classes/api/quickpay/Quickpay.php';
+require_once _from_top_folder().'/classes/api/postnord/Postnord.php';
+require_once _from_top_folder().'/classes/api/dawa/Dawa.php';

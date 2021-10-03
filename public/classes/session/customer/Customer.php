@@ -13,11 +13,11 @@ use vezit\classes\session\customer\company as Company;
 
 class Customer implements \JsonSerializable {
 
-
+  private $fullname;  
   // -- subclasses -- //
-  private $address;
-  private $contact;
-  private $company;
+  public $address;
+  public $contact;
+  public $company;
   // -- subclasses -- //
 
   // public function __construct($fullname, $contact, $address, $company) {

@@ -20,7 +20,7 @@ class Session implements \JsonSerializable {
   public function __construct() {
   
 
-
+    $this->session_id = rand(1000000,9999999);
     // -- subclasses -- //
     $this->customer = new Customer\Customer();
     $this->order = new Order\Order();

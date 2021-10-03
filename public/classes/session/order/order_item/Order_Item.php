@@ -10,8 +10,13 @@ class Order_Item implements \JsonSerializable {
   private $price;
   private $quantity;
 
-  public function __construct() {
+  public function __construct($product_name, $product_id, $price, $quantity) {
+    $this->product_name = $product_name;
+    $this->product_id = $product_id;
+    $this->price = $price;
+    $this->quantity = $quantity;
   }
+
 
   public function set_product_name($product_name)
   {

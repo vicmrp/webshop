@@ -1,26 +1,43 @@
 <?php
 // ----- global ----- //
-require __DIR__.'/../../global-requirements.php'; // _from_top_folder().'/
+require_once __DIR__.'/../../global-requirements.php'; // _from_top_folder().'/
 
-
-use vezit\classes\session\customer as Customer;
-use vezit\classes\session\shipment as Shipment;
-use vezit\classes\session\order as Order;
-use vezit\classes\session\order\order_status as Order_Status;
+// use vezit\classes\session as Session;
 
 session_start();
-
 $session = $_SESSION["session"];
 
 
 
-// Customer
-$c_address = new Customer\Address("Vinkelvej", "12d 3tv", "2800", "KGS. Lyngby");
-$c_contact = new Customer\Contact("26129604", "victor.reipur@gmail.com");
-$c_company = new Customer\Company('10007933', 'SGUPS v/Steen Gede');
-$c_customer = new Customer\Customer("Victor Reipur", $c_contact, $c_address, $c_company);
+// Forstil dig at du udfylder kontakt og leverings informationer
 
-$session->set_customer($c_customer);
+// Customer
+$fullname = "Victor Reipur";
+// Contact
+$phone = "26129604";
+$email = "Victor.reipur@gmail.com";
+// Address
+$street_name = "Vinkelvej";
+$street_number = "12d 3tv";
+$postal_code = "2800";
+$city = "KGS. LYNGBY";
+// Company
+$cvr_number = "10007933";
+$company_name = "SGUPS v/Steen Gede";
+
+// Contact
+$session->customer->set_fullname($fullname);
+$session->customer->contact->set_phone($phone);
+$session->customer->contact->set_email($email);
+$session->customer->address->set_street_name($street_name);
+$session->customer->address->set_street_number($street_number);
+$session->customer->address->set_postal_code($postal_code);
+$session->customer->address->set_city($city);
+$session->customer->company->set_cvr_number($cvr_number);
+$session->customer->company->set_company_name($company_name);
 
 echo json_encode($session, JSON_PRETTY_PRINT) . PHP_EOL;
 
+
+// Vi gar nu videre til valg af leveringslokation. Her skal du bruge API op imod postnord
+$_SESSION["session"] = $session;
