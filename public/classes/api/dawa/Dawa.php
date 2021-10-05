@@ -13,7 +13,7 @@ class Dawa {
     //
     // Dokumentation
     // https://dawadocs.dataforsyningen.dk/dok/guide/datavask
-    public static function get_sanitized_address(string $street_name_and_house_number, string $postal_code)
+    public static function call_get_sanitized_address(string $street_name_and_house_number, string $postal_code)
     {
         // $betegnelse = urlencode("$street_name_and_house_number" . ", " . "$postal_code");
         $betegnelse = urlencode("$street_name_and_house_number, $postal_code");

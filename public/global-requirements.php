@@ -10,7 +10,7 @@
 // $g_my_global_var = 'Hello from global';
 $g_postnord_apikey = file_get_contents(__DIR__.'/../secret/postnord_apikey');
 $g_quickpay_apikey = file_get_contents(__DIR__.'/../secret/quickpay_apikey');
-$g_quickpay_privatekey = file_get_contents(__DIR__.'/../secret/quickpay_apikey');
+$g_quickpay_privatekey = file_get_contents(__DIR__.'/../secret/quickpay_privatekey');
 
 require_once 'library.php';
 

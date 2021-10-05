@@ -17,8 +17,7 @@ $fullname = "Victor Reipur";
 $phone = "26129604";
 $email = "Victor.reipur@gmail.com";
 // Address
-$street_name = "Vinkelvej";
-$street_number = "12d 3tv";
+$street = "Vinkelvej 12d, 3tv";
 $postal_code = "2800";
 $city = "KGS. LYNGBY";
 // Company
@@ -29,8 +28,7 @@ $company_name = "SGUPS v/Steen Gede";
 $session->customer->set_fullname($fullname);
 $session->customer->contact->set_phone($phone);
 $session->customer->contact->set_email($email);
-$session->customer->address->set_street_name($street_name);
-$session->customer->address->set_street_number($street_number);
+$session->customer->address->set_street($street);
 $session->customer->address->set_postal_code($postal_code);
 $session->customer->address->set_city($city);
 $session->customer->company->set_cvr_number($cvr_number);

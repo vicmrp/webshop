@@ -8,7 +8,7 @@ class Postnord {
   // --- Hent service points --- //
   // Documentation 
   // https://guides.developer.postnord.com/
-  public static function get_servicepoints(object $sanitized_address, int $max_return_of_service_points = 10) {
+  public static function call_get_servicepoints(object $sanitized_address, int $max_return_of_service_points = 10) {
     
     // paramentre
     $country_code             = 'DK';
