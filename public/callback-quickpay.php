@@ -25,4 +25,6 @@ file_put_contents($file_name, json_encode($quickpay->get_payment(), JSON_PRETTY_
 $session = file_get_contents(_from_top_folder()."/temp/$order_id.json");
 
 file_put_contents('session-' . $order_id . '.json', $session);
+
+
 ?>
