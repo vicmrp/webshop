@@ -9,7 +9,7 @@ use vezit\classes\session\order\order_status as Order_Status;
 class Order implements \JsonSerializable {
 
   private $order_id;
-  public $order_status;
+  private $order_status;
   private $order_item = array();
   
   public function __construct() {

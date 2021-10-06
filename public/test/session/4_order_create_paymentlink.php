@@ -23,11 +23,13 @@ $quickpay = new Quickpay\Quickpay;
 
 $quickpay->call_set_payment($order_id);
 $quickpay->call_get_paymentlink($order_id , 21300);
+$session->order->order_status
 
 // Gem session i database / json fil
 file_put_contents(_from_top_folder()."/temp/$order_id.json", json_encode($session, JSON_PRETTY_PRINT));
 
 // echo payment link til brugeren
+
 echo $quickpay->get_paymentlink()->url . PHP_EOL;
 
 // Afslut Sessionen og afvent callback pa om brugeren har betalt eller ej callback-quickpay.json

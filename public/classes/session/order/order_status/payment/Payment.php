@@ -2,7 +2,7 @@
 namespace vezit\classes\session\order\order_status\payment;
 
 class Payment implements \JsonSerializable {
-  private $accepted;
+  private $accepted = false;
   private $currency;
   private $amount;
 
