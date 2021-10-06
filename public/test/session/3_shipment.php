@@ -18,17 +18,18 @@ $sanitized_address = Dawa\Dawa::call_get_sanitized_address($session->customer->a
 // SERVER Fa service points retur
 $service_points = Postnord\Postnord::call_get_servicepoints($sanitized_address);
 // var_dump($service_points->servicePointInformationResponse);
-// exit;
+
 // KLIENT Vælg leveringslokation addresse
-$street_name = $service_points->servicePointInformationResponse->servicePoints[0]->visitingAddress->streetName;
-$street_number = $service_points->servicePointInformationResponse->servicePoints[0]->visitingAddress->streetNumber;
-$postal_code = $service_points->servicePointInformationResponse->servicePoints[0]->visitingAddress->postalCode;
-$city = $service_points->servicePointInformationResponse->servicePoints[0]->visitingAddress->city;
+$street_name = $service_points->servicePointInformationResponse->servicePoints[3]->visitingAddress->streetName;
+$street_number = $service_points->servicePointInformationResponse->servicePoints[3]->visitingAddress->streetNumber;
+$postal_code = $service_points->servicePointInformationResponse->servicePoints[3]->visitingAddress->postalCode;
+$city = $service_points->servicePointInformationResponse->servicePoints[3]->visitingAddress->city;
 
-// // Shipment
-$s_address = new Shipment\Address('Jernbanepladsen', '49', '2800', 'KGS. LYNGBY');
-$s_shipment = new Shipment\Shipment(null, false, $s_address);
 
-$session->set_shipment($s_shipment);
+$session->shipment->address->set_street_name($street_name);
+$session->shipment->address->set_street_number($street_number);
+$session->shipment->address->set_postal_code($postal_code);
+$session->shipment->address->set_city($city);
+
 
 echo json_encode($session, JSON_PRETTY_PRINT) . PHP_EOL;

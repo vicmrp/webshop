@@ -12,7 +12,7 @@ class Shipment implements \JsonSerializable {
   public $address;
 
   public function __construct() {
-    $this->address = new Address\Address(null, null, null, null);
+    $this->address = new Address\Address();
   }
 
 

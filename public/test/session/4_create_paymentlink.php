@@ -3,38 +3,31 @@
 require __DIR__.'/../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
 // Namespaces
-
+use vezit\classes\api\quickpay as Quickpay;
 
 session_start();
 
-// echo $_SESSION["session"]->get_session_id();
 $session = $_SESSION["session"];
-
+$order_id = $session->order->get_order_id();
 
 
 // instansiere quickpay til session
-$apikey = file_get_contents('../../../secret/quickpay_apikey');
-$order_id = strval(rand(1000000,9999999));
-$quickpay = new Quickpay\Quickpay($apikey, $order_id);
-$session->set_quickpay($quickpay);
+$quickpay = new Quickpay\Quickpay;
+// if ($quickpay->get_payment())
+// echo var_dump($quickpay->get_payment());
 
+// Hvis der allerede er oprettet en payment session sa 
+// if ($quickpay->get_payment() === NULL) {
+// Sørg for at tjække om der i forvejen er instantieret en payment session
+// };
 
-// Create a new payment
-$session->quickpay->set_payment();
-// echo json_encode($quickpay->get_payment(), JSON_PRETTY_PRINT) . PHP_EOL;
+$quickpay->call_set_payment($order_id);
+$quickpay->call_get_paymentlink($order_id , 21300);
 
+// Gem session i database / json fil
+file_put_contents(_from_top_folder()."/temp/$order_id.json", json_encode($session, JSON_PRETTY_PRINT));
 
-// Authorize payment using a link
-$price = 11900; // 119 kr
-$session->quickpay->set_paymentlink($price);
-echo $session->quickpay->get_paymentlink() . PHP_EOL;
+// echo payment link til brugeren
+echo $quickpay->get_paymentlink()->url . PHP_EOL;
 
-
-// Check payment status
-$session->quickpay->set_paymentstatus();
-// echo json_encode($quickpay->get_paymentstatus(), JSON_PRETTY_PRINT) . PHP_EOL;
-
-// Betal checkout
-$_SESSION["session"] = $session;
-
-// Nar du har betalt modtager du en ordrebekræftelse pa mail
+// Afslut Sessionen og afvent callback pa om brugeren har betalt eller ej callback-quickpay.json

@@ -10,7 +10,7 @@ use vezit\classes\session\shipment as Shipment;
 class Session implements \JsonSerializable {
 
   
-  private $session_id;
+  // private $session_id;
   // -- subclasses -- //
   public $customer;
   public $order;
@@ -20,7 +20,7 @@ class Session implements \JsonSerializable {
   public function __construct() {
   
 
-    $this->session_id = rand(1000000,9999999);
+    // $this->session_id = rand(1000000,9999999);
     // -- subclasses -- //
     $this->customer = new Customer\Customer();
     $this->order = new Order\Order();
