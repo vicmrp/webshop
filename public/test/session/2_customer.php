@@ -34,7 +34,7 @@ $session->customer->address->set_city($city);
 $session->customer->company->set_cvr_number($cvr_number);
 $session->customer->company->set_company_name($company_name);
 
-echo json_encode($session, JSON_PRETTY_PRINT) . PHP_EOL;
+echo "<pre>" . json_encode($session, JSON_PRETTY_PRINT) . "</pre>";
 
 
 // Vi gar nu videre til valg af leveringslokation. Her skal du bruge API op imod postnord

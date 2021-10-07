@@ -8,7 +8,7 @@ use vezit\classes\session\shipment\address as Address;
 
 class Shipment implements \JsonSerializable {
   private $tracking_number;
-  private $order_collected;
+  private $order_collected = false;
   public $address;
 
   public function __construct() {

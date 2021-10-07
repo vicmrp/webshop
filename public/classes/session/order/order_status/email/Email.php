@@ -3,8 +3,8 @@ namespace vezit\classes\session\order\order_status\email;
 
 
 class Email implements \JsonSerializable {
-  private $confirmation_sent;
-  private $invoice_sent;
+  private $confirmation_sent = false;
+  private $invoice_sent = false;
 
   public function __construct() {
 

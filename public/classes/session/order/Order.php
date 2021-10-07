@@ -4,12 +4,12 @@ require_once __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_f
 
 use vezit\classes\session\order\order_item as Order_Item;
 use vezit\classes\session\order\order_status as Order_Status;
-
+// use vezit\classes\session\order\order_status\payment as Payment;
 
 class Order implements \JsonSerializable {
 
   private $order_id;
-  private $order_status;
+  public  $order_status;
   private $order_item = array();
   
   public function __construct() {
@@ -42,6 +42,15 @@ class Order implements \JsonSerializable {
   {
     // skubber et objekt ind i arrayen af typen Order_Item
     array_push($this->order_item, $order_item);
+
+    // Opdater amount fæltet    
+    $amount = 0;
+    foreach ($this->order_item as $order_item) {
+        $price = $order_item->get_price();
+        $quantity = $order_item->get_quantity();
+        $amount = $amount + $price * $quantity;
+    }
+    $this->order_status->payment->set_amount($amount);
   }
 
   public function get_order_item()
@@ -52,8 +61,7 @@ class Order implements \JsonSerializable {
   // Includes private properties in json_encode()
   public function jsonSerialize()
   {
-      $vars = get_object_vars($this);
-
-      return $vars;
+    $vars = get_object_vars($this);
+    return $vars;
   }
 }

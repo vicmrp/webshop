@@ -8,8 +8,8 @@ use vezit\classes\session\order\order_status\email as Email;
 
 class Order_Status implements \JsonSerializable {
 
-  private $payment;
-  private $email;
+  public $payment;
+  public $email;
 
   public function __construct() {
     $this->email = new Email\Email();

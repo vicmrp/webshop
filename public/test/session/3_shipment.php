@@ -32,4 +32,4 @@ $session->shipment->address->set_postal_code($postal_code);
 $session->shipment->address->set_city($city);
 
 
-echo json_encode($session, JSON_PRETTY_PRINT) . PHP_EOL;
+echo "<pre>" . json_encode($session, JSON_PRETTY_PRINT) . "</pre>";
