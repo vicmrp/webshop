@@ -15,7 +15,7 @@ $g_quickpay_privatekey = file_get_contents(__DIR__.'/../secret/quickpay_privatek
 require_once 'library.php';
 
 
-// ----- namespaces ----- //
+// ----- namespaces - inkludere alle klasserne ----- //
 require_once _from_top_folder().'/classes/session/customer/address/Address.php';
 require_once _from_top_folder().'/classes/session/customer/company/Company.php';
 require_once _from_top_folder().'/classes/session/customer/contact/Contact.php';
