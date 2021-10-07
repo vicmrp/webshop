@@ -1,1 +1,3 @@
 secret/*
+public/composer/vendor/*
+public/temp/*.json

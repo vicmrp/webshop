@@ -16,15 +16,22 @@ if (! ($quickpay->get_payment()->accepted)) {exit(1);}; // exit hvis betalingen 
 
 $order_id = $quickpay->get_payment()->order_id;
 
-// Find betalingssessionen
-$file_name = 'callback-' . $order_id . '.json';
-file_put_contents($file_name, json_encode($quickpay->get_payment(), JSON_PRETTY_PRINT));
+// Hent betalingssessionen baseret p ordre id
+
 // Nar du har betalt modtager du en ordrebekræftelse pa mail
 
 // Hent session 
-$session = file_get_contents(_from_top_folder()."/temp/$order_id.json");
+// Hent betalingssessionen baseret p ordre id
+$session = json_decode(file_get_contents(_from_top_folder()."/temp/$order_id-session.json"));
 
-file_put_contents('session-' . $order_id . '.json', $session);
+// hvis betalingen er true sa set den til true i session databasen og forsæt
+if (!($quickpay->get_payment()->accepted)) {exit(1);};
 
+$session->order->order_status->payment->amount = true;
+
+file_put_contents(_from_top_folder()."/temp/$order_id-session.json", json_encode($session, JSON_PRETTY_PRINT));
+file_put_contents(_from_top_folder()."/temp/$order_id-callback.json", json_encode($quickpay->get_payment(), JSON_PRETTY_PRINT));
+
+// udsend ordre bekræftelse
 
 ?>
