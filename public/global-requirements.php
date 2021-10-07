@@ -11,6 +11,7 @@
 $g_postnord_apikey = file_get_contents(__DIR__.'/../secret/postnord_apikey');
 $g_quickpay_apikey = file_get_contents(__DIR__.'/../secret/quickpay_apikey');
 $g_quickpay_privatekey = file_get_contents(__DIR__.'/../secret/quickpay_privatekey');
+$g_smtp_mail_credential = json_decode(file_get_contents(__DIR__.'/../secret/smtp_mail_credential.json'));
 
 require_once 'library.php';
 
@@ -31,3 +32,5 @@ require_once _from_top_folder().'/classes/session/Session.php';
 require_once _from_top_folder().'/classes/api/quickpay/Quickpay.php';
 require_once _from_top_folder().'/classes/api/postnord/Postnord.php';
 require_once _from_top_folder().'/classes/api/dawa/Dawa.php';
+require_once _from_top_folder().'/classes/mail/Mail.php';
+
