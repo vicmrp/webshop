@@ -4,6 +4,7 @@ require_once __DIR__.'/global-requirements.php';
 
 // ----- Namespace ----- //
 use vezit\classes\api\quickpay as Quickpay;
+use vezit\classes\mail as Mail;
 
 $quickpay = new Quickpay\Quickpay;
 $request_body = file_get_contents("php://input");
@@ -33,5 +34,12 @@ file_put_contents(_from_top_folder()."/temp/$order_id-session.json", json_encode
 file_put_contents(_from_top_folder()."/temp/$order_id-callback.json", json_encode($quickpay->get_payment(), JSON_PRETTY_PRINT));
 
 // udsend ordre bekræftelse
-
+  // ----- Eksempel ----- //
+  $session_json = json_encode($session, JSON_PRETTY_PRINT);
+  (array)$recipients = array(array("victor.reipur@gmail.com", "Victor Reipur"));
+  (string)$subject = "Bekræftelse på ordre er nr. $order_id";
+  (string)$body = "<h1>Hello World</h1><pre>$session_json</pre>";
+  (array)$setFrom = array('dev.victor.reipur@gmail.com', 'Steengede.com');
+  Mail\Mail::send_mail($recipients, $subject, $body, null, $setFrom);
+  // ----- Eksempel ----- //
 ?>
