@@ -1,0 +1,15 @@
+{
+    "fullName": "Victor Reipur",
+    "phone": "26129604",
+    "email": "victor.reipur@gmail.com",
+    "customerAddress": {
+        "streetNameAndStreetNumber": "Vinkelvej 12d 3tv",
+        "postalCode": "2800",
+        "city": ""
+    },
+    "deliveryAddress" : null,
+    "company": {
+        "cvrNumber": "",
+        "companyName": ""
+    }
+}
