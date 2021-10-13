@@ -28,7 +28,7 @@ $session = json_decode(file_get_contents(_from_top_folder()."/temp/$order_id-ses
 // hvis betalingen er true sa set den til true i session databasen og forsæt
 if (!($quickpay->get_payment()->accepted)) {exit(1);};
 
-$session->order->order_status->payment->amount = true;
+$session->order->order_status->payment->accepted = true;
 
 file_put_contents(_from_top_folder()."/temp/$order_id-session.json", json_encode($session, JSON_PRETTY_PRINT));
 file_put_contents(_from_top_folder()."/temp/$order_id-callback.json", json_encode($quickpay->get_payment(), JSON_PRETTY_PRINT));

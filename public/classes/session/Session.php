@@ -3,11 +3,14 @@ namespace vezit\classes\session;
 
 require_once __DIR__.'/../../global-requirements.php';
 
+use vezit\classes\mysql as Mysql;
 use vezit\classes\session\customer as Customer;
 use vezit\classes\session\order as Order;
 use vezit\classes\session\shipment as Shipment;
 
-class Session implements \JsonSerializable {
+// For hver session oprettes oprettes der en entry i db
+
+class Session extends Mysql\Mysql implements \JsonSerializable {
 
   
   // private $session_id;
@@ -26,6 +29,14 @@ class Session implements \JsonSerializable {
     $this->order = new Order\Order();
     $this->shipment = new Shipment\Shipment();
     // -- subclasses -- //
+
+    // -- sql -- //
+    $this->mysqli = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
+    if ($this->mysqli->connect_error) {
+      // Check connection
+      die("Connection failed: " . $this->mysqli->connect_error);
+    }
+    // -- sql -- //
   }
 
   public function set_session_id($session_id)
@@ -58,6 +69,8 @@ class Session implements \JsonSerializable {
     $this->quickpay = $quickpay;
   }
 
+
+
   // Includes private properties in json_encode()
   public function jsonSerialize()
   {
@@ -65,3 +78,5 @@ class Session implements \JsonSerializable {
     return $vars;
   }
 }
+
+

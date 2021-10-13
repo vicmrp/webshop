@@ -15,7 +15,7 @@ $session = $_SESSION["session"];
 $fullname = "Victor Reipur";
 // Contact
 $phone = "26129604";
-$email = "Victor.reipur@gmail.com";
+$email = "victor.reipur@gmail.com";
 // Address
 $street = "Vinkelvej 12d, 3tv";
 $postal_code = "2800";

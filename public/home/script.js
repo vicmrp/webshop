@@ -1,1 +1,3 @@
-console.log('Hello World from home.js')
+let x = 'Hello World from homes.js'
+
+console.log(x)
