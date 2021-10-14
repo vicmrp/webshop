@@ -2,9 +2,12 @@
 // ----- global ----- //
 require_once __DIR__.'/../../global-requirements.php'; // _from_top_folder().'/
 
-// use vezit\classes\session as Session;
+// Starter sessionen
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();  
+}
 
-session_start();
+
 $session = $_SESSION["session"];
 
 

@@ -2,10 +2,13 @@
 // ----- global ----- //
 require __DIR__.'/../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
+// Starter sessionen
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();  
+}
+
 // Namespaces
 use vezit\classes\api\quickpay as Quickpay;
-
-session_start();
 
 $session = $_SESSION["session"];
 $order_id = $session->order->get_order_id();

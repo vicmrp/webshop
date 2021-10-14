@@ -2,13 +2,17 @@
 // ----- global ----- //
 require_once __DIR__.'/../../global-requirements.php'; // _from_top_folder().'/
 
+// Starter sessionen
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();  
+}
+
 
 use vezit\classes\session\shipment as Shipment;
 use vezit\classes\session\shipment\address as Address;
 use vezit\classes\api\dawa as Dawa;
 use vezit\classes\api\postnord as Postnord;
 
-session_start();
 
 $session = $_SESSION["session"];
 

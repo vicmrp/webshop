@@ -1,34 +1,13 @@
 <?php
 
-require_once __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 
-use vezit\classes\mysql as Mysql;
+use vezit\classes\db_conn as Db_Conn;
 use vezit\classes\session\customer as Customer;
 use vezit\classes\session\order as Order;
 use vezit\classes\session\shipment as Shipment;
 
-// class Mysql {
-//   protected $servername = "localhost";
-//   protected $username   = "user";
-//   protected $password   = "ovXWUUUnmZYNXZTA";
-//   protected $dbname     = "user_steengede_com";
-//   protected $mysqli;
-
-//   // Create connection
-//   public function __construct() {    
-//     $this->mysqli = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-//     if ($this->mysqli->connect_error) {
-//       // Check connection
-//       die("Connection failed: " . $this->mysqli->connect_error);
-//     }
-//   }
-//   public function myFunc1()
-//   {
-//     return $this->dbname;
-//   }
-// }
-
-class MyClass extends Mysql\Mysql implements \JsonSerializable
+class MyClass extends Db_Conn\Db_Conn implements \JsonSerializable
 {
   public function myFunc2()
   {
@@ -42,8 +21,8 @@ class MyClass extends Mysql\Mysql implements \JsonSerializable
   }
 }
 
-$mysql = new Mysql\Mysql();
-echo $mysql->test();
+// $mysql = new Db_Conn\Db_Conn();
+// echo $mysql->test();
 
 
 $myClass = new MyClass();

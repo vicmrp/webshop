@@ -1,18 +1,18 @@
 <?php
 namespace vezit\classes\session;
 
-require_once __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 
-use vezit\classes\mysql as Mysql;
+
+use vezit\classes\db_conn as Db_Conn;
 use vezit\classes\session\customer as Customer;
 use vezit\classes\session\order as Order;
 use vezit\classes\session\shipment as Shipment;
 
 // For hver session oprettes oprettes der en entry i db
 
-class Session extends Mysql\Mysql implements \JsonSerializable {
+class Session extends Db_Conn\Db_Conn implements \JsonSerializable {
 
-  
   // private $session_id;
   // -- subclasses -- //
   public $customer;
@@ -22,7 +22,6 @@ class Session extends Mysql\Mysql implements \JsonSerializable {
 
   public function __construct() {
   
-
     // $this->session_id = rand(1000000,9999999);
     // -- subclasses -- //
     $this->customer = new Customer\Customer();
@@ -31,10 +30,10 @@ class Session extends Mysql\Mysql implements \JsonSerializable {
     // -- subclasses -- //
 
     // -- sql -- //
-    $this->mysqli = new mysqli($this->servername, $this->username, $this->password, $this->dbname);
-    if ($this->mysqli->connect_error) {
-      // Check connection
-      die("Connection failed: " . $this->mysqli->connect_error);
+    global $g_db_conn;
+    $this->db_conn = new \mysqli($g_db_conn->servername, $g_db_conn->username, $g_db_conn->password, $g_db_conn->dbname);
+    if ($this->db_conn->connect_error) {
+      die("Connection failed: " . $this->db_conn->connect_error); // Check connection
     }
     // -- sql -- //
   }
@@ -68,15 +67,37 @@ class Session extends Mysql\Mysql implements \JsonSerializable {
   {
     $this->quickpay = $quickpay;
   }
-
-
-
+  
   // Includes private properties in json_encode()
-  public function jsonSerialize()
+  public function jsonSerialize($excluded_objects = array())
   {
-    $vars = get_object_vars($this);
-    return $vars;
+    $all_vars = get_object_vars($this);
+    $result = array();
+    foreach($all_vars as $key => $value) {
+      foreach($excluded_objects as $excluded_object) {
+        if (! ($key == $excluded_object)) {
+          $result[$key]=$value;
+        }
+        $result[$key]=$value;
+      }
+      return $result;
+
+      // for ($i=0; $i <= 0; $i++) { 
+      //   if (!($key == $exclude_objects[$i]))
+      //   {
+      //     echo $exclude_objects[$i];
+      //     var_dump($key);
+      //   }
+        
+      // }
+    }
+    // return $result;
   }
 }
 
 
+
+
+$x = new Session();
+
+var_dump($x->jsonSerialize());
