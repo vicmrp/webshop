@@ -69,35 +69,14 @@ class Session extends Db_Conn\Db_Conn implements \JsonSerializable {
   }
   
   // Includes private properties in json_encode()
-  public function jsonSerialize($excluded_objects = array())
+  public function jsonSerialize()
   {
     $all_vars = get_object_vars($this);
     $result = array();
     foreach($all_vars as $key => $value) {
-      foreach($excluded_objects as $excluded_object) {
-        if (! ($key == $excluded_object)) {
+        if (($key == "db_conn")) { break; }
           $result[$key]=$value;
-        }
-        $result[$key]=$value;
       }
       return $result;
-
-      // for ($i=0; $i <= 0; $i++) { 
-      //   if (!($key == $exclude_objects[$i]))
-      //   {
-      //     echo $exclude_objects[$i];
-      //     var_dump($key);
-      //   }
-        
-      // }
-    }
-    // return $result;
   }
 }
-
-
-
-
-$x = new Session();
-
-var_dump($x->jsonSerialize());
