@@ -1,6 +1,4 @@
 <?php
-// I make this comment for others and my future self to easier understand the code below //ddongding
-
 // php scriptet echo'er en fil struktur som g?r at du har en konsistent header og footer i pa din side
 
 
