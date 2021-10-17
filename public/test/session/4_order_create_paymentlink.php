@@ -34,6 +34,17 @@ $quickpay->call_get_paymentlink($order_id , $amount);
 // Gem session i database / json fil
 file_put_contents(_from_top_folder()."/temp/$order_id-session.json", json_encode($session, JSON_PRETTY_PRINT));
 
+// insert_into_database('')
+// get_from_database('')
+
+// session
+// get by id
+// create
+$session->create(4444);
+
+// update
+
+
 // echo payment link til brugeren
 
 echo "<pre>" . $quickpay->get_paymentlink()->url . "</pre>";
