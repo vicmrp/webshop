@@ -17,7 +17,7 @@
             "name": "Launch Edge",
             "request": "launch",
             "type": "pwa-msedge",
-            "url": "https://steengede.com/home/",
+            "url": "https://steengede.com/cart/",
             "webRoot": "${workspaceFolder}"
         }
     ]
