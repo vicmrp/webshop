@@ -65,8 +65,12 @@ let y = ` {
 }
 `;
 
+// Create Session-cart
+// Read from Session-cart
+// Update Session-cart
+// Delete Session-cart
 
-
+// sammenlign Session-cart med produktor
 
 
 
