@@ -11,7 +11,7 @@ use vezit\classes\session\shipment as Shipment;
 
 // For hver session oprettes oprettes der en entry i db
 
-class Session extends Db_Conn\Db_Conn implements \JsonSerializable, I\ISession {
+class Session extends Db_Conn\Db_Conn implements \JsonSerializable, ISession {
 
   // private $session_id;
   // -- subclasses -- //
@@ -121,18 +121,8 @@ class Session extends Db_Conn\Db_Conn implements \JsonSerializable, I\ISession {
 
   }
 
+  public function get_session_by_id($order_id) {}
+
   public function update_by_id($order_id) {}
   // ---- ISession ---- //
 }
-
-
-// $db_conn = new Db_Conn\Db_Conn();
-// $db_conn->create(1111);
-
-$session = new Session();
-// var_dump($session);
-
-
-
-
-
