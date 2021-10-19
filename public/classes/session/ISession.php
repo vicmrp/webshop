@@ -1,5 +1,5 @@
 <?php
-namespace vezit\interfaces;
+namespace vezit\classes\session;
 
 require __DIR__.'/../global-requirements.php';
 

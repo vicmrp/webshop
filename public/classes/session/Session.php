@@ -8,7 +8,6 @@ use vezit\classes\db_conn as Db_Conn;
 use vezit\classes\session\customer as Customer;
 use vezit\classes\session\order as Order;
 use vezit\classes\session\shipment as Shipment;
-use vezit\interfaces as I; 
 
 // For hver session oprettes oprettes der en entry i db
 
