@@ -2,10 +2,13 @@
 // ----- global ----- //
 require __DIR__.'/../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
+// Starter sessionen
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();  
+}
+
 // Namespaces
 use vezit\classes\api\quickpay as Quickpay;
-
-session_start();
 
 $session = $_SESSION["session"];
 $order_id = $session->order->get_order_id();
@@ -23,27 +26,24 @@ $quickpay = new Quickpay\Quickpay;
 
 // total prisen er baseret pa den akumeleret pris
 //  af indkøbskurvens indhold
-$my_array = $session->order->get_order_item();
-// var_dump($my_array); exit ;
-$total = 0;
-foreach ($my_array as $object) {
-    $price = $object->get_price();
-    $quantity = $object->get_quantity();
-
-    $total = $total + $price * $quantity;
-
-    echo "price: $price,- quantity: $quantity" . PHP_EOL;
-}
-echo "total: $total" . PHP_EOL;
-
-$amount = $total;
-
+$amount = $session->order->order_status->payment->get_amount();
+// echo $amount;
 $quickpay->call_set_payment($order_id);
 $quickpay->call_get_paymentlink($order_id , $amount);
-$session->order->order_status->payment->set_amount($amount);
 
 // Gem session i database / json fil
-file_put_contents(_from_top_folder()."/temp/$order_id.json", json_encode($session, JSON_PRETTY_PRINT));
+file_put_contents(_from_top_folder()."/temp/$order_id-session.json", json_encode($session, JSON_PRETTY_PRINT));
+
+// insert_into_database('')
+// get_from_database('')
+
+// session
+// get by id
+// create
+$session->create(4444);
+
+// update
+
 
 // echo payment link til brugeren
 

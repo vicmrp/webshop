@@ -2,9 +2,12 @@
 // ----- global ----- //
 require_once __DIR__.'/../../global-requirements.php'; // _from_top_folder().'/
 
-// use vezit\classes\session as Session;
+// Starter sessionen
+if (session_status() === PHP_SESSION_NONE) {
+  session_start();  
+}
 
-session_start();
+
 $session = $_SESSION["session"];
 
 
@@ -12,17 +15,17 @@ $session = $_SESSION["session"];
 // Forstil dig at du udfylder kontakt og leverings informationer
 
 // Customer
-$fullname = "Victor Reipur";
+$fullname = "Julian Christ";
 // Contact
-$phone = "26129604";
-$email = "Victor.reipur@gmail.com";
+$phone = "12457845";
+$email = "just-julian@hotmail.com";
 // Address
-$street = "Vinkelvej 12d, 3tv";
-$postal_code = "2800";
-$city = "KGS. LYNGBY";
+$street = "Ryethøjvej 1";
+$postal_code = "3500";
+$city = "Værløse";
 // Company
-$cvr_number = "10007933";
-$company_name = "SGUPS v/Steen Gede";
+$cvr_number = "";
+$company_name = "";
 
 // Contact
 $session->customer->set_fullname($fullname);

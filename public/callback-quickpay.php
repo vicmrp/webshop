@@ -4,6 +4,7 @@ require_once __DIR__.'/global-requirements.php';
 
 // ----- Namespace ----- //
 use vezit\classes\api\quickpay as Quickpay;
+use vezit\classes\mail as Mail;
 
 $quickpay = new Quickpay\Quickpay;
 $request_body = file_get_contents("php://input");
@@ -16,15 +17,29 @@ if (! ($quickpay->get_payment()->accepted)) {exit(1);}; // exit hvis betalingen 
 
 $order_id = $quickpay->get_payment()->order_id;
 
-// Find betalingssessionen
-$file_name = 'callback-' . $order_id . '.json';
-file_put_contents($file_name, json_encode($quickpay->get_payment(), JSON_PRETTY_PRINT));
+// Hent betalingssessionen baseret p ordre id
+
 // Nar du har betalt modtager du en ordrebekræftelse pa mail
 
 // Hent session 
-$session = file_get_contents(_from_top_folder()."/temp/$order_id.json");
+// Hent betalingssessionen baseret p ordre id
+$session = json_decode(file_get_contents(_from_top_folder()."/temp/$order_id-session.json"));
 
-file_put_contents('session-' . $order_id . '.json', $session);
+// hvis betalingen er true sa set den til true i session databasen og forsæt
+if (!($quickpay->get_payment()->accepted)) {exit(1);};
 
+$session->order->order_status->payment->accepted = true;
 
+file_put_contents(_from_top_folder()."/temp/$order_id-session.json", json_encode($session, JSON_PRETTY_PRINT));
+file_put_contents(_from_top_folder()."/temp/$order_id-callback.json", json_encode($quickpay->get_payment(), JSON_PRETTY_PRINT));
+
+// udsend ordre bekræftelse
+  // ----- Eksempel ----- //
+  $session_json = json_encode($session, JSON_PRETTY_PRINT);
+  (array)$recipients = array(array("victor.reipur@gmail.com", "Victor Reipur"));
+  (string)$subject = "Bekræftelse på ordre er nr. $order_id";
+  (string)$body = "<h1>Hello World</h1><pre>$session_json</pre>";
+  (array)$setFrom = array('dev.victor.reipur@gmail.com', 'Steengede.com');
+  Mail\Mail::send_mail($recipients, $subject, $body, null, $setFrom);
+  // ----- Eksempel ----- //
 ?>

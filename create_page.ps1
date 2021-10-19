@@ -296,8 +296,8 @@ Write-Host
 
 # Korrigere rettigheder for den nye lokale mappe
 bash -c "chown www-data:www-data -R $locationRelativToThisScript/$lLocation/$contentFolderName"
-bash -c "chmod 750 -R $locationRelativToThisScript/$lLocation/$contentFolderName"
+bash -c "chmod 770 -R $locationRelativToThisScript/$lLocation/$contentFolderName"
 
 # Overskriver rettigheder for den globale mappe
 bash -c "chown www-data:www-data -R $locationRelativToThisScript/global"
-bash -c "chmod 750 -R $locationRelativToThisScript/global"
+bash -c "chmod 770 -R $locationRelativToThisScript/global"

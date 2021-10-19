@@ -1,4 +1,5 @@
 <?php
+
 // php scriptet echo'er en fil struktur som g?r at du har en konsistent header og footer i pa din side
 
 
@@ -19,7 +20,7 @@
 // ----- foot ----- //
 
 // denne variable er navnet pa php filen.
-// $fileNameOfThisFile="home";
+// $fileNameOfThisFile="hero";
 
 // fil lokationer
 $gLocation = "../global/html";

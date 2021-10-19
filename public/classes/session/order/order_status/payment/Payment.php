@@ -10,6 +10,7 @@ class Payment implements \JsonSerializable {
 
   }
 
+
   public function set_amount($amount)
   {
     $this->amount = $amount;
