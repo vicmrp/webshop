@@ -20,7 +20,7 @@ require_once 'library.php';
 
 
 // ----- namespaces - inkludere alle klasserne ----- //
-require_once _from_top_folder().'/interfaces/ISession.php';
+require_once _from_top_folder().'/classes/session/ISession.php';
 require_once _from_top_folder().'/classes/session/Session.php';
 require_once _from_top_folder().'/classes/db_conn/Db_Conn.php';
 require_once _from_top_folder().'/classes/mail/Mail.php';
