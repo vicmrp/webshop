@@ -1,4 +1,4 @@
-function httpRequest(method, url, body, callback) {
+function callServerByHttpRequestCallback(method, url, body, callback) {
     let xhttp;
     xhttp= new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
@@ -12,12 +12,8 @@ function httpRequest(method, url, body, callback) {
     xhttp.send(body);
 }
 
-// void sletmig
-function testDebug(x) {
-    console.log(x.responseText)
-}
-
-// slet mig
-function sleepCallback(seconds, message) {
-    httpRequest("GET", `https://steengede.com/test/sleep.php?sleep=${seconds}&msg=${message}`, null, testDebug)
+async function callServerByFetchReturnObject(url, options = null) {
+    const fetchResponse = await fetch(url, options);
+    const response = await fetchResponse.text();
+    return JSON.parse(response);
 }
