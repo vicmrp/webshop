@@ -25,8 +25,3 @@ class Db_Conn {
 
 
 }
-
-
-// $db_conn = new Db_Conn();
-
-// $db_conn->create(122134);

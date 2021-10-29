@@ -11,41 +11,21 @@ if (session_status() === PHP_SESSION_NONE) {
 use vezit\classes\api\quickpay as Quickpay;
 
 $session = $_SESSION["session"];
+$session_id = $session->get_session_id();
 $order_id = $session->order->get_order_id();
-
 
 // instansiere quickpay til session
 $quickpay = new Quickpay\Quickpay;
-// if ($quickpay->get_payment())
-// echo var_dump($quickpay->get_payment());
-
-// Hvis der allerede er oprettet en payment session sa 
-// if ($quickpay->get_payment() === NULL) {
-// Sørg for at tjække om der i forvejen er instantieret en payment session
-// };
 
 // total prisen er baseret pa den akumeleret pris
 //  af indkøbskurvens indhold
-$amount = $session->order->order_status->payment->get_amount();
-// echo $amount;
+$amount = $session->order->order_status->payment->get_accumulated_amount();
 $quickpay->call_set_payment($order_id);
 $quickpay->call_get_paymentlink($order_id , $amount);
 
 // Gem session i database / json fil
-file_put_contents(_from_top_folder()."/temp/$order_id-session.json", json_encode($session, JSON_PRETTY_PRINT));
+file_put_contents(_from_top_folder()."/temp_database/session/not_accepted/$session_id.json", json_encode($session, JSON_PRETTY_PRINT));
 
-// insert_into_database('')
-// get_from_database('')
-
-// session
-// get by id
-// create
-$session->create(4444);
-
-// update
-
-
-// echo payment link til brugeren
 
 echo "<pre>" . $quickpay->get_paymentlink()->url . "</pre>";
 

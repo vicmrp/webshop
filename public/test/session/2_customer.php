@@ -15,14 +15,14 @@ $session = $_SESSION["session"];
 // Forstil dig at du udfylder kontakt og leverings informationer
 
 // Customer
-$fullname = "Julian Christ";
+$fullname = "Victor Reipur";
 // Contact
-$phone = "12457845";
-$email = "just-julian@hotmail.com";
+$phone = "26129604";
+$email = "victor.reipur@gmail.com";
 // Address
-$street = "Ryethøjvej 1";
-$postal_code = "3500";
-$city = "Værløse";
+$street = "Vinkelvej 12D 3tv";
+$postal_code = "2800";
+$city = "Lyngby";
 // Company
 $cvr_number = "";
 $company_name = "";

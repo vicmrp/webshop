@@ -13,8 +13,6 @@ class Order implements \JsonSerializable {
   private $order_item = array();
   
   public function __construct() {
-
-    $this->order_id = rand(1000000,9999999);
     $this->order_status = new Order_Status\Order_Status();
   }
 

@@ -23,3 +23,6 @@ Allow from 87.59.235.56
 
 # DTU
 Allow from 192.38.90.76
+
+# DTU telenor
+Allow from 2.131.83.204

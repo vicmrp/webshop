@@ -15,6 +15,7 @@ class Session extends Db_Conn\Db_Conn implements \JsonSerializable, ISession {
 
   // private $session_id;
   // -- subclasses -- //
+  private $session_id;
   public $customer;
   public $order;
   public $shipment;
@@ -23,12 +24,15 @@ class Session extends Db_Conn\Db_Conn implements \JsonSerializable, ISession {
 
   public function __construct() {
   
-    // $this->session_id = rand(1000000,9999999);
+    $this->session_id = rand(1000000,9999999);
     // -- subclasses -- //
     $this->customer = new Customer\Customer();
     $this->order = new Order\Order();
     $this->shipment = new Shipment\Shipment();
     // -- subclasses -- //
+
+    // Sets variables for subclasses
+    $this->order->set_order_id($this->session_id);
 
 
     // -- sql -- //
@@ -39,11 +43,6 @@ class Session extends Db_Conn\Db_Conn implements \JsonSerializable, ISession {
     }
     // -- sql -- //
     
-
-    // when session is constructed an entity should be created that reflects the session
-    $this->create(rand(1000000,9999999));
-    // $this->create(1000000);
-    $this->get_by_id(1000000);
   }
 
   public function set_session_id($session_id)

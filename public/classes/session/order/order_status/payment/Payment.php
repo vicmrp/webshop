@@ -16,7 +16,7 @@ class Payment implements \JsonSerializable {
     $this->amount = $amount;
   }
 
-  public function get_amount()
+  public function get_accumulated_amount()
   {
     return $this->amount;
   }
