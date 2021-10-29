@@ -24,13 +24,13 @@
 const exampleArray = [ [ [ 'value' ] ] ];
 // bad 
 
-// exampleArray.forEach((array1) => {
-//   array1.forEach((array2) => {
-//     array2.forEach((el) => {
-//       console.log(el);
-//     })
-//   })
-// })
+exampleArray.forEach((array1) => {
+  array1.forEach((array2) => {
+    array2.forEach((el) => {
+      console.log(el);
+    })
+  })
+})
 
 // good
 const retrieveFinalValue = (element) => {
