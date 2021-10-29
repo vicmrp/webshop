@@ -10,7 +10,7 @@ class Order implements \JsonSerializable {
 
   private $order_id;
   public  $order_status;
-  private $order_item = array();
+  private $order_items = array();
   
   public function __construct() {
     $this->order_status = new Order_Status\Order_Status();
@@ -36,19 +36,10 @@ class Order implements \JsonSerializable {
     return $this->order_status;
   }
 
-  public function set_order_item(object $order_item)
+  public function add_order_item(object $order_item)
   {
-    // skubber et objekt ind i arrayen af typen Order_Item
-    array_push($this->order_item, $order_item);
-
-    // Opdater amount fæltet    
-    $amount = 0;
-    foreach ($this->order_item as $order_item) {
-        $price = $order_item->get_price();
-        $quantity = $order_item->get_quantity();
-        $amount = $amount + $price * $quantity;
-    }
-    $this->order_status->payment->set_amount($amount);
+    array_push($this->order_items, $order_item);
+    $this->order_status->payment->set_accumulated_amount($this->order_items);
   }
 
   public function get_order_item()
