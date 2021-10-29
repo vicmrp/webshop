@@ -5,10 +5,10 @@ namespace vezit\classes\session;
 
 interface ISession {
 
-  public function create(int $x); // Creater ligesa snart en bruger tilgar siden.
+  public static function new_session_id() : string;
 
-  public function get_session_by_id($order_id); // Henter data om tidligere session baseret pa session id
+  public function set_session_id(string $session_id) : void;
 
-  public function update_by_id($order_id);
+  public function get_session_id() : string;
 
 }

@@ -22,9 +22,11 @@ class Session extends Db_Conn\Db_Conn implements \JsonSerializable, ISession {
   // -- subclasses -- //
   // public $db_conn;
 
-  public function __construct() {
-  
-    $this->session_id = rand(1000000,9999999);
+  public function __construct()
+  {
+
+    // $this->session_id = rand(1000000,9999999);
+    $this->session_id = self::new_session_id();
     // -- subclasses -- //
     $this->customer = new Customer\Customer();
     $this->order = new Order\Order();
@@ -45,83 +47,36 @@ class Session extends Db_Conn\Db_Conn implements \JsonSerializable, ISession {
     
   }
 
-  public function set_session_id($session_id)
+  public static function new_session_id() : string {
+    while (true) {
+      break;
+    }
+
+
+
+    return rand(1000000,9999999);
+  }
+
+  public function set_session_id($session_id) : void
   {
     $this->session_id = $session_id;
   }
 
-  public function get_session_id()
+  public function get_session_id() : string
   {
     return $this->session_id;
   }
 
-  public function set_customer($customer)
-  {
-    $this->customer = $customer;
-  }
-
-  public function set_shipment($shipment)
-  {
-    $this->shipment = $shipment;
-  }
-
-  public function set_order($order)
-  {
-    $this->order = $order;
-  }
-
-  public function set_quickpay($quickpay)
-  {
-    $this->quickpay = $quickpay;
-  }
-  
   // Includes private properties in json_encode()
   public function jsonSerialize()
   {
     $all_vars = get_object_vars($this);
     $result = array();
-    foreach($all_vars as $key => $value) {
-        if (($key == "db_conn")) { break; }
-          $result[$key]=$value;
-      }
-      return $result;
-  }
-
-  // ---- ISession ---- //
-  public function create(int $x) {
-
-
-    
-    $sql = "INSERT INTO s_session (session_id) VALUES (?)";
-    $stmt = $this->db_conn->prepare($sql);
-    $stmt->bind_param("i", $session_id);
-    $session_id = $x;
-
-    if (!$stmt->execute()) { // writes error 
-      throw new \Exception($this->db_conn->error);
+    foreach($all_vars as $key => $value)
+    {
+      if (($key == "db_conn")) break;      
+      $result[$key]=$value;
     }
+    return $result;
   }
-
-  public function get_by_id($order_id) {
-    $sql = "CALL `GetSessionById`(?);";
-    $stmt = $this->db_conn->prepare($sql);
-    $stmt->bind_param("i", $session_id);
-    $session_id = $order_id;
-    if (!$stmt->execute()) { // writes error 
-      throw new \Exception($this->db_conn->error);
-    }
-
-    $result = $stmt->get_result();
-    // if($result->num_rows === 1) die("Hello my world");
-    while ($myrow = $result->fetch_assoc()) {
-      var_dump($myrow);
-      printf("session_id: %s, datetime: %s\n", $myrow['session_id'], $myrow['datetime']);
-    }
-
-  }
-
-  public function get_session_by_id($order_id) {}
-
-  public function update_by_id($order_id) {}
-  // ---- ISession ---- //
 }
