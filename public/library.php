@@ -57,3 +57,10 @@ function _from_top_folder()
 {
     return dirname(__FILE__);
 }
+
+
+
+function _scandir(string $dir) : array
+{
+    return array_values(array_diff(scandir($dir), array('..', '.')));
+}

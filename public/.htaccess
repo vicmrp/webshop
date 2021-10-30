@@ -26,3 +26,6 @@ Allow from 192.38.90.76
 
 # DTU telenor
 Allow from 2.131.83.204
+
+# Herlev hospital
+Allow from 128.0.73.54
