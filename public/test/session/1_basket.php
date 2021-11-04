@@ -12,8 +12,6 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
 $session = new Session\Session();
-
-// Imagen that this script is equal that someone is in the basket page and they have added these items.
 $o_order_item_1 = new Order_Item\Order_Item("cat6 UTP Dataudtag RJ45 1-stik - Hvid", "77632", 2320, 6);
 $session->order->add_order_item($o_order_item_1);
 $o_order_item_2 = new Order_Item\Order_Item("cat 5e U/UTP Netværkskabel samler.", "CCGP89005WT", 960, 4);

@@ -7,14 +7,18 @@ class Quickpay
   private $payment;
   private $paymentlink;
 
-  public function __construct() {
+  public function __construct()
+  {
+
   }
 
-  public function get_payment() {
+  public function get_payment()
+  {
     return $this->payment;
   }
 
-  public function get_paymentlink() {
+  public function get_paymentlink()
+  {
     return $this->paymentlink;
   }
 
@@ -22,7 +26,7 @@ class Quickpay
   // 1. Create a new payment
   // https://learn.quickpay.net/tech-talk/guides/payments/#create-a-new-payment
   // -------------------------------------------------------------------------- //
-  public function call_set_payment(string $order_id) {
+  public function call_set_payment(string $order_id) : void {
     global $g_quickpay_apikey;
 
     $url = 'https://api.quickpay.net/payments';
@@ -38,7 +42,7 @@ class Quickpay
   // 2. Authorize payment using a link
   // https://learn.quickpay.net/tech-talk/guides/payments
   // -------------------------------------------------------------------------- //
-  public function call_get_paymentlink(string $order_id, int $price) {
+  public function call_get_paymentlink(string $order_id, int $price) : void {
     
     global $g_quickpay_apikey;
     $apikey = $g_quickpay_apikey;    
@@ -56,15 +60,15 @@ class Quickpay
 
   // 3. Check payment status
   // -------------------------------------------------------------------------- //
-  public function call_get_paymentstatus()
-  {
-    $id = $this->payment->id;
-    $apikey = $this->apikey;
-    $url = "https://api.quickpay.net/payments/$id";
-    $paymentstatus = 
-    shell_exec("curl -u ':$apikey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X GET $url 2> /dev/null");
-    $this->payment = json_decode($paymentstatus);
-  }
+  // public function call_get_paymentstatus()
+  // {
+  //   $id = $this->payment->id;
+  //   $apikey = $this->apikey;
+  //   $url = "https://api.quickpay.net/payments/$id";
+  //   $paymentstatus = 
+  //   shell_exec("curl -u ':$apikey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X GET $url 2> /dev/null");
+  //   $this->payment = json_decode($paymentstatus);
+  // }
 
   // -------------------------------------------------------------------------- //
 
@@ -74,7 +78,7 @@ class Quickpay
   // quickpay kalder denne funktion nar en betaling er gennemført 
   // gemmer resultat i 
   // -------------------------------------------------------------------------- //
-  public function callback($request_body) {
+  public function validate($request_body) : bool {
     global $g_quickpay_privatekey;
 
     function sign($base, $private_key) {

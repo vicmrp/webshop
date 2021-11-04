@@ -27,35 +27,21 @@ class Session extends Db_Conn\Db_Conn implements \JsonSerializable, ISession {
   public function __construct()
   {
 
-    // $this->session_id = rand(1000000,9999999);
     $this->session_id = self::new_session_id();
-    // -- subclasses -- //
+
     $this->customer = new Customer\Customer();
     $this->order = new Order\Order();
     $this->shipment = new Shipment\Shipment();
-    // -- subclasses -- //
 
-    // Sets variables for subclasses
     $this->order->set_order_id($this->session_id);
 
-
-    // -- sql -- //
-    global $g_db_conn;
-    $this->db_conn = new \mysqli($g_db_conn->servername, $g_db_conn->username, $g_db_conn->password, $g_db_conn->dbname);
-    if ($this->db_conn->connect_error) {
-      die("Connection failed: " . $this->db_conn->connect_error); // Check connection
-    }
-    // -- sql -- //
-    
   }
 
   public static function new_session_id() : string {
     
     function session_id_is_unique(string $session_id) : bool
     {
-      $not_accepted_list = _scandir(_from_top_folder().'/temp_database/session/accepted');
-      $accepted_list = _scandir(_from_top_folder().'/temp_database/session/not_accepted');
-      $array_of_session_ids = array_merge($not_accepted_list, $accepted_list);
+      $array_of_session_ids = _scandir(_from_top_folder().'/temp_database/session');
       foreach($array_of_session_ids as $file_session_id)
       { 
         if ($session_id == substr($file_session_id, 0, -5)) return false;

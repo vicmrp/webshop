@@ -5,41 +5,33 @@ require_once __DIR__.'/global-requirements.php';
 // ----- Namespace ----- //
 use vezit\classes\api\quickpay as Quickpay;
 use vezit\classes\mail as Mail;
+use vezit\classes\repositories\session as R_Session;
 
 $quickpay = new Quickpay\Quickpay;
-$request_body = file_get_contents("php://input");
+$request = file_get_contents("php://input");
+$order_id;
+$session;
+$session_json;
+$payment;
 
-// hvad skal der ske nar call back kaldes?
-// Find data / json fil baseret pa ordre_id
-// hvis resultatet er falsk sa stop scriptet
-if (! ($quickpay->callback($request_body))) {exit(1);}; // exit hvis afsender ikke er fra quickpay
-if (! ($quickpay->get_payment()->accepted)) {exit(1);}; // exit hvis betalingen ikke er gennemført
+if (! ($quickpay->validate($request))) {exit(1);};
+if (! ($quickpay->get_payment()->accepted)) {exit(1);};
 
-$order_id = $quickpay->get_payment()->order_id;
+$payment = $quickpay->get_payment();
 
-// Hent betalingssessionen baseret p ordre id
+$order_id = $payment->order_id;
+$session_id = $order_id;
 
-// Nar du har betalt modtager du en ordrebekræftelse pa mail
 
-// Hent session 
-// Hent betalingssessionen baseret p ordre id
-$session = json_decode(file_get_contents(_from_top_folder()."/temp/$order_id-session.json"));
+$r_session = new R_Session\Session;
 
-// hvis betalingen er true sa set den til true i session databasen og forsæt
-if (!($quickpay->get_payment()->accepted)) {exit(1);};
+$r_session->update($session_id, $payment);
+$session_json = json_encode($r_session->find($session_id), JSON_PRETTY_PRINT);
 
-$session->order->order_status->payment->accepted = true;
 
-file_put_contents(_from_top_folder()."/temp/$order_id-session.json", json_encode($session, JSON_PRETTY_PRINT));
-file_put_contents(_from_top_folder()."/temp/$order_id-callback.json", json_encode($quickpay->get_payment(), JSON_PRETTY_PRINT));
-
-// udsend ordre bekræftelse
-  // ----- Eksempel ----- //
-  $session_json = json_encode($session, JSON_PRETTY_PRINT);
-  (array)$recipients = array(array("victor.reipur@gmail.com", "Victor Reipur"));
-  (string)$subject = "Bekræftelse på ordre er nr. $order_id";
-  (string)$body = "<h1>Hello World</h1><pre>$session_json</pre>";
-  (array)$setFrom = array('dev.victor.reipur@gmail.com', 'Steengede.com');
-  Mail\Mail::send_mail($recipients, $subject, $body, null, $setFrom);
-  // ----- Eksempel ----- //
+(array)$recipients = array(array("victor.reipur@gmail.com", "Victor Reipur"));
+(string)$subject = "Bekræftelse på ordre er nr. $order_id";
+(string)$body = "<h1>Hello World</h1><pre>$session_json</pre>";
+(array)$setFrom = array('dev.victor.reipur@gmail.com', 'Steengede.com');
+Mail\Mail::send_mail($recipients, $subject, $body, null, $setFrom);
 ?>
