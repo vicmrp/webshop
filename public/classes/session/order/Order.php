@@ -42,6 +42,11 @@ class Order implements \JsonSerializable {
     $this->order_status->payment->set_accumulated_amount($this->order_items);
   }
 
+  public function set_order_items($order_items)
+  {
+    $this->order_items = $order_items;
+  }
+
   public function get_order_item()
   {
     return $this->order_item;

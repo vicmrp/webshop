@@ -7,11 +7,13 @@ require __DIR__.'/../../global-requirements.php';
 use vezit\classes\db_conn as Db_Conn;
 use vezit\classes\session\customer as Customer;
 use vezit\classes\session\order as Order;
+use vezit\classes\session\order\order_item as Order_Item;
 use vezit\classes\session\shipment as Shipment;
+
 
 // For hver session oprettes oprettes der en entry i db
 
-class Session extends Db_Conn\Db_Conn implements \JsonSerializable, ISession {
+class Session implements \JsonSerializable, ISession {
   const MIN_SESSION_ID = 1000000;
   const MAX_SESSION_ID = 9999999;
 
@@ -66,6 +68,34 @@ class Session extends Db_Conn\Db_Conn implements \JsonSerializable, ISession {
   public function get_session_id() : string
   {
     return $this->session_id;
+  }
+
+  public function construct_session_from_repository(object $session) : void 
+  {
+    $this->session_id = $session->session_id;
+    
+    $this->customer->set_fullname($session->customer->fullname);
+    $this->customer->contact->set_phone($session->customer->contact->phone);
+    $this->customer->contact->set_email($session->customer->contact->email);
+    $this->customer->address->set_street($session->customer->address->street);
+    $this->customer->address->set_postal_code($session->customer->address->postal_code);
+    $this->customer->address->set_city($session->customer->address->city);
+    $this->customer->company->set_cvr_number($session->customer->company->cvr_number);
+    $this->customer->company->set_company_name($session->customer->company->company_name);
+
+    $this->order->set_order_id($session->order->order_id);
+    $this->order->order_status->payment->set_accepted($session->order->order_status->payment->accepted);
+    $this->order->order_status->payment->set_amount($session->order->order_status->payment->amount);
+    $this->order->order_status->email->set_confirmation_sent($session->order->order_status->email->confirmation_sent);
+    $this->order->order_status->email->set_invoice_sent($session->order->order_status->email->invoice_sent);
+    $this->order->set_order_items($session->order->order_items);
+    
+    $this->shipment->set_tracking_number($session->shipment->tracking_number);
+    $this->shipment->set_order_collected($session->shipment->order_collected);
+    $this->shipment->address->set_street_name($session->shipment->address->street_name);
+    $this->shipment->address->set_street_number($session->shipment->address->street_number);
+    $this->shipment->address->set_postal_code($session->shipment->address->postal_code);
+    $this->shipment->address->set_city($session->shipment->address->city);
   }
 
   // Includes private properties in json_encode()
