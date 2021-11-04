@@ -10,6 +10,19 @@ class Payment implements \JsonSerializable {
 
   }
 
+  public function set_accepted(bool $accepted) : void {
+    $this->accepted = $accepted;
+  }
+
+
+  public function set_currency($currency) : void {
+    $this->currency = $currency;
+  }
+
+  public function set_amount($amount) : void {
+    $this->amount = $amount;
+  }
+
   public function set_accumulated_amount(array $order_items) : void
   {
     // Opdater amount fæltet    
