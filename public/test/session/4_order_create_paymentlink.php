@@ -19,7 +19,7 @@ $order_id = $session->order->get_order_id();
 $quickpay = new Quickpay\Quickpay;
 
 // total prisen er baseret pa den akumeleret pris
-//  af indkøbskurvens indhold
+// af indkøbskurvens indhold
 $amount = $session->order->order_status->payment->get_accumulated_amount();
 $quickpay->call_set_payment($order_id);
 $quickpay->call_get_paymentlink($order_id , $amount);
