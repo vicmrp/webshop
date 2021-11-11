@@ -4,6 +4,19 @@ window.onload = async function () {
 
   
 
-  console.log(session);
+
+  function addOrderItem(product_id, quantity) {
+    // ringer server op
+    
+
+    // opdatere session objekt
+  }
+
+
+  // console.log(session.order.order_items);
+
+  session.order.order_items.forEach(element => {
+    console.log(element)
+  });
 
 }

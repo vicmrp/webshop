@@ -25,7 +25,9 @@ function create_session() : string {
   return $session_json;
 }
 
+function add_order_item($product_id, $quantity) : string {
 
+}
 
 $request = isset($_GET["request"]) ? $_GET['request'] : 'No message specified';
 $parameters = json_decode(file_get_contents("php://input"));
@@ -39,8 +41,8 @@ switch ($request) {
     $result = create_session();
     break;
   case 'add_order_item':
-    $result = add_order_item();
-  break;  
+    $result = add_order_item($parameters->product_id, $parameters->quantity);
+    break;
   default:
     error_log("unkown request");
     break;
