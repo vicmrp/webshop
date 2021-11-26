@@ -6,10 +6,12 @@ window.onload = async function () {
 
 
   function addOrderItem(product_id, quantity) {
-    // ringer server op
+    // ringer server op og tilføj
     
 
     // opdatere session objekt
+
+    // 
   }
 
 
