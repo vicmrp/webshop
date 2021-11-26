@@ -64,3 +64,9 @@ function _scandir(string $dir) : array
 {
     return array_values(array_diff(scandir($dir), array('..', '.')));
 }
+
+
+
+function _return_evaluated_user_credentials() {
+
+}

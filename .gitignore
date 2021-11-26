@@ -1,3 +1,4 @@
 secret/*
-public/composer/vendor/*
-public/temp_database/session/*.json
+public/_composer/vendor/*
+public/_temp_database/session/*.json
+public/old/*

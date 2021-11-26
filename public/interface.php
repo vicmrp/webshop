@@ -1,51 +1,50 @@
 <?php
 // ----- global ----- //
-require_once __DIR__.'/global-requirements.php'; // _from_top_folder().
+require_once __DIR__.'/global-requirements.php';
 
-use vezit\classes\session\order\order_item as Order_Item;
-use vezit\classes\session as Session;
-use vezit\classes\repositories\session as R_Session;
+use vezit\classes\api\endpoint as E;
+use vezit\classes\login as Login;
+use vezit\classes\tspa as Tspa;
+use vezit\classes\error as Error;
+session_start();
 
-// Starts session
-if (session_status() === PHP_SESSION_NONE) {
-  session_start();  
-}
-
-function find_session($session_id) : string {
-  $r_session = new R_Session\Session;
-  $session_json = json_encode($r_session->find($session_id), JSON_PRETTY_PRINT);
-  return $session_json;
-}
-
-function create_session() : string {
-  $session = new Session\Session();
-  $r_session = new R_Session\Session;
-  $r_session->insert($session);
-  $session_json = json_encode($session, JSON_PRETTY_PRINT);
-  return $session_json;
-}
-
-function add_order_item($product_id, $quantity) : string {
-
-}
-
-$request = isset($_GET["request"]) ? $_GET['request'] : 'No message specified';
-$parameters = json_decode(file_get_contents("php://input"));
+$required_get_parameters = array('functioncall');
+$endpoint = new E\Endpoint();
+$endpoint->set_expected_get_parameters($required_get_parameters);
+$endpoint->set_body(file_get_contents("php://input"));
 
 
-switch ($request) {
-  case 'find_session':
-    $result = find_session($parameters->session_id);
+switch ($endpoint->get_parameter->functioncall) {
+
+  case 'get_powershell_script':
+    $required_get_parameters = array('computername');
+    $endpoint->set_expected_get_parameters($required_get_parameters);
+    $tspa = new Tspa\Tspa();
+    echo $tspa->get_powershell_script($endpoint->get_parameter->computername);
     break;
-  case 'create_session':
-    $result = create_session();
+
+  case 'set_validation_result':
+    $endpoint->set_expected_body_properties(array('username', 'identity'));
+    $login = new Login\Login();
+    $login->set_username($endpoint->body->username);
+    $login->set_identity($endpoint->body->identity);
+    $login->set_groupmember('byg-it-afd');
+    $login->set_validation_result();
+    echo json_encode($login->set_validation_result(), JSON_PRETTY_PRINT);
     break;
-  case 'add_order_item':
-    $result = add_order_item($parameters->product_id, $parameters->quantity);
+
+  case 'get_login_status':
+    $login = new Login\Login();
+    echo json_encode($login->get_login_status());
     break;
+
+  case 'set_destroy_login_session':
+    $login = new Login\Login();
+    echo json_encode($login->set_destroy_login_session());    
+    break;
+
   default:
-    error_log("unkown request");
+    $error_message = "interface Unknown functioncall: " . $endpoint->get_parameter->functioncall;
+    new Error\Error(__FILE__, $error_message, $fatal_error=true);
     break;
 }
-
-echo $result;
