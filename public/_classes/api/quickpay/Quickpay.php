@@ -51,7 +51,6 @@ class Quickpay
     $url = "https://api.quickpay.net/payments/$id/link";
     $paymentlink = 
     shell_exec("curl -u ':$apikey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X PUT -d '{\"amount\":\"$price\"}' $url 2> /dev/null");
-    
     $this->paymentlink = json_decode($paymentlink);
   }
   // -------------------------------------------------------------------------- //
