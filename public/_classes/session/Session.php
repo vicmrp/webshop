@@ -24,19 +24,15 @@ class Session implements \JsonSerializable, ISession {
   public $order;
   public $shipment;
   // -- subclasses -- //
-  // public $db_conn;
 
-  public function __construct()
-  {
-
-    $this->session_id = self::new_session_id();
+  public function __construct() {
 
     $this->customer = new Customer\Customer();
     $this->order = new Order\Order();
     $this->shipment = new Shipment\Shipment();
 
+    $this->session_id = self::new_session_id();
     $this->order->set_order_id($this->session_id);
-
   }
 
   public static function new_session_id() : string {
@@ -60,20 +56,17 @@ class Session implements \JsonSerializable, ISession {
     }
   }
 
-  public function set_session_id($session_id) : void
-  {
+  public function set_session_id($session_id) : void {
     $this->session_id = $session_id;
   }
 
-  public function get_session_id() : string
-  {
+  public function get_session_id() : string {
     return $this->session_id;
   }
 
   public function construct_session_from_repository(object $session) : void 
   {
-    $this->session_id = $session->session_id;
-    
+    $this->session_id = $session->session_id;    
     $this->customer->set_fullname($session->customer->fullname);
     $this->customer->contact->set_phone($session->customer->contact->phone);
     $this->customer->contact->set_email($session->customer->contact->email);
@@ -98,9 +91,7 @@ class Session implements \JsonSerializable, ISession {
     $this->shipment->address->set_city($session->shipment->address->city);
   }
 
-  // Includes private properties in json_encode()
-  public function jsonSerialize()
-  {
+  public function jsonSerialize() {
     $all_vars = get_object_vars($this);
     $result = array();
     foreach($all_vars as $key => $value)

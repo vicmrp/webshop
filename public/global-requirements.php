@@ -24,3 +24,24 @@ foreach (new RecursiveIteratorIterator($directories) as $filename => $file)
 { 
   if (!is_dir($filename)) require_once $filename;  
 }
+
+// ----- namespaces - inkludere alle klasserne ----- //
+$directories = new RecursiveDirectoryIterator(_from_top_folder().'/_dto');
+foreach (new RecursiveIteratorIterator($directories) as $filename => $file)
+{ 
+  if (!is_dir($filename)) require_once $filename;  
+}
+
+// ----- namespaces - inkludere alle klasserne ----- //
+$directories = new RecursiveDirectoryIterator(_from_top_folder().'/_services');
+foreach (new RecursiveIteratorIterator($directories) as $filename => $file)
+{ 
+  if (!is_dir($filename)) require_once $filename;  
+}
+
+// ----- namespaces - inkludere alle klasserne ----- //
+$directories = new RecursiveDirectoryIterator(_from_top_folder().'/_repositories');
+foreach (new RecursiveIteratorIterator($directories) as $filename => $file)
+{ 
+  if (!is_dir($filename)) require_once $filename;  
+}

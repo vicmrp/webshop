@@ -1,7 +1,7 @@
 <?php
 namespace vezit\classes\repositories\product;
 
-require __DIR__.'/../../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 
 class Product implements IProduct {
 
