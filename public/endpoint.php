@@ -2,10 +2,11 @@
 // ----- global ----- //
 require_once __DIR__.'/global-requirements.php';
 
-use vezit\classes\api\endpoint as E;
-use vezit\classes\login as Login;
-use vezit\classes\tspa as Tspa;
-use vezit\classes\error as Error;
+use vezit\_classes\api\endpoint as E;
+use vezit\_classes\login as Login;
+use vezit\_classes\tspa as Tspa;
+use vezit\_classes\error as Error;
+
 session_start();
 
 $required_get_parameters = array('functioncall');

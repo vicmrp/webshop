@@ -3,7 +3,7 @@
 export default class Interface {
 
   async callServerByFetchReturnObject(url, options = null) {
-    const fetchResponse = await fetch(url, options);
+    const fetchResponse = await fetch(url, options)
     const response = await fetchResponse.text();
     return JSON.parse(response);
   }
@@ -24,16 +24,16 @@ export default class Interface {
   }
 
 
-  async testIfServerResponseIsEqualToModel(expectedProperties, serverResponse) {
+  testIfServerResponseIsEqualToModel(expectedProperties, serverResponse) {
     let count = 0
-  expectedProperties.forEach(expectedProperty => { 
-    for (const [property, value] of Object.entries(serverResponse)) {
-      if (expectedProperty === property)
-        count++
-    }
-    });
+    expectedProperties.forEach(expectedProperty => { 
+      for (const [property, value] of Object.entries(serverResponse)) {
+        if (expectedProperty === property)
+          count++
+      }
+      });
 
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       resolve((count === expectedProperties.length) ? true : false)
     })
   }

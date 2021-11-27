@@ -18,6 +18,11 @@ $g_db_conn              = json_decode(file_get_contents(__DIR__.'/../secret/db_c
 require_once 'library.php';
 
 
+// _DISABLED = 0
+// _NONE = 1
+// _ACTIVE = 2
+if (session_status() != 2) session_start();
+
 // ----- namespaces - inkludere alle klasserne ----- //
 $directories = new RecursiveDirectoryIterator(_from_top_folder().'/_classes');
 foreach (new RecursiveIteratorIterator($directories) as $filename => $file)
@@ -41,6 +46,13 @@ foreach (new RecursiveIteratorIterator($directories) as $filename => $file)
 
 // ----- namespaces - inkludere alle klasserne ----- //
 $directories = new RecursiveDirectoryIterator(_from_top_folder().'/_repositories');
+foreach (new RecursiveIteratorIterator($directories) as $filename => $file)
+{ 
+  if (!is_dir($filename)) require_once $filename;  
+}
+
+// ----- namespaces - inkludere alle klasserne ----- //
+$directories = new RecursiveDirectoryIterator(_from_top_folder().'/_entities');
 foreach (new RecursiveIteratorIterator($directories) as $filename => $file)
 { 
   if (!is_dir($filename)) require_once $filename;  

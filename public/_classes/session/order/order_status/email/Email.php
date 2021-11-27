@@ -1,5 +1,5 @@
 <?php
-namespace vezit\classes\session\order\order_status\email;
+namespace vezit\_classes\session\order\order_status\email;
 
 
 class Email implements \JsonSerializable {

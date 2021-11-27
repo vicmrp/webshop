@@ -1,14 +1,14 @@
 <?php
-namespace vezit\classes\session\customer;
+namespace vezit\_classes\session\customer;
 
 
 
 require_once __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
 
-use vezit\classes\session\customer\address as Address;
-use vezit\classes\session\customer\contact as Contact;
-use vezit\classes\session\customer\company as Company;
+use vezit\_classes\session\customer\address as Address;
+use vezit\_classes\session\customer\contact as Contact;
+use vezit\_classes\session\customer\company as Company;
 
 
 class Customer implements \JsonSerializable {

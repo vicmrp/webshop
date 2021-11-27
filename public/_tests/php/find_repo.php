@@ -2,8 +2,8 @@
 // ----- global ----- //
 require_once __DIR__.'/../../global-requirements.php'; // _from_top_folder().
 
-use vezit\classes\repositories\product as R_Product;
-use vezit\classes\session as Session;
+use vezit\_classes\repositories\product as R_Product;
+use vezit\_classes\session as Session;
 $session = new Session\Session();
 
 // add order item to session

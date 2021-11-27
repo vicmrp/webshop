@@ -3,9 +3,9 @@
 require_once __DIR__.'/global-requirements.php';
 
 // ----- Namespace ----- //
-use vezit\classes\api\quickpay as Quickpay;
-use vezit\classes\mail as Mail;
-use vezit\classes\repositories\session as R_Session;
+use vezit\_classes\api\quickpay as Quickpay;
+use vezit\_classes\mail as Mail;
+use vezit\_classes\repositories\session as R_Session;
 
 $quickpay = new Quickpay\Quickpay;
 $request = file_get_contents("php://input");

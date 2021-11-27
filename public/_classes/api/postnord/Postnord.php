@@ -1,5 +1,5 @@
 <?php
-namespace vezit\classes\api\postnord;
+namespace vezit\_classes\api\postnord;
 require_once __DIR__.'/../../../global-requirements.php';
 
 

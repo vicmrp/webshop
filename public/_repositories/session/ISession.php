@@ -1,6 +1,6 @@
 <?php
 
-namespace vezit\classes\repositories\session;
+namespace vezit\_repositories\session;
 
 interface ISession {
   public function find(string $session_id) : object;

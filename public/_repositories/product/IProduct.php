@@ -1,6 +1,6 @@
 <?php
 
-namespace vezit\classes\repositories\product;
+namespace vezit\_repositories\product;
 
 interface IProduct {
   public function find(string $id) : object;

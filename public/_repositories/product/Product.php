@@ -1,5 +1,5 @@
 <?php
-namespace vezit\classes\repositories\product;
+namespace vezit\_repositories\product;
 
 require __DIR__.'/../../global-requirements.php';
 

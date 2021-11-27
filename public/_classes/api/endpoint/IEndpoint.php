@@ -1,6 +1,6 @@
 <?php
 
-namespace vezit\classes\api\endpoint;
+namespace vezit\_classes\api\endpoint;
 
 interface IEndpoint {
 

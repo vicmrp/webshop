@@ -1,10 +1,10 @@
 <?php
 
-namespace vezit\classes\login;
+namespace vezit\_classes\login;
 
 require __DIR__.'/../../global-requirements.php';
 
-use vezit\classes\dto\login\response as response;
+use vezit\_classes\dto\login\response as response;
 
 class Login implements ILogin
 {

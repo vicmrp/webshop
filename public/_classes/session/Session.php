@@ -1,14 +1,14 @@
 <?php
-namespace vezit\classes\session;
+namespace vezit\_classes\session;
 
 require __DIR__.'/../../global-requirements.php';
 
 
-use vezit\classes\db_conn as Db_Conn;
-use vezit\classes\session\customer as Customer;
-use vezit\classes\session\order as Order;
-use vezit\classes\session\order\order_item as Order_Item;
-use vezit\classes\session\shipment as Shipment;
+use vezit\_classes\db_conn as Db_Conn;
+use vezit\_classes\session\customer as Customer;
+use vezit\_classes\session\order as Order;
+use vezit\_classes\session\order\order_item as Order_Item;
+use vezit\_classes\session\shipment as Shipment;
 
 
 // For hver session oprettes oprettes der en entry i db

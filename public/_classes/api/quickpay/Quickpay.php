@@ -1,5 +1,5 @@
 <?php
-namespace vezit\classes\api\quickpay;
+namespace vezit\_classes\api\quickpay;
 require_once __DIR__.'/../../../global-requirements.php';
 
 class Quickpay

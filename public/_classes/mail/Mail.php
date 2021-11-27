@@ -1,5 +1,5 @@
 <?php
-namespace vezit\classes\mail;
+namespace vezit\_classes\mail;
 
 require_once __DIR__.'/../../global-requirements.php';
 require_once _from_top_folder().'/_composer/vendor/autoload.php';
@@ -12,7 +12,7 @@ class Mail
 {
   
   // ----- Eksempel ----- //
-  // use vezit\classes\mail as Mail;
+  // use vezit\_classes\mail as Mail;
   // (array)$recipients = array(array("victor.reipur@gmail.com", "Victor Reipur"));
   // (string)$subject = "Here is the subject 2";
   // (string)$body = "This is the HTML message body <b>in bold!</b>";

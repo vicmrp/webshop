@@ -1,9 +1,9 @@
 <?php
-namespace vezit\classes\session\order\order_status;
+namespace vezit\_classes\session\order\order_status;
 require __DIR__.'/../../../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
-use vezit\classes\session\order\order_status\payment as Payment;
-use vezit\classes\session\order\order_status\email as Email;
+use vezit\_classes\session\order\order_status\payment as Payment;
+use vezit\_classes\session\order\order_status\email as Email;
 
 
 class Order_Status implements \JsonSerializable {

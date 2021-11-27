@@ -1,17 +1,20 @@
 <?php
 
-namespace vezit\classes\api\endpoint;
+namespace vezit\_classes\api\endpoint;
 
 require __DIR__.'/../../../global-requirements.php';
 
-use vezit\classes\error as Error;
+use vezit\_classes\error as Error;
+
 class Endpoint implements IEndpoint
 {
   public $get_parameter;
   public $body;
+  private $controller_file_location;
 
-  public function __construct()
+  public function __construct($controller_file_location)
   {
+    $this->controller_file_location = $controller_file_location;
     $this->get_parameter = new \stdClass();
   }
 
@@ -24,7 +27,7 @@ class Endpoint implements IEndpoint
       } 
       else {
         $error_message = "expected GET parameter ($parameter) does not exist.";
-        new Error\Error(__FILE__, $error_message, $fatal_error=true);
+        new Error\Error($this->controller_file_location, $error_message, $fatal_error=true);
       }
     }
   }
@@ -38,11 +41,11 @@ class Endpoint implements IEndpoint
       }
       else {
         $error_message = "body property ($property) does not exist.";
-        new Error\Error(__FILE__, $error_message, $fatal_error=true);
+        new Error\Error($this->controller_file_location, $error_message, $fatal_error=true);
       }
     }
   }
-
+  
   public function set_body(string $json) : void
   {
     $this->body = new \stdClass();

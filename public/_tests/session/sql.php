@@ -2,10 +2,10 @@
 
 require __DIR__.'/../../global-requirements.php';
 
-use vezit\classes\db_conn as Db_Conn;
-use vezit\classes\session\customer as Customer;
-use vezit\classes\session\order as Order;
-use vezit\classes\session\shipment as Shipment;
+use vezit\_classes\db_conn as Db_Conn;
+use vezit\_classes\session\customer as Customer;
+use vezit\_classes\session\order as Order;
+use vezit\_classes\session\shipment as Shipment;
 
 class MyClass extends Db_Conn\Db_Conn implements \JsonSerializable
 {

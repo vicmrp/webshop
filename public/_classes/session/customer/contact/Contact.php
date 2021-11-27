@@ -1,5 +1,5 @@
 <?php
-namespace vezit\classes\session\customer\contact;
+namespace vezit\_classes\session\customer\contact;
 
 
 

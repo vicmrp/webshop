@@ -8,10 +8,10 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 
-use vezit\classes\session\shipment as Shipment;
-use vezit\classes\session\shipment\address as Address;
-use vezit\classes\api\dawa as Dawa;
-use vezit\classes\api\postnord as Postnord;
+use vezit\_classes\session\shipment as Shipment;
+use vezit\_classes\session\shipment\address as Address;
+use vezit\_classes\api\dawa as Dawa;
+use vezit\_classes\api\postnord as Postnord;
 
 
 $session = $_SESSION["session"];

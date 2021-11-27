@@ -1,8 +1,11 @@
 <?php
 
-namespace vezit\classes\repositories\user;
+namespace vezit\_repositories\user;
 
 require __DIR__.'/../../global-requirements.php';
+
+use vezit\_entities\user as Entity;
+use vezit\_classes\error as Error;
 
 class User implements IUser {
 
@@ -19,7 +22,7 @@ class User implements IUser {
     // -- sql -- //
   }
 
-  public function get_by_id(int $id) : object {
+  public function get_user_by_id(int $id) : object {
     $sql = "SELECT * FROM `User` WHERE User.Id=?";
     $stmt = $this->db_conn->prepare($sql);
     $stmt->bind_param("i", $id);
@@ -29,18 +32,35 @@ class User implements IUser {
     return $user;
   }
 
-  public function get_by_email(string $email) : object {
+  public function get_user_by_email(string $email) : Entity\User {
     $sql = "SELECT * FROM `User` WHERE User.Email=?";
     $stmt = $this->db_conn->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
-    $user = (object)$result->fetch_assoc();
+
+    if($result->num_rows === 0) {
+      $error_message = "get_user_by_email '$email' does not exist in database: ";
+      new Error\Error(__FILE__, $error_message, $fatal_error=true);
+    }
+
+    $entity = $result->fetch_assoc();
+    
+    $user = new Entity\User();
+    $user->id = $entity['Id'];
+    $user->email = $entity['Email'];
+    $user->password = $entity['Password'];
+    $user->role = $entity['Role'];
+
     return $user;
   }
 
-  public function get_by_role(string $email) : object {
+  public function get_user_by_role(string $email) : object {
     return new stdClass;
   }
-  
 }
+
+// php -f _repositories/user/User.php
+// $user = new User();
+// $result = $user->get_user_by_email('victor.reipur@gmail.com');
+// var_dump($result);

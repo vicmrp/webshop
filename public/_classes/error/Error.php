@@ -1,6 +1,6 @@
 <?php
 
-namespace vezit\classes\error;
+namespace vezit\_classes\error;
 require __DIR__.'/../../global-requirements.php';
 
 class Error {
