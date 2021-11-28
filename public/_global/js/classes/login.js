@@ -30,11 +30,7 @@ export default class Login extends Interface {
 
     this.#iButton.addEventListener("click",async () => {
       const result = await this.getValidateUserCredentials(this.#iUsername.value, this.#iPassword.value)
-      // const login_reponse = await this.get_login_status()
-      // console.log("Hello World");
-      // console.log(login_reponse);
-      
-      // console.log(user);
+      console.log(result);
     })
   }
 
@@ -47,8 +43,6 @@ export default class Login extends Interface {
 
 
   async getValidateUserCredentials(username, password) {
-
-    // console.log("evaluating");
 
     const loginFomula = {
       email: username,
@@ -65,48 +59,12 @@ export default class Login extends Interface {
         'Content-Type': 'application/json'
       },
       body: body
-    }
-
-    
+    }    
     const serverResponse = await this.callServerByFetchReturnObject(url, options)
-
-    const requiredModelProperties = ['email', 'user_credentials_is_valid', 'php_session_is_active']
-    const importedModel = new LoginResponse();
-    // console.log(importedModel);
-    // console.log(new LoginResponse());
-    // const loginResponse = await this.setModel(serverResponse, model)
-
-
     const result = await this.getJavascriptModel(
       serverResponse,
       new LoginResponse()
     )
-
-
-    // console.log(result)
-
-    // console.log(serverResponse);
-    
-    
-    // const valuereturn = (result) ? 
-    //   new LoginResponse(
-    //     serverResponse.username,
-    //     serverResponse.groupmember,
-    //     serverResponse.user_credentials_is_valid,
-    //     serverResponse.php_session_is_active
-    //   ) : console.error(`Missing expected properties`)
-
-    // return new Promise(function(resolve, reject) {
-    //   resolve(valuereturn)
-    // })
-
-    
-
-    return
-        
-
-    // // console.log(serverResponse);
-    // const loginResponse = new LoginResponse(serverResponse.username,serverResponse.groupmember,serverResponse.user_credentials_is_valid)
-    // return loginResponse
+    return result
   }
 }
