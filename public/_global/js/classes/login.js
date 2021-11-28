@@ -48,14 +48,12 @@ export default class Login extends Interface {
 
   async getValidateUserCredentials(username, password) {
 
-    console.log("evaluating");
+    // console.log("evaluating");
 
     const loginFomula = {
       email: username,
       password: password
     }
-
-
 
     const functioncall = 'get_validated_user_credentials'
     const url = `https://steengede.com/controller/login.php?functioncall=${functioncall}`
@@ -73,13 +71,21 @@ export default class Login extends Interface {
     const serverResponse = await this.callServerByFetchReturnObject(url, options)
 
     const requiredModelProperties = ['email', 'user_credentials_is_valid', 'php_session_is_active']
+    const importedModel = new LoginResponse();
+    // console.log(importedModel);
+    // console.log(new LoginResponse());
+    // const loginResponse = await this.setModel(serverResponse, model)
 
-    const loginResponse = await this.setModel(serverResponse, model)
 
-    const result = await this.testIfServerResponseIsEqualToModel(requiredModelProperties, serverResponse)
-    console.log(result)
+    const result = await this.getJavascriptModel(
+      serverResponse,
+      new LoginResponse()
+    )
 
-    console.log(serverResponse);
+
+    // console.log(result)
+
+    // console.log(serverResponse);
     
     
     // const valuereturn = (result) ? 
