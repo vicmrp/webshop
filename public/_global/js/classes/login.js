@@ -65,6 +65,7 @@ export default class Login extends Interface {
       serverResponse,
       new LoginResponse()
     )
+ 
     return result
   }
 }

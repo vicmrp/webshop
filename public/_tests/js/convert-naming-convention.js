@@ -2,42 +2,79 @@ String.prototype.replaceAt = function(index, replacement) {
   return this.substr(0, index) + replacement + this.substr(index + replacement.length);
 }
 
+class LoginResponse {
+  constructor(
+    email, 
+    userCredentialsIsValid, 
+    phpSessionIsActive
+  )
+  {
+    this.email = email
+    this.userCredentialsIsValid = userCredentialsIsValid
+    this.phpSessionIsActive = phpSessionIsActive
+  }
+}
 
-const returnConvertedPhpModel = (phpModel) => {
-  const _phpPropertyNames = Object.keys(phpModel)
 
-  function convertPropertyNameConvetionFromPhpToJs(propertyName) {
-    while ( propertyName.indexOf('_') != -1 ) {
-      const index = propertyName.indexOf('_')
-    
-      function replaceLowercaseToUppercase(propertyName) {
-        return propertyName.replaceAt(index+1, propertyName.substring(index+1, index+2).toUpperCase())
+const getJavascriptModel = (phpModel, javascriptModel) => {
+
+  const getConvertedPhpModel = (phpModel) => {
+    let convertedPhpModel = phpModel
+    const phpModelPropertyNames = Object.keys(phpModel)
+
+    function getJavascriptPropertyName(phpPropertyName) {
+
+
+
+      while ( phpPropertyName.indexOf('_') != -1 ) {
+        const index = phpPropertyName.indexOf('_')
+      
+        function replaceLowercaseToUppercase(phpPropertyName) {
+          return phpPropertyName.replaceAt(index+1, phpPropertyName.substring(index+1, index+2).toUpperCase())
+        }
+      
+        function removeUnderscore(phpPropertyName) {
+          return phpPropertyName.slice(0,index) + phpPropertyName.slice(index + 1)
+        }
+      
+        phpPropertyName = replaceLowercaseToUppercase(phpPropertyName)
+        phpPropertyName = removeUnderscore(phpPropertyName)
+      
       }
-    
-      function removeUnderscore(propertyName) {
-        return propertyName.slice(0,index) + propertyName.slice(index + 1)
-      }
-    
-      propertyName = replaceLowercaseToUppercase(propertyName)
-      propertyName = removeUnderscore(propertyName)
-    
+      return phpPropertyName
     }
-    return propertyName
+
+
+    phpModelPropertyNames.forEach((propertyName) => {
+      const javascriptPropertyName = getJavascriptPropertyName(propertyName)  
+      if (javascriptPropertyName != propertyName)
+      {
+        phpModel[javascriptPropertyName] = phpModel[propertyName]
+        delete phpModel[propertyName]
+      }
+    })
+    convertedPhpModel = phpModel
+    return convertedPhpModel
   }
 
-  _phpPropertyNames.forEach((item) => {
-    const javascriptPropertyName = convertPropertyNameConvetionFromPhpToJs(item)    
-    if (javascriptPropertyName != item)
-    {
-      phpModel[javascriptPropertyName] = phpModel[item]
-      delete phpModel[item]
+  const convertedPhpModel = getConvertedPhpModel(phpModel)
+
+  for (const [javascriptModelProperty, javascriptModelValue] of Object.entries(javascriptModel)) {
+    for (const [convertedPhpModelProperty, convertedPhpModelValue] of Object.entries(convertedPhpModel)) {        
+      if (javascriptModelProperty === convertedPhpModelProperty)
+        javascriptModel[javascriptModelProperty] = convertedPhpModelValue
     }
-  })
-  return phpModel
+  }
+
+
+  // return new Promise(function(resolve, reject) {
+  //   resolve(javascriptModel);
+  // })
+  return javascriptModel
 }
 
 const json = '{"email": "test@steengede.com", "user_credentials_is_valid": "true", "php_session_is_active": "true"}'
 const phpModel = JSON.parse(json)
 
-const result = returnConvertedPhpModel(phpModel)
+const result = getJavascriptModel(phpModel, new LoginResponse)
 console.log(result);

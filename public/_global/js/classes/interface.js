@@ -24,47 +24,55 @@ export default class Interface {
   
   getJavascriptModel(phpModel, javascriptModel) {
 
-    const returnConvertedPhpModel = (phpModel) => {
-      const _phpPropertyNames = Object.keys(phpModel)
-    
-      function convertPropertyNameConvetionFromPhpToJs(propertyName) {
-        while ( propertyName.indexOf('_') != -1 ) {
-          const index = propertyName.indexOf('_')
+    const getConvertedPhpModel = (phpModel) => {
+      let convertedPhpModel = phpModel
+      const phpModelPropertyNames = Object.keys(phpModel)
+  
+      function getJavascriptPropertyName(phpPropertyName) {
+  
+  
+  
+        while ( phpPropertyName.indexOf('_') != -1 ) {
+          const index = phpPropertyName.indexOf('_')
         
-          function replaceLowercaseToUppercase(propertyName) {
-            return propertyName.replaceAt(index+1, propertyName.substring(index+1, index+2).toUpperCase())
+          function replaceLowercaseToUppercase(phpPropertyName) {
+            return phpPropertyName.replaceAt(index+1, phpPropertyName.substring(index+1, index+2).toUpperCase())
           }
         
-          function removeUnderscore(propertyName) {
-            return propertyName.slice(0,index) + propertyName.slice(index + 1)
+          function removeUnderscore(phpPropertyName) {
+            return phpPropertyName.slice(0,index) + phpPropertyName.slice(index + 1)
           }
         
-          propertyName = replaceLowercaseToUppercase(propertyName)
-          propertyName = removeUnderscore(propertyName)
+          phpPropertyName = replaceLowercaseToUppercase(phpPropertyName)
+          phpPropertyName = removeUnderscore(phpPropertyName)
         
         }
-        return propertyName
+        return phpPropertyName
       }
-    
-      _phpPropertyNames.forEach((item) => {
-        const javascriptPropertyName = convertPropertyNameConvetionFromPhpToJs(item)    
-        if (javascriptPropertyName != item)
+  
+  
+      phpModelPropertyNames.forEach((propertyName) => {
+        const javascriptPropertyName = getJavascriptPropertyName(propertyName)  
+        if (javascriptPropertyName != propertyName)
         {
-          phpModel[javascriptPropertyName] = phpModel[item]
-          delete phpModel[item]
+          phpModel[javascriptPropertyName] = phpModel[propertyName]
+          delete phpModel[propertyName]
         }
       })
-      return phpModel
+      convertedPhpModel = phpModel
+      return convertedPhpModel
     }
-
-    const convertedPhpModel = returnConvertedPhpModel(phpModel)
+  
+    const convertedPhpModel = getConvertedPhpModel(phpModel)
+  
     for (const [javascriptModelProperty, javascriptModelValue] of Object.entries(javascriptModel)) {
       for (const [convertedPhpModelProperty, convertedPhpModelValue] of Object.entries(convertedPhpModel)) {        
         if (javascriptModelProperty === convertedPhpModelProperty)
           javascriptModel[javascriptModelProperty] = convertedPhpModelValue
       }
     }
-
+  
+  
     return new Promise(function(resolve, reject) {
       resolve(javascriptModel);
     })
