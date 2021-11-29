@@ -17,11 +17,8 @@ $g_db_conn              = json_decode(file_get_contents(__DIR__.'/../secret/db_c
 // misc funktioner
 require_once 'library.php';
 
+if (session_status() === PHP_SESSION_NONE) session_start();
 
-// _DISABLED = 0
-// _NONE = 1
-// _ACTIVE = 2
-if (session_status() != 2) session_start();
 
 // ----- namespaces - inkludere alle klasserne ----- //
 $directories = new RecursiveDirectoryIterator(_from_top_folder().'/_classes');

@@ -10,7 +10,6 @@ if (session_status() === PHP_SESSION_NONE) {
   session_start();  
 }
 
-
 $session = new Session\Session();
 $o_order_item_1 = new Order_Item\Order_Item("cat6 UTP Dataudtag RJ45 1-stik - Hvid", "77632", 2320, 6);
 $session->order->add_order_item($o_order_item_1);
