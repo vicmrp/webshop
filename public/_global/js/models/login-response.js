@@ -1,12 +1,14 @@
 export default class LoginResponse {
   constructor(
-    email, 
+    username, 
     userCredentialsIsValid, 
-    phpSessionIsActive
+    groupmember,
+    userSessionVariableIsset
   )
   {
-    this.email = email
+    this.username = username
+    this.groupmember = groupmember
     this.userCredentialsIsValid = userCredentialsIsValid
-    this.phpSessionIsActive = phpSessionIsActive
+    this.userSessionVariableIsset = userSessionVariableIsset
   }
 }

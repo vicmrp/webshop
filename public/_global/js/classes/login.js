@@ -45,21 +45,22 @@ export default class Login extends Interface {
   async getValidateUserCredentials(username, password) {
 
     const loginFomula = {
-      email: username,
+      username: username,
       password: password
     }
 
     const functioncall = 'get_validated_user_credentials'
     const url = `https://steengede.com/controller/login.php?functioncall=${functioncall}`
     const body = JSON.stringify(loginFomula)
-
     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: body
-    }    
+    }
+
+
     const serverResponse = await this.callServerByFetchReturnObject(url, options)
     const result = await this.getJavascriptModel(
       serverResponse,

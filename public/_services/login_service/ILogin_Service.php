@@ -1,12 +1,11 @@
 <?php
 namespace vezit\_services\login_service;
 
-use vezit\_repositories\user as User;
-use vezit\_dto\user\resquest as Request;
-use vezit\_dto\user\response as Response;
+use vezit\_dto\login\resquest as Login_Request;
+use vezit\_dto\login\response as Login_Response;
 
 interface ILogin_Service {
 
-  public function validate_user_credentials(Request\Login_Request $login_request) : Response\Login_Response;
+  public function validate_user_credentials(Login_Request\Login_Request $login_request) : Login_Response\Login_Response;
 
 }

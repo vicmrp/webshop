@@ -3,39 +3,38 @@ namespace vezit\_services\login_service;
 
 require __DIR__.'/../../global-requirements.php';
 
-use vezit\_repositories\user as User;
-use vezit\_dto\user\resquest as Request;
-use vezit\_dto\user\response as Response;
-use vezit\_classes\error as Error;
+use vezit\_dto\login\resquest as Login_Request;
+use vezit\_dto\login\response as Login_Response;
+use vezit\_repositories\active_directory as Repository;
 
 
 class Login_Service implements ILogin_Service {
+  
 
-  public function validate_user_credentials(Request\Login_Request $login_request) : Response\Login_Response {
+  public function validate_user_credentials(Login_Request\Login_Request $login_request, $unit_test=false) : Login_Response\Login_Response {
+    $login_response = new Login_Response\Login_Response();
+    $active_directory = new Repository\Active_Directory();
 
-    $user = new User\User();
-    
-    $result = $user->get_user_by_email($login_request->email);
-    $password_varify = password_verify($login_request->password, $result->password);
-    $login_response = new Response\Login_Response();
-    $login_response->email = $result->email;
-
-    $login_response->user_credentials_is_valid = $password_varify ? true : false;
-
-
-    $login_response->php_session_is_active = (session_status() === 2) ? true : false;
-
-
+    $login_response->username =  $login_request->username;
+    $login_response->groupmember = $login_request->groupmember;
+    $login_response->varified = ($unit_test) ? true : (bool)$active_directory->credentials_verified($login_request);
     return $login_response;
   }
 
+  public function set_login_session_response($login_response) : bool {
+    $_SESSION['login_session_response'] = json_encode($login_response);
+    
+
+    // $_SESSION['login_session_response'] = new Login_Response\Login_Response();
+    // $_SESSION['login_session_response']->username = $login_response->username;
+    // $_SESSION['login_session_response']->groupmember = $login_response->groupmemberM;
+    // $_SESSION['login_session_response']->varified = $login_response->varified;
+    // $_SESSION['login_session_response']->login_session_response_isset = isset($_SESSION['login_session_response']);
+    
+    return isset($_SESSION['login_session_response']);
+  }
+
+  public function get_login_session_response() {
+    return ($_SESSION['login_session_response']) ? json_decode($_SESSION['login_session_response']) : json_decode('{"test":"HelloWorld"}');
+  }
 }
-
-
-// // php -f _services/login_service/Login_Service.php
-// $login_request = new Request\Login_Request();
-// $login_request->email = 'test@steengede.com';
-// $login_request->password = 'Passw0rd';
-// $login_service = new Login_Service();
-// $result = $login_service->validate_user_credentials($login_request);
-// var_dump($result);

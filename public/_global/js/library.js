@@ -64,3 +64,14 @@ async function getOrSetSessionObj()
     resolve(result)
   })
 }
+
+const runGlobalSequence = async () => {
+  // Start session
+  
+
+  // Is User logged in?
+
+  //
+ 
+  console.log('running global sequence');
+}
