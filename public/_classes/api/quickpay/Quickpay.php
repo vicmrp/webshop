@@ -60,17 +60,20 @@ class Quickpay
 
   // 3. Check payment status
   // -------------------------------------------------------------------------- //
-  // public function call_get_paymentstatus()
-  // {
-  //   $id = $this->payment->id;
-  //   $apikey = $this->apikey;
-  //   $url = "https://api.quickpay.net/payments/$id";
-  //   $paymentstatus = 
-  //   shell_exec("curl -u ':$apikey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X GET $url 2> /dev/null");
-  //   $this->payment = json_decode($paymentstatus);
-  // }
-
+  public function call_get_payments() : object
+  {
+    global $g_quickpay_apikey;
+    $apikey = $g_quickpay_apikey;
+    $url = "https://api.quickpay.net/payments";
+    $paymentstatus =
+    shell_exec("curl -u ':$apikey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X GET $url 2> /dev/null");
+    return (object)json_decode($paymentstatus, false);
+  }
   // -------------------------------------------------------------------------- //
+
+
+
+  
 
 
 

@@ -20,15 +20,17 @@ class Endpoint implements IEndpoint
 
   public function set_expected_get_parameters(array $expected_get_parameters) : void
   {
+    
     foreach ($expected_get_parameters as $parameter) {
-      if(array_key_exists($parameter, $_GET))
-      {
+
+      if(array_key_exists($parameter, $_GET)) {
         $this->get_parameter->$parameter = $_GET[$parameter];
-      } 
+      }
       else {
         $error_message = "expected GET parameter ($parameter) does not exist.";
         new Error\Error($this->controller_file_location, $error_message, $fatal_error=true);
       }
+
     }
   }
 

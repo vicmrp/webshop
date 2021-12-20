@@ -1,13 +1,13 @@
 <?php
 
-namespace vezit\_repositories\user;
+namespace vezit\_repositories\user_repository;
 
 require __DIR__.'/../../global-requirements.php';
 
 use vezit\_entities\user as Entity;
 use vezit\_classes\error as Error;
 
-class User implements IUser {
+class User_Repository implements IUser_Repository {
 
   private $db_conn;
 
@@ -45,11 +45,11 @@ class User implements IUser {
     }
 
     $entity = $result->fetch_assoc();
-    
+        
     $user = new Entity\User();
     $user->id = $entity['Id'];
     $user->email = $entity['Email'];
-    $user->password = $entity['Password'];
+    $user->hash = $entity['Hash'];
     $user->role = $entity['Role'];
 
     return $user;
@@ -59,8 +59,3 @@ class User implements IUser {
     return new stdClass;
   }
 }
-
-// php -f _repositories/user/User.php
-// $user = new User();
-// $result = $user->get_user_by_email('victor.reipur@gmail.com');
-// var_dump($result);

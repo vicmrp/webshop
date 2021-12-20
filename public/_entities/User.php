@@ -6,7 +6,7 @@ class User {
 
   public $id = null;
   public $email;
-  public $password;
+  public $hash;
   public $role = null;
 
 }

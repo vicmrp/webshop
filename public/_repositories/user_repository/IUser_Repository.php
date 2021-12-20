@@ -1,11 +1,11 @@
 <?php
-namespace vezit\_repositories\user;
+namespace vezit\_repositories\user_repository;
 
 require __DIR__.'/../../global-requirements.php';
 
 use vezit\_entities\user as Entity;
 
-interface IUser {
+interface IUser_Repository {
 
   public function get_user_by_id(int $id) : object;
   public function get_user_by_email(string $email) : Entity\User;

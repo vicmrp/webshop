@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../../global-requirements.php';
 
 use vezit\_classes\db_conn as Db_Conn;
 use vezit\_classes\session\customer as Customer;

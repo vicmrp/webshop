@@ -14,26 +14,11 @@ $endpoint->set_expected_get_parameters($required_get_parameters);
 
 
 switch ($endpoint->get_parameter->functioncall) {
-
-  case 'get_validated_user_credentials':
-
-    $endpoint->set_expected_body_properties(array('username', 'password'));
-    $login_request = new Login_Request\Login_Request();
-    $login_request->username = $endpoint->body->username;
-    $login_request->password = $endpoint->body->password;
-
-    $login_service = new Service\Login_Service();
-    $login_response = $login_service->validate_user_credentials($login_request);
-    $response = $login_response;    
+  case 'value':
+    # code...
     break;
-
   default:
     $error_message = "Unknown functioncall: " . $endpoint->get_parameter->functioncall;
     new Error\Error(__FILE__, $error_message, $fatal_error=true);
     break;
 }
-
-
-
-
-echo json_encode($response, JSON_PRETTY_PRINT);
