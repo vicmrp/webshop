@@ -11,5 +11,12 @@
             "url": "https://steengede.com/login/",
             "webRoot": "${workspaceFolder}"
         },
+        {
+            "name": "Admin",
+            "request": "launch",
+            "type": "pwa-msedge",
+            "url": "https://steengede.com/admin/",
+            "webRoot": "${workspaceFolder}"
+        }
     ]
 }

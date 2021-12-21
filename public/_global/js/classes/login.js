@@ -7,11 +7,6 @@ export default class Login extends Interface {
   #iUsername
   #iPassword
   #iButton
-  #username = null
-  #userCredentialsIsValid = false
-
-
-
   
   constructor(iUsername, iPassword, iButton) {
     super()
@@ -29,17 +24,14 @@ export default class Login extends Interface {
     })
 
     this.#iButton.addEventListener("click",async () => {
-      const result = await this.getValidateUserCredentials(this.#iUsername.value, this.#iPassword.value)
+      const result = await this.getValidateUserCredentials(
+        this.#iUsername.value, this.#iPassword.value
+        )
       console.log(result);
     })
   }
 
-
-  async get_login_status() {
-    const url = `http://tspa2.byg.dtu.dk/interface.php?functioncall=get_login_status`
-    const response = await this.callServerByFetchReturnObject(url)
-    return response
-  }
+  
 
 
   async getValidateUserCredentials(username, password) {
@@ -66,7 +58,6 @@ export default class Login extends Interface {
       serverResponse,
       new LoginResponse()
     )
- 
     return result
   }
 }

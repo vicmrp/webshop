@@ -27,6 +27,12 @@ switch ($endpoint->get_parameter->functioncall) {
     $response = $login_response;    
     break;
 
+  case 'logout':
+    $login_service = new Service\Login_Service();
+    $logout_response = $login_service->logout();
+    $response = $logout_response;
+    break;
+
   default:
     $error_message = "Unknown functioncall: " . $endpoint->get_parameter->functioncall;
     new Error\Error(__FILE__, $error_message, $fatal_error=true);
@@ -35,5 +41,5 @@ switch ($endpoint->get_parameter->functioncall) {
 
 
 
-
+header('Content-Type: application/json; charset=utf-8');
 echo json_encode($response, JSON_PRETTY_PRINT);

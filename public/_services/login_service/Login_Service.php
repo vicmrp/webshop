@@ -15,22 +15,23 @@ class Login_Service implements ILogin_Service {
     $user_repository = new User_Repository\User_Repository();
     
     $user_entity = $user_repository->get_user_by_email($login_request->username);
+    $access_granted = password_verify($login_request->password, $user_entity->hash);
+
+    if ($access_granted) $_SESSION['session_var_active'] = true;  
 
     $login_response = new Login_Response\Login_Response();
     $login_response->username =  $login_request->username;
-    $login_response->access_granted = password_verify($login_request->password, $user_entity->hash) ? true : false;    
+    $login_response->access_granted = $access_granted ? true : false;
+    $login_response->session_var_active = $_SESSION['session_var_active'];
+    
     return $login_response;
-
   }
 
-  public function set_login_session_response($login_response) : bool {
-    $_SESSION['login_session_response'] = json_encode($login_response);
+  public function logout() : Login_Response\Logout_Response {
+    $logout_response = new Login_Response\Logout_Response();
+    if (isset($_SESSION['session_var_active']))
+      unset($_SESSION['session_var_active']);
     
-    
-    return isset($_SESSION['login_session_response']);
-  }
-
-  public function get_login_session_response() {
-    return ($_SESSION['login_session_response']) ? json_decode($_SESSION['login_session_response']) : json_decode('{"test":"HelloWorld"}');
+    return $logout_response;
   }
 }
