@@ -33,6 +33,12 @@ switch ($endpoint->get_parameter->functioncall) {
     $response = $logout_response;
     break;
 
+  case 'check_if_user_is_logged_in':
+    $login_service = new Service\Login_Service();
+    $login_response = $login_service->check_if_user_is_logged_in();
+    $response = $login_response;   
+    break;
+
   default:
     $error_message = "Unknown functioncall: " . $endpoint->get_parameter->functioncall;
     new Error\Error(__FILE__, $error_message, $fatal_error=true);

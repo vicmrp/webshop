@@ -27,10 +27,22 @@ class Login_Service implements ILogin_Service {
     return $login_response;
   }
 
-  public function logout() : Login_Response\Logout_Response {
-    $logout_response = new Login_Response\Logout_Response();
+  public function check_if_user_is_logged_in() : Login_Response\Is_User_Logged_In_Response {
+
+    $is_user_logged_in_response = new Login_Response\Is_User_Logged_In_Response();
+
+    $is_user_logged_in_response->user_is_logged_in = isset($_SESSION['session_var_active']) ? true : false;
+
+    return $is_user_logged_in_response;
+
+  }
+
+  public function logout() : Login_Response\Is_User_Logged_In_Response {
+    $logout_response = new Login_Response\Is_User_Logged_In_Response();
     if (isset($_SESSION['session_var_active']))
       unset($_SESSION['session_var_active']);
+
+    $logout_response->user_is_logged_in = false;
     
     return $logout_response;
   }

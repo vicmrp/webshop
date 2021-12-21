@@ -1,5 +1,6 @@
 import Interface from './interface.js'
 import LoginResponse from '../models/login-response.js'
+import IsUserLoggedInResponse from '../models/is-user-logged-in-response.js'
 
 export default class Login extends Interface {
 
@@ -8,9 +9,10 @@ export default class Login extends Interface {
   #iPassword
   #iButton
   
-  constructor(iUsername, iPassword, iButton) {
-    super()
+  constructor() { super() }
 
+
+  addEventListeners(iUsername, iPassword, iButton) {
     this.#iUsername = iUsername,
     this.#iPassword = iPassword,
     this.#iButton   = iButton
@@ -27,11 +29,23 @@ export default class Login extends Interface {
       const result = await this.getValidateUserCredentials(
         this.#iUsername.value, this.#iPassword.value
         )
+
+      if (result.accessGranted === true)  {
+
+        // const currentUrl = location.href
+        const url = new URL(location.href)
+        const comingFrom = url.searchParams.get("coming_from")
+
+
+        const redirection = (comingFrom !== null) ? comingFrom : '/home/'
+        location.replace(`https://${location.hostname}${redirection}`)
+      }
       console.log(result);
     })
   }
 
-  
+
+
 
 
   async getValidateUserCredentials(username, password) {
@@ -59,5 +73,54 @@ export default class Login extends Interface {
       new LoginResponse()
     )
     return result
+  }
+
+
+
+
+  async checkIfUserIsLoggedIn() {
+
+    const functioncall = 'check_if_user_is_logged_in'
+    const url = `https://steengede.com/controller/login.php?functioncall=${functioncall}`
+    const body = null
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: body
+    }
+
+    const serverResponse = await this.callServerByFetchReturnObject(url, options)
+    const result = await this.getJavascriptModel(
+      serverResponse,
+      new IsUserLoggedInResponse()
+    )
+
+    return result
+  }
+
+  async requestLogoutUser() {
+    
+    // const result = (IsUserLoggedInResponse.userIsLoggedIn === true) ? true : 
+    const functioncall = 'logout'
+    const url = `https://steengede.com/controller/login.php?functioncall=${functioncall}`
+    const body = null
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: body
+    }
+
+
+    const serverResponse = await this.callServerByFetchReturnObject(url, options)
+    const result = await this.getJavascriptModel(
+      serverResponse,
+      new IsUserLoggedInResponse()
+    )
+    return result
+
   }
 }
