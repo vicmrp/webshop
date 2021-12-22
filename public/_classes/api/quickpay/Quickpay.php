@@ -72,10 +72,15 @@ class Quickpay
   // -------------------------------------------------------------------------- //
 
 
-
+  public function call_get_payment_by_id(int $id) : object {
+    global $g_quickpay_apikey;
+    $apikey = $g_quickpay_apikey;
+    $url = "https://api.quickpay.net/payments/$id";
+    $paymentstatus =
+    shell_exec("curl -u ':$apikey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X GET $url 2> /dev/null");
+    return (object)json_decode($paymentstatus, false);
+  }
   
-
-
 
   // Callback - en automatisk udgave af call_get_paymentstatus
   // quickpay kalder denne funktion nar en betaling er gennemført 

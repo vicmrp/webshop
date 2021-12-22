@@ -11,50 +11,54 @@ login.checkIfUserIsLoggedIn().then(isUserLoggedInResponse => {
 
 
 
-// const admin = new Admin()
+const admin = new Admin()
 
 
-// admin.getAllPayments().then(object => {
+admin.getAllPayments().then(object => {
 
-//   const main = document.getElementsByTagName('main')[0];
-//   const tbl = document.createElement('table');
-//   const tbdy = document.createElement('tbody');
-//   const trHeader = document.createElement('tr')
-//   tbdy.appendChild(trHeader)
-//   tbl.appendChild(tbdy)
-//   main.appendChild(tbl)
+  const main = document.getElementById('main_get-payments');
+  const tbl = document.createElement('table');
+  const tbdy = document.createElement('tbody');
+  const trHeader = document.createElement('tr')
+  tbdy.appendChild(trHeader)
+  tbl.appendChild(tbdy)
+  main.appendChild(tbl)
 
-//   const headers = ['id', 'order_id', 'accepted'] 
-//   headers.forEach(element => {
-//     const child = document.createElement("th")
-//     child.innerHTML = element
-//     trHeader.appendChild(child)
-//   })
+  const headers = ['id', 'order_id', 'accepted'] 
+  headers.forEach(element => {
+    const child = document.createElement("th")
+    child.innerHTML = element
+    trHeader.appendChild(child)
+  })
 
- 
-//   for (const [key, nestedObject] of Object.entries(object)) {
-//     const tr = document.createElement('tr')
 
-//     const id = document.createElement('td')
-//     const orderId = document.createElement('td')
-//     const accepted = document.createElement('td')
+  for (const [key, nestedObject] of Object.entries(object)) {
 
-//     id.innerHTML = nestedObject.id
+    const tr = document.createElement('tr')
+
+    const id = document.createElement('td')
+    const orderId = document.createElement('td')
+    const accepted = document.createElement('td')
+
+    id.innerHTML = nestedObject.id
     
-//     orderId.innerHTML = nestedObject.order_id
-//     accepted.innerHTML = nestedObject.accepted
-//     tr.appendChild(id)
-//     tr.appendChild(orderId)
-//     tr.appendChild(accepted)
+    orderId.innerHTML = nestedObject.order_id
+    accepted.innerHTML = nestedObject.accepted
+    tr.appendChild(id)
+    tr.appendChild(orderId)
+    tr.appendChild(accepted)
 
-//     tbdy.appendChild(tr)
-
-
-
-
-//   }
+    tbdy.appendChild(tr)
 
 
 
-// })
+
+  }
+
+
+
+})
+
+
+admin.getPaymentById(275689149).then(data => {console.log(data);})
 

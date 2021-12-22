@@ -28,6 +28,12 @@ function get_response() : object {
     case 'get_all_payments':
       $quickpay = new Quickpay();
       return $quickpay->call_get_payments();
+    
+    case 'get_payment_by_id':
+      $quickpay = new Quickpay();
+      
+      $endpoint->set_expected_body_properties(array('id'));
+      return $quickpay->call_get_payment_by_id((int)$endpoint->body->id);
     default:
       $error_message = "Unknown functioncall: " . $endpoint->get_parameter->functioncall;
       new Error\Error(__FILE__, $error_message, $fatal_error=true);

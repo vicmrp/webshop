@@ -16,6 +16,7 @@ class Endpoint implements IEndpoint
   {
     $this->controller_file_location = $controller_file_location;
     $this->get_parameter = new \stdClass();
+    $this->body = new \stdClass();
   }
 
   public function set_expected_get_parameters(array $expected_get_parameters) : void
