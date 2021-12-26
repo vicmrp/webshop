@@ -1,6 +1,6 @@
 <?php 
 
-require_once __DIR__.'/../global-requirements.php';
+require_once __DIR__.'/../../global-requirements.php';
 
 use vezit\classes\api\endpoint as E;
 use vezit\classes\api\quickpay\Quickpay;
