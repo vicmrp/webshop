@@ -56,6 +56,6 @@ class User_Repository implements IUser_Repository {
   }
 
   public function get_user_by_role(string $email) : object {
-    return new stdClass;
+    return (object)"";
   }
 }

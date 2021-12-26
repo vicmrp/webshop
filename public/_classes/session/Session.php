@@ -33,6 +33,18 @@ class Session implements \JsonSerializable, ISession {
 
     $this->session_id = self::new_session_id();
     $this->order->set_order_id($this->session_id);
+
+    // Check if session already exist
+    if (isset($_SESSION["session_json"]) === true) {
+      $session_stored_object = json_decode($_SESSION["session_json"]);
+      $this->construct_session_from_repository($session_stored_object);
+    }
+
+    // $_SESSION["session_json"] = json_encode($session);
+    // return $session;
+
+
+
   }
 
   public static function new_session_id() : string {
