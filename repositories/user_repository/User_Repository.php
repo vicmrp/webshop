@@ -1,11 +1,11 @@
 <?php
 
-namespace vezit\_repositories\user_repository;
+namespace vezit\repositories\user_repository;
 
 require __DIR__.'/../../global-requirements.php';
 
-use vezit\_entities\user as Entity;
-use vezit\_classes\error as Error;
+use vezit\entities\user as Entity;
+use vezit\classes\error as Error;
 
 class User_Repository implements IUser_Repository {
 

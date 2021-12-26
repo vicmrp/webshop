@@ -1,6 +1,6 @@
 <?php
 
-namespace vezit\_dto\login\response;
+namespace vezit\dto\login\response;
 
 class Logout_Response {
   public $username = null;

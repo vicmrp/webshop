@@ -1,5 +1,5 @@
 <?php
-namespace vezit\_dto\product\response;
+namespace vezit\dto\product\response;
 
 
 class Product_Response

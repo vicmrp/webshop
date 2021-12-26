@@ -2,10 +2,10 @@
 
 require_once __DIR__.'/../global-requirements.php';
 
-use vezit\_classes\api\endpoint as E;
-use vezit\_classes\error as Error;
-use vezit\_dto\login\resquest as Login_Request;
-use vezit\_services\login_service as Service;
+use vezit\classes\api\endpoint as E;
+use vezit\classes\error as Error;
+use vezit\dto\login\resquest as Login_Request;
+use vezit\services\login_service as Service;
 
 
 $required_get_parameters = array('functioncall');

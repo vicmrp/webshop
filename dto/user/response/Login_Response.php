@@ -1,6 +1,6 @@
 <?php
 
-namespace vezit\_dto\user\response;
+namespace vezit\dto\user\response;
 
 class Login_Response {
   public $email = null;

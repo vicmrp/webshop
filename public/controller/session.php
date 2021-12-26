@@ -2,11 +2,11 @@
 
 require_once __DIR__.'/../global-requirements.php';
 
-use vezit\_classes\api\endpoint as E;
-use vezit\_classes\api\quickpay\Quickpay;
-use vezit\_classes\error as Error;
-use vezit\_classes\session as Session;
-use vezit\_classes\session\order\order_item as Order_Item;
+use vezit\classes\api\endpoint as E;
+use vezit\classes\api\quickpay\Quickpay;
+use vezit\classes\error as Error;
+use vezit\classes\session as Session;
+use vezit\classes\session\order\order_item as Order_Item;
 header('Content-Type: application/json; charset=utf-8');
 
 

@@ -1,5 +1,5 @@
 <?php
-namespace vezit\_classes\session\order\order_item;
+namespace vezit\classes\session\order\order_item;
 
 
 

@@ -8,8 +8,8 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Namespaces
-use vezit\_classes\api\quickpay as Quickpay;
-use vezit\_classes\repositories\session as R_Session;
+use vezit\classes\api\quickpay as Quickpay;
+use vezit\classes\repositories\session as R_Session;
 
 $session = $_SESSION["session"];
 $session_id = $session->get_session_id();

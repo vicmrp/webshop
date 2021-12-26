@@ -1,9 +1,9 @@
 <?php
-namespace vezit\_classes\session\shipment;
+namespace vezit\classes\session\shipment;
 
 require_once __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
-use vezit\_classes\session\shipment\address as Address;
+use vezit\classes\session\shipment\address as Address;
 
 
 class Shipment implements \JsonSerializable {

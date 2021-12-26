@@ -1,5 +1,5 @@
 <?php
-namespace vezit\_classes\api\dawa;
+namespace vezit\classes\api\dawa;
 
 class Dawa {
 

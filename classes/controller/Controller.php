@@ -1,5 +1,5 @@
 <?php 
-namespace vezit\_classes\controller;
+namespace vezit\classes\controller;
 
 class Controller
 {

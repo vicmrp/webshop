@@ -1,9 +1,9 @@
 <?php
-namespace vezit\_repositories\user_repository;
+namespace vezit\repositories\user_repository;
 
 require __DIR__.'/../../global-requirements.php';
 
-use vezit\_entities\user as Entity;
+use vezit\entities\user as Entity;
 
 interface IUser_Repository {
 

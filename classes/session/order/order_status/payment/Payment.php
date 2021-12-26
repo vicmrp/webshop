@@ -1,5 +1,5 @@
 <?php
-namespace vezit\_classes\session\order\order_status\payment;
+namespace vezit\classes\session\order\order_status\payment;
 
 class Payment implements \JsonSerializable {
   private $accepted = false;

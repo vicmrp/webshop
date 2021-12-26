@@ -1,6 +1,6 @@
 <?php
-namespace vezit\_classes\login;
-use vezit\_classes\dto\login\response as response;
+namespace vezit\classes\login;
+use vezit\classes\dto\login\response as response;
 
 
 interface ILogin {

@@ -1,10 +1,10 @@
 <?php
 
-namespace vezit\_classes\api\endpoint;
+namespace vezit\classes\api\endpoint;
 
 require __DIR__.'/../../../global-requirements.php';
 
-use vezit\_classes\error as Error;
+use vezit\classes\error as Error;
 
 class Endpoint implements IEndpoint
 {

@@ -1,10 +1,10 @@
 <?php
-namespace vezit\_classes\session\order;
+namespace vezit\classes\session\order;
 require_once __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
-use vezit\_classes\session\order\order_item as Order_Item;
-use vezit\_classes\session\order\order_status as Order_Status;
-// use vezit\_classes\session\order\order_status\payment as Payment;
+use vezit\classes\session\order\order_item as Order_Item;
+use vezit\classes\session\order\order_status as Order_Status;
+// use vezit\classes\session\order\order_status\payment as Payment;
 
 class Order implements \JsonSerializable {
 

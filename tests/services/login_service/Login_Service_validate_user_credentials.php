@@ -1,9 +1,9 @@
 <?php
-namespace vezit\_services\login_service;
+namespace vezit\services\login_service;
 
 require __DIR__.'/../../../global-requirements.php';
 
-use vezit\_dto\login\resquest as Request;
+use vezit\dto\login\resquest as Request;
 
 $username = 'test@steengede.com';
 $password = 'Passw0rd';

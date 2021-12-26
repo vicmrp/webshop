@@ -1,6 +1,6 @@
 <?php
 
-namespace vezit\_dto\login\resquest;
+namespace vezit\dto\login\resquest;
 
 class Login_Request {
   public $username;

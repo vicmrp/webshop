@@ -1,11 +1,11 @@
 <?php
-namespace vezit\_services\login_service;
+namespace vezit\services\login_service;
 
 require __DIR__.'/../../global-requirements.php';
 
-use vezit\_dto\login\resquest as Login_Request;
-use vezit\_dto\login\response as Login_Response;
-use vezit\_repositories\user_repository as User_Repository;
+use vezit\dto\login\resquest as Login_Request;
+use vezit\dto\login\response as Login_Response;
+use vezit\repositories\user_repository as User_Repository;
 
 class Login_Service implements ILogin_Service {
   

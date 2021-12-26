@@ -2,10 +2,10 @@
 
 require_once __DIR__.'/../global-requirements.php';
 
-use vezit\_classes\api\endpoint as E;
-use vezit\_classes\api\quickpay\Quickpay;
-use vezit\_classes\error as Error;
-use vezit\_services\login_service as Login_Service;
+use vezit\classes\api\endpoint as E;
+use vezit\classes\api\quickpay\Quickpay;
+use vezit\classes\error as Error;
+use vezit\services\login_service as Login_Service;
 
 
 // Requires login

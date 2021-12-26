@@ -1,6 +1,6 @@
 <?php
 
-namespace vezit\_repositories\product_repository;
+namespace vezit\repositories\product_repository;
 
 interface IProduct_Repository {
   public function get_all() : array;

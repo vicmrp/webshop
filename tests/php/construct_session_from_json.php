@@ -2,10 +2,10 @@
 // ----- global ----- //
 require_once __DIR__.'/../../global-requirements.php'; // _from_top_folder().
 
-use vezit\_classes\session as Session;
+use vezit\classes\session as Session;
 
 $session = new Session\Session();
-use vezit\_classes\repositories\session as R_Session;
+use vezit\classes\repositories\session as R_Session;
 
 function find_session($session_id) : object {
   $r_session = new R_Session\Session;
