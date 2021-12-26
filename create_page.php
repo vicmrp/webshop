@@ -8,7 +8,7 @@ $pagename = $argv[1];
 
 $page_location = array(
   "location_relativ_to_this_script" => __DIR__ . "/public",
-  "global_file_location", "../_global/html",
+  "global_file_location", "../global/html",
   "local_file_location", "."
 );
 
@@ -77,7 +77,7 @@ function create_index_page($path, $subpages_filenames) : void {
   // php scriptet echo'er en fil struktur som gør at du har en konsistent header og footer i pa din side
 
   // fil lokationer
-  \$global_file_location = \"../_global/html\";
+  \$global_file_location = \"../global/html\";
   \$local_file_location = \".\";
 
   // ------ Denne del echo'er hele html siden ------ //

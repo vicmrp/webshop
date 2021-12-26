@@ -1,4 +1,4 @@
-import Login from '../_global/js/classes/login.js'
+import Login from '../global/js/classes/login.js'
 
 const iUsername = document.getElementById('_main-login_username')
 const iPassword = document.getElementById('_main-login_password')

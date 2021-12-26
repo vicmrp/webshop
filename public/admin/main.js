@@ -1,5 +1,5 @@
-import Admin from '../_global/js/classes/admin.js'
-import Login from '../_global/js/classes/login.js';
+import Admin from '../global/js/classes/admin.js'
+import Login from '../global/js/classes/login.js';
 
 const main = async () => {
   const login = new Login()
