@@ -1,0 +1,63 @@
+{
+    "session_id": "4385162",
+    "customer": {
+        "fullname": "Victor Reipur",
+        "address": {
+            "street": "Vinkelvej 12D 3tv",
+            "postal_code": "2800",
+            "city": "Lyngby"
+        },
+        "contact": {
+            "phone": "26129604",
+            "email": "victor.reipur@gmail.com"
+        },
+        "company": {
+            "cvr_number": "",
+            "company_name": ""
+        }
+    },
+    "order": {
+        "order_id": "4385162",
+        "order_status": {
+            "payment": {
+                "accepted": true,
+                "currency": "DKK",
+                "amount": 31760
+            },
+            "email": {
+                "confirmation_sent": false,
+                "invoice_sent": false
+            }
+        },
+        "order_items": [
+            {
+                "product_name": "cat6 UTP Dataudtag RJ45 1-stik - Hvid",
+                "product_id": "77632",
+                "price": 2320,
+                "quantity": 6
+            },
+            {
+                "product_name": "cat 5e U\/UTP Netv\u00e6rkskabel samler.",
+                "product_id": "CCGP89005WT",
+                "price": 960,
+                "quantity": 4
+            },
+            {
+                "product_name": "kabelsamler",
+                "product_id": "2312314",
+                "price": 1000,
+                "quantity": 14
+            }
+        ]
+    },
+    "shipment": {
+        "tracking_number": null,
+        "order_collected": false,
+        "address": {
+            "street_name": "Jernbanepladsen",
+            "street_number": "49",
+            "postal_code": "2800",
+            "city": "KGS. LYNGBY"
+        }
+    }
+}

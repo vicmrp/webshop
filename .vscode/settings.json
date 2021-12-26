@@ -1,6 +1,6 @@
 {
     // Specifies the color theme used in the workbench.
-    "workbench.colorTheme": "Monokai-Contrast",
+    "workbench.colorTheme": "Default Dark+",
     "liveServer.settings.port": 5502,
     "[JavaScript]": {
         "editor.tabSize": 2
