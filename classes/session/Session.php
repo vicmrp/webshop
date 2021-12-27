@@ -38,9 +38,7 @@ class Session implements \JsonSerializable, ISession {
     // Check if session already exist
     if (isset($_SESSION["active_session_response"]) === true) {
       $active_session_response = json_decode($_SESSION["active_session_response"]);
-      $this->construct_session_from_repository($active_session_response->session);
-    } else {
-      $this->set_storing_session_response();
+      $this->construct_session_from_repository($active_session_response);
     }
   }
 
@@ -48,7 +46,9 @@ class Session implements \JsonSerializable, ISession {
   {
     $session_response = new Session_Response\Session_Response();
     $session_response->session = $this;
-    $_SESSION["active_session_response"] = json_encode($session_response);
+    $json_active_session_response = json_encode($session_response, JSON_PRETTY_PRINT);
+
+    $_SESSION["active_session_response"] = $json_active_session_response;
   }
 
   public static function new_session_id() : string {
@@ -80,32 +80,37 @@ class Session implements \JsonSerializable, ISession {
     return $this->session_id;
   }
 
-  public function construct_session_from_repository(object $session) : void 
+  public function construct_session_from_repository(object $active_session_response) : void 
   {
 
-    $this->session_id = $session->session_id;    
-    $this->customer->set_fullname($session->customer->fullname);
-    $this->customer->contact->set_phone($session->customer->contact->phone);
-    $this->customer->contact->set_email($session->customer->contact->email);
-    $this->customer->address->set_street($session->customer->address->street);
-    $this->customer->address->set_postal_code($session->customer->address->postal_code);
-    $this->customer->address->set_city($session->customer->address->city);
-    $this->customer->company->set_cvr_number($session->customer->company->cvr_number);
-    $this->customer->company->set_company_name($session->customer->company->company_name);
+    $this->session_id = $active_session_response->session->session_id;    
+    $this->customer->set_fullname($active_session_response->session->customer->fullname);
+    $this->customer->contact->set_phone($active_session_response->session->customer->contact->phone);
+    $this->customer->contact->set_email($active_session_response->session->customer->contact->email);
+    $this->customer->address->set_street($active_session_response->session->customer->address->street);
+    $this->customer->address->set_postal_code($active_session_response->session->customer->address->postal_code);
+    $this->customer->address->set_city($active_session_response->session->customer->address->city);
+    $this->customer->company->set_cvr_number($active_session_response->session->customer->company->cvr_number);
+    $this->customer->company->set_company_name($active_session_response->session->customer->company->company_name);
 
-    $this->order->set_order_id($session->order->order_id);
-    $this->order->order_status->payment->set_accepted($session->order->order_status->payment->accepted);
-    $this->order->order_status->payment->set_amount($session->order->order_status->payment->amount);
-    $this->order->order_status->email->set_confirmation_sent($session->order->order_status->email->confirmation_sent);
-    $this->order->order_status->email->set_invoice_sent($session->order->order_status->email->invoice_sent);
-    $this->order->set_order_items($session->order->order_items);
+    $this->order->set_order_id($active_session_response->session->order->order_id);
+    $this->order->order_status->payment->set_accepted($active_session_response->session->order->order_status->payment->accepted);
+    $this->order->order_status->payment->set_amount($active_session_response->session->order->order_status->payment->amount);
+    $this->order->order_status->email->set_confirmation_sent($active_session_response->session->order->order_status->email->confirmation_sent);
+    $this->order->order_status->email->set_invoice_sent($active_session_response->session->order->order_status->email->invoice_sent);
+    // $this->order->set_order_items($active_session_response->session->order->order_items);
+    foreach ($active_session_response->session->order->order_items as $order_item) {
+      $order_item->product_name = $order_item->product_name . "fiisk";
+      $new_order_item = new Order_Item\Order_Item($order_item->product_name, $order_item->product_id, $order_item->price, $order_item->quantity);
+      $this->order->add_order_item($new_order_item);
+    }
     
-    $this->shipment->set_tracking_number($session->shipment->tracking_number);
-    $this->shipment->set_order_collected($session->shipment->order_collected);
-    $this->shipment->address->set_street_name($session->shipment->address->street_name);
-    $this->shipment->address->set_street_number($session->shipment->address->street_number);
-    $this->shipment->address->set_postal_code($session->shipment->address->postal_code);
-    $this->shipment->address->set_city($session->shipment->address->city);
+    $this->shipment->set_tracking_number($active_session_response->session->shipment->tracking_number);
+    $this->shipment->set_order_collected($active_session_response->session->shipment->order_collected);
+    $this->shipment->address->set_street_name($active_session_response->session->shipment->address->street_name);
+    $this->shipment->address->set_street_number($active_session_response->session->shipment->address->street_number);
+    $this->shipment->address->set_postal_code($active_session_response->session->shipment->address->postal_code);
+    $this->shipment->address->set_city($active_session_response->session->shipment->address->city);
   }
 
   public function jsonSerialize() {

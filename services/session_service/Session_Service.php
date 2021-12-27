@@ -25,12 +25,17 @@ class Session_Service
 
 
     // is item already added to object?
+
+    // var_dump($this->session->order);
+    // die("");
     if ($this->session->order->get_order_item($product_id)->order_item === null) {
       $new_order_item = new Order_Item\Order_Item($product_reponse->name, $product_reponse->id, $product_reponse->price, $new_quantity);
       $this->session->order->add_order_item($new_order_item);
     } else {
       $this->session->order->set_change_quantity_order_item($product_id, $new_quantity);
     }
+
+    $this->session->set_storing_session_response();
     return $this->get_session();
   }
 

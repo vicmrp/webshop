@@ -5,10 +5,10 @@ namespace vezit\classes\session\order\order_item;
 
 class Order_Item implements \JsonSerializable {
 
-  private $product_name;
-  private $product_id;
-  private $price;
-  private $quantity;
+  public $product_name;
+  public $product_id;
+  public $price;
+  public $quantity;
 
   public function __construct($product_name, $product_id, $price, $quantity) {
     $this->product_name = $product_name;
