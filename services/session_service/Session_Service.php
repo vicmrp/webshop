@@ -17,8 +17,8 @@ class Session_Service
     $this->session = new Session\Session();
   }
 
-  public function add_order_item(int $product_id, int $new_quantity) : Session_Response\Session_Response
-  {
+  public function add_order_item(int $product_id, int $new_quantity) : Session_Response\Session_Response {
+    
     // find item in database
     $product_service = new Product_Service\Product_Service();
     $product_reponse = $product_service->get_by_id($product_id);

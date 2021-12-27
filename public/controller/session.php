@@ -25,15 +25,14 @@ function get_response() : object {
   switch ($endpoint->get_parameter->functioncall) {
 
     case 'get_session':
-
       return $session_service->get_session();
     
     case 'add_order_item':
-      
       $endpoint->set_expected_body_properties(array('product_id', 'quantity'));
       $product_id = (int)$endpoint->body->product_id;
-      $quantity = (int)$endpoint->body->quantity;   
-      return $session_service->add_order_item($product_id, $quantity); 
+      $quantity = (int)$endpoint->body->quantity;
+      $session_response = $session_service->add_order_item($product_id, $quantity);
+      return $session_response;
 
     case 'destroy_session':
       session_destroy();
@@ -41,9 +40,9 @@ function get_response() : object {
     
     case 'get_payment_by_id':
       $quickpay = new Quickpay();
-      
       $endpoint->set_expected_body_properties(array('id'));
       return $quickpay->call_get_payment_by_id((int)$endpoint->body->id);
+
     default:
       $error_message = "Unknown functioncall: " . $endpoint->get_parameter->functioncall;
       new Error\Error(__FILE__, $error_message, $fatal_error=true);

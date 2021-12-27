@@ -15,6 +15,17 @@ class Order implements \JsonSerializable {
   
   public function __construct() {
     $this->order_status = new Order_Status\Order_Status();
+
+    if (isset($_SESSION["active_session_response"]) === true) {
+      $active_session_response = json_decode($_SESSION["active_session_response"]);
+      $this->construct_order_from_repository($active_session_response);
+    }
+  }
+
+  public function construct_order_from_repository($active_session_response) {
+    $this->order_id = $active_session_response->session->order->order_id;
+    $this->order_status = $active_session_response->session->order->order_status;
+    $this->order_items = $active_session_response->session->order->order_items;
   }
 
   public function set_order_id($order_id)
@@ -37,8 +48,7 @@ class Order implements \JsonSerializable {
     return $this->order_status;
   }
 
-  public function add_order_item(object $order_item)
-  {
+  public function add_order_item(object $order_item) : void {
     array_push($this->order_items, $order_item);
     $this->order_status->payment->set_accumulated_amount($this->order_items);
   }
@@ -69,17 +79,13 @@ class Order implements \JsonSerializable {
     return $this->order_items;
   }
 
-  // public function set_order_item($product_id) : Order_Item_Response\Order_Item_Response
-  // {
-
-  // }
-
   public function get_order_item(int $product_id) : Order_Item_Response\Order_Item_Response {
     $order_item_response = new Order_Item_Response\Order_Item_Response();
     for ($i=0; $i < count($this->order_items); $i++) {
       if($this->order_items[$i]->get_product_id() === $product_id)
-        $order_item_response->order_item =  $this->order_items[$i];
+        $order_item_response->order_item = $this->order_items[$i];
     }
+    var_dump($order_item_response);
     return $order_item_response;
   }
 
