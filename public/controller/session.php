@@ -7,6 +7,8 @@ use vezit\classes\api\quickpay\Quickpay;
 use vezit\classes\error as Error;
 use vezit\classes\session as Session;
 use vezit\classes\session\order\order_item as Order_Item;
+use vezit\services\product_service as Product_Service;
+use vezit\services\session_service as Session_Service;
 header('Content-Type: application/json; charset=utf-8');
 
 
@@ -18,23 +20,20 @@ function get_response() : object {
   $required_get_parameters = array('functioncall');
   $endpoint = new E\Endpoint($controller_file_location = __FILE__);
   $endpoint->set_expected_get_parameters($required_get_parameters);
+  $session_service = new Session_Service\Session_Service();
 
   switch ($endpoint->get_parameter->functioncall) {
 
     case 'get_session':
 
-      $session = new Session\Session();
-      return $session;
-
+      return $session_service->get_session();
     
     case 'add_order_item':
+      
       $endpoint->set_expected_body_properties(array('product_id', 'quantity'));
-
-      $session = new Session\Session();
-      $o_order_item_1 = new Order_Item\Order_Item("cat6 UTP Dataudtag RJ45 1-stik - Hvid", "77632", 2320, 6);
-      $session->order->add_order_item($o_order_item_1);
-      return $session;
-
+      $product_id = (int)$endpoint->body->product_id;
+      $quantity = (int)$endpoint->body->quantity;   
+      return $session_service->add_order_item($product_id, $quantity); 
 
     case 'destroy_session':
       session_destroy();

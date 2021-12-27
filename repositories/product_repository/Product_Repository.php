@@ -3,6 +3,8 @@ namespace vezit\repositories\product_repository;
 
 require __DIR__.'/../../global-requirements.php';
 
+use vezit\entities\product as Entity;
+
 class Product_Repository implements IProduct_Repository {
 
   // Create connection
@@ -26,12 +28,23 @@ class Product_Repository implements IProduct_Repository {
     return (array)$json;
   }
 
-  public function find(string $id) : object
-  {
+  public function find(int $id) : Entity\Product {
+    
+    $sql = "SELECT * FROM `Product` WHERE Product.Id=?";
+    $stmt = $this->db_conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $entity = $result->fetch_assoc();
 
+    $response = new Entity\Product();
+    $response->id = $entity['Id'];
+    $response->name = $entity['Name'];
+    $response->price = $entity['Price'];
+    $response->quantity = $entity['Quantity'];
+    $response->category_id = $entity['CategoryId'];
 
-    return json_decode(file_get_contents(_from_top_folder()."/temp_database/product/$id.json"));
-
+    return $response;
 
   }
 

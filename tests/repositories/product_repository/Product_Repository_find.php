@@ -6,9 +6,7 @@ require __DIR__.'/../../../global-requirements.php';
 
 
 
-
-
 // php -f tests/repositories/product_repository/Product_Repository_get_all.php
 $product_repository = new Product_Repository();
-$result = $product_repository->get_all();
+$result = $product_repository->find(1);
 var_dump($result);

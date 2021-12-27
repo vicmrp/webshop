@@ -4,6 +4,7 @@ require_once __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_f
 
 use vezit\classes\session\order\order_item as Order_Item;
 use vezit\classes\session\order\order_status as Order_Status;
+use vezit\dto\order_item\response as Order_Item_Response;
 // use vezit\classes\session\order\order_status\payment as Payment;
 
 class Order implements \JsonSerializable {
@@ -42,14 +43,44 @@ class Order implements \JsonSerializable {
     $this->order_status->payment->set_accumulated_amount($this->order_items);
   }
 
+  public function set_change_quantity_order_item(int $product_id, $new_quantity) : Order_Item_Response\Order_Item_Response {
+    // $order_item_response = new Order_Item_Response\Order_Item_Response();
+
+    
+    if($this->get_order_item($product_id)->order_item === null)
+      return $this->get_order_item($product_id);
+
+    for ($i=0; $i < count($this->order_items); $i++) {
+      if($this->order_items[$i]->get_product_id() === $product_id)
+        $this->order_items[$i]->quantity = $new_quantity;
+    }
+    
+    return $this->get_order_item($product_id);
+
+  }
+
   public function set_order_items($order_items)
   {
     $this->order_items = $order_items;
   }
 
-  public function get_order_item()
+  public function get_order_items()
   {
-    return $this->order_item;
+    return $this->order_items;
+  }
+
+  // public function set_order_item($product_id) : Order_Item_Response\Order_Item_Response
+  // {
+
+  // }
+
+  public function get_order_item(int $product_id) : Order_Item_Response\Order_Item_Response {
+    $order_item_response = new Order_Item_Response\Order_Item_Response();
+    for ($i=0; $i < count($this->order_items); $i++) {
+      if($this->order_items[$i]->get_product_id() === $product_id)
+        $order_item_response->order_item =  $this->order_items[$i];
+    }
+    return $order_item_response;
   }
 
   // Includes private properties in json_encode()
