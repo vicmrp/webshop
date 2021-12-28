@@ -15,26 +15,9 @@ class Order implements \JsonSerializable {
   public function __construct() {
     $this->order_status = new Order_Status\Order_Status();
 
-    // if (isset($_SESSION["active_session_response"]) === true) {
-    //   $active_session_response = json_decode($_SESSION["active_session_response"]);
-    //   $this->construct_order_from_repository($active_session_response);
-    // }
   }
 
-  public function construct_order_from_repository(object $active_session_response) {
-    $this->set_order_id = $active_session_response->session->order->order_id;
-    // die(var_dump($active_session_response->session->order->order_items));
 
-    // $order_items = $active_session_response->session->order->order_items;
-    // foreach ($order_items as $order_item) {
-    //   $order_item->product_name = $order_item->product_name . "fiisk";
-    //   $new_order_item = new Order_Item\Order_Item($order_item->product_name, $order_item->product_id, $order_item->price, $order_item->quantity);
-    //   $this->add_order_item($new_order_item);
-    // }
-    // var_dump($order_items[0]);
-    // die($this->order_items[0]->get_product_name());
-    // $this->order_items = $active_session_response->session->order->order_items;
-  }
 
   public function set_order_id($order_id) {
     $this->order_id = $order_id;
@@ -56,13 +39,10 @@ class Order implements \JsonSerializable {
 
   public function add_order_item(Order_Item\Order_Item $order_item) : void {
     array_push($this->order_items, $order_item);
-    // var_dump($order_item);
     $this->order_status->payment->set_accumulated_amount($this->order_items);
   }
 
-  public function set_change_quantity_order_item(int $product_id, $new_quantity) : Order_Item_Response\Order_Item_Response {
-    // $order_item_response = new Order_Item_Response\Order_Item_Response();
-
+  public function set_change_quantity_order_item(int $product_id, int $new_quantity) : Order_Item_Response\Order_Item_Response {
     
     if($this->get_order_item($product_id)->order_item === null)
       return $this->get_order_item($product_id);
@@ -70,6 +50,7 @@ class Order implements \JsonSerializable {
     for ($i=0; $i < count($this->order_items); $i++) {
       if($this->order_items[$i]->get_product_id() === $product_id)
         $this->order_items[$i]->quantity = $new_quantity;
+        if ($new_quantity <= 0) unset($this->order_items[$i]); // deletes product if quantity is zero
     }
     
     return $this->get_order_item($product_id);

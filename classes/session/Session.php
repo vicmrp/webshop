@@ -82,7 +82,6 @@ class Session implements \JsonSerializable, ISession {
 
   public function construct_session_from_repository(object $active_session_response) : void 
   {
-
     $this->session_id = $active_session_response->session->session_id;    
     $this->customer->set_fullname($active_session_response->session->customer->fullname);
     $this->customer->contact->set_phone($active_session_response->session->customer->contact->phone);
@@ -98,11 +97,8 @@ class Session implements \JsonSerializable, ISession {
     $this->order->order_status->payment->set_amount($active_session_response->session->order->order_status->payment->amount);
     $this->order->order_status->email->set_confirmation_sent($active_session_response->session->order->order_status->email->confirmation_sent);
     $this->order->order_status->email->set_invoice_sent($active_session_response->session->order->order_status->email->invoice_sent);
-    // $this->order->set_order_items($active_session_response->session->order->order_items);
-    foreach ($active_session_response->session->order->order_items as $order_item) {
-      $order_item->product_name = $order_item->product_name . "fiisk";
-      $new_order_item = new Order_Item\Order_Item($order_item->product_name, $order_item->product_id, $order_item->price, $order_item->quantity);
-      $this->order->add_order_item($new_order_item);
+    foreach ((array)$active_session_response->session->order->order_items as $order_item) {
+      $this->order->add_order_item(new Order_Item\Order_Item($order_item->product_name, $order_item->product_id, $order_item->price, $order_item->quantity));
     }
     
     $this->shipment->set_tracking_number($active_session_response->session->shipment->tracking_number);
