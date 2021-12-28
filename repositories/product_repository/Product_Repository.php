@@ -5,6 +5,7 @@ require __DIR__.'/../../global-requirements.php';
 
 use vezit\entities\product as Entity;
 use vezit\classes\error as Error;
+use vezit\entities\product\Products;
 
 class Product_Repository implements IProduct_Repository {
 
@@ -20,14 +21,25 @@ class Product_Repository implements IProduct_Repository {
     // -- sql -- //
   }
 
-  public function get_all() : array {
+  public function get_all() : Entity\Products {
     $sql = "SELECT * FROM `Product`";
     $stmt = $this->db_conn->prepare($sql);
     $stmt->execute();
     $result = $stmt->get_result();
-    $json = mysqli_fetch_all ($result, MYSQLI_ASSOC);
+    $enitities = mysqli_fetch_all ($result, MYSQLI_ASSOC);
     
-    return (array)$json;
+    $products = new Entity\Products();
+    foreach ($enitities as $key => $entity) {
+      $product = new Entity\Product();
+      $product->id = $entity['Id'];
+      $product->name = $entity['Name'];
+      $product->price = $entity['Price'];
+      $product->quantity = $entity['Quantity'];
+      $product->category_id = $entity['CategoryId'];
+      array_push($products->list_of_products, $product);
+    }
+
+    return $products;
   }
 
   public function find(int $id) : Entity\Product {
@@ -52,7 +64,6 @@ class Product_Repository implements IProduct_Repository {
     $response->category_id = $entity['CategoryId'];
 
     return $response;
-
   }
 
   public function insert(object $product) : void
