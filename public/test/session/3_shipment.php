@@ -38,5 +38,4 @@ $session->shipment->address->set_street_number($street_number);
 $session->shipment->address->set_postal_code($postal_code);
 $session->shipment->address->set_city($city);
 
-
 echo "<pre>" . json_encode($session, JSON_PRETTY_PRINT) . "</pre>";
