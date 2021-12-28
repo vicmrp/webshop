@@ -23,6 +23,10 @@ class Payment implements \JsonSerializable {
     $this->amount = $amount;
   }
 
+  // public function get_amount() : int {
+  //   return $this->amount;
+  // }
+
   public function set_accumulated_amount(array $order_items) : void
   {
     // Opdater amount fæltet    
