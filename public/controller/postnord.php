@@ -29,7 +29,17 @@ function get_response() : object {
 
       $postnord_service = new Postnord_Service\Postnord_Service();
 
-      return $postnord_service->get_service_points();;
+      return (object)$postnord_service->get_service_points();
+
+    case 'set_shipment_address':
+      $postnord_service = new Postnord_Service\Postnord_Service();
+      $endpoint->set_expected_body_properties(
+        array('index')
+      );
+
+      $index = $endpoint->body->index;
+      // return (object)"$index";
+      return $postnord_service->set_shipment_address($index);
       
     default:
       $error_message = "Unknown functioncall: " . $endpoint->get_parameter->functioncall;

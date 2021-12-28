@@ -32,13 +32,15 @@ class Session implements \JsonSerializable, ISession {
     $this->order = new Order\Order();
     $this->shipment = new Shipment\Shipment();
 
-    $this->session_id = self::new_session_id();
-    $this->order->set_order_id($this->session_id);
+
 
     // Check if session already exist
     if (isset($_SESSION["active_session_response"]) === true) {
       $active_session_response = json_decode($_SESSION["active_session_response"]);
       $this->construct_session_from_repository($active_session_response);
+    } else {
+      $this->session_id = self::new_session_id();
+      $this->order->set_order_id($this->session_id);
     }
   }
 

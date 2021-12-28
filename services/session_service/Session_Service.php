@@ -7,6 +7,7 @@ use vezit\dto\session\response as Session_Response;
 use vezit\classes\session\order\order_item as Order_Item;
 use vezit\services\product_service as Product_Service;
 use vezit\classes\error as Error;
+use vezit\services\postnord_service as Postnord_Service;
 
 require __DIR__.'/../../global-requirements.php';
 
@@ -30,8 +31,8 @@ class Session_Service
     $this->session->customer->address->set_city($customer_info['city']);
     $this->session->customer->company->set_cvr_number($customer_info['cvr_number']);
     $this->session->customer->company->set_company_name($customer_info['company_name']);
-
     $this->session->set_storing_session_response();
+
     return $this->get_session();
 
   }

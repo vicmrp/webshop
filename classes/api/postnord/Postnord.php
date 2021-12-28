@@ -34,6 +34,7 @@ class Postnord {
 
     for ($i=0; $i < count($service_points); $i++) {
       $postnord_service_point_response = new Response\Postnord_Service_Point_Response();
+      $postnord_service_point_response->index = $i;
       $postnord_service_point_response->street_name    = $postnord_response->servicePointInformationResponse->servicePoints[$i]->visitingAddress->streetName;
       $postnord_service_point_response->street_number  = $postnord_response->servicePointInformationResponse->servicePoints[$i]->visitingAddress->streetNumber;
       $postnord_service_point_response->postal_code    = $postnord_response->servicePointInformationResponse->servicePoints[$i]->visitingAddress->postalCode;
