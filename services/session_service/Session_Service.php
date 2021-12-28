@@ -19,6 +19,23 @@ class Session_Service
     $this->session = new Session\Session();
   }
 
+  public function set_customer(array $customer_info) : Session_Response\Session_Response
+  {
+    // $customer_info
+    $this->session->customer->set_fullname($customer_info['fullname']);
+    $this->session->customer->contact->set_phone($customer_info['phone']);
+    $this->session->customer->contact->set_email($customer_info['email']);
+    $this->session->customer->address->set_street($customer_info['street']);
+    $this->session->customer->address->set_postal_code($customer_info['postal_code']);
+    $this->session->customer->address->set_city($customer_info['city']);
+    $this->session->customer->company->set_cvr_number($customer_info['cvr_number']);
+    $this->session->customer->company->set_company_name($customer_info['company_name']);
+
+    $this->session->set_storing_session_response();
+    return $this->get_session();
+
+  }
+
   public function add_order_item(int $product_id, int $new_quantity) : Session_Response\Session_Response {
     
     // find item in database

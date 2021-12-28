@@ -43,6 +43,18 @@ function get_response() : object {
       $endpoint->set_expected_body_properties(array('id'));
       return $quickpay->call_get_payment_by_id((int)$endpoint->body->id);
 
+    case 'set_customer':
+      $endpoint->set_expected_body_properties(
+        array('fullname', 'phone', 'email', 'street', 'postal_code', 'city', 'cvr_number', 'company_name')
+      );
+
+      $customer_details = (array)$endpoint->body;
+      $session_service->set_customer($customer_details);
+      return $session_service->set_customer($customer_details);
+
+    // case: 'get_shipment':
+      
+
     default:
       $error_message = "Unknown functioncall: " . $endpoint->get_parameter->functioncall;
       new Error\Error(__FILE__, $error_message, $fatal_error=true);
