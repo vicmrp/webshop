@@ -1,5 +1,12 @@
 <?php
+
+
 namespace vezit\classes\api\dawa;
+use vezit\dto\dawa\response as Response;
+
+require __DIR__.'/../../../global-requirements.php';
+
+
 
 class Dawa {
 
@@ -13,11 +20,20 @@ class Dawa {
     //
     // Dokumentation
     // https://dawadocs.dataforsyningen.dk/dok/guide/datavask
-    public static function call_get_sanitized_address(string $street_name_and_house_number, string $postal_code)
+    public static function call_get_sanitized_address(string $street_name_and_house_number, string $postal_code) : Response\Sanitized_Address_Response
     {
         // $betegnelse = urlencode("$street_name_and_house_number" . ", " . "$postal_code");
         $betegnelse = urlencode("$street_name_and_house_number, $postal_code");
         $dawa_json_response = shell_exec("curl --location --request GET 'https://api.dataforsyningen.dk/datavask/adresser?betegnelse=$betegnelse' 2> /dev/null");
-        return json_decode($dawa_json_response);
+        
+        $dawa_response = json_decode($dawa_json_response);
+
+        $sanitized_address_response = new Response\Sanitized_Address_Response();  
+        $sanitized_address_response->city =             $dawa_response->resultater[0]->adresse->postnrnavn;
+        $sanitized_address_response->postal_code =      $dawa_response->resultater[0]->adresse->postnr;
+        $sanitized_address_response->street_name =      $dawa_response->resultater[0]->adresse->adresseringsvejnavn;
+        $sanitized_address_response->street_number =    $dawa_response->resultater[0]->adresse->husnr;
+
+        return $sanitized_address_response;
     }
 }
