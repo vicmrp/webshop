@@ -13,7 +13,8 @@ use vezit\classes\session\customer\company as Company;
 
 class Customer implements \JsonSerializable {
 
-  private $fullname;  
+  private $fullname = null;
+  private $customer_details_satisfied = null;
   // -- subclasses -- //
   public $address;
   public $contact;
@@ -29,9 +30,22 @@ class Customer implements \JsonSerializable {
 
   }
 
+  public function set_customer_details_satisfied($customer_details_satisfied) : void {
+    $this->customer_details_satisfied = $customer_details_satisfied;
+  }
+
+  public function get_customer_details_satisfied() {
+    return $this->customer_details_satisfied;
+  }
+
   public function set_fullname($fullname)
   {
     $this->fullname = $fullname;
+  }
+
+  public function get_fullname()
+  {
+    return $this->fullname;
   }
 
   public function set_contact($contact)

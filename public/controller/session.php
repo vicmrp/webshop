@@ -26,6 +26,13 @@ function get_response() : object {
 
     case 'get_session':
       return $session_service->get_session();
+
+    case 'remove_order_item':
+      $endpoint->set_expected_body_properties(array('product_id'));
+      $product_id = (int)$endpoint->body->product_id;
+      $session_response = $session_service->remove_order_item($product_id);
+      return $session_response;
+
     
     case 'add_order_item':
       $endpoint->set_expected_body_properties(array('product_id', 'quantity'));

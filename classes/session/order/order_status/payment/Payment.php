@@ -4,11 +4,23 @@ namespace vezit\classes\session\order\order_status\payment;
 class Payment implements \JsonSerializable {
   private $accepted = false;
   private $currency = 'DKK';
-  private $amount;
+  private $amount = null;
+  private $payment_details_satisfied = null;
 
   public function __construct() {
 
   }
+
+  public function set_payment_details_satisfied($payment_details_satisfied)
+  {
+    $this->payment_details_satisfied = $payment_details_satisfied;
+  }
+
+  public function get_payment_details_satisfied()
+  {
+    return $this->payment_details_satisfied;
+  }
+
 
   public function set_accepted(bool $accepted) : void {
     $this->accepted = $accepted;
@@ -23,9 +35,9 @@ class Payment implements \JsonSerializable {
     $this->amount = $amount;
   }
 
-  // public function get_amount() : int {
-  //   return $this->amount;
-  // }
+  public function get_amount() {
+    return $this->amount;
+  }
 
   public function set_accumulated_amount(array $order_items) : void
   {

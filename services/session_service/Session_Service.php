@@ -32,12 +32,33 @@ class Session_Service
     $this->session->customer->company->set_cvr_number($customer_info['cvr_number']);
     $this->session->customer->company->set_company_name($customer_info['company_name']);
     $this->session->set_storing_session_response();
-
     return $this->get_session();
-
   }
 
+  
+  
+  public function remove_order_item($product_id) : Session_Response\Session_Response
+  {
+      // find item in database
+      $product_service = new Product_Service\Product_Service();
+      $product_response = $product_service->get_by_id($product_id);
+
+      $this->session->order->remove_order_item($product_response->id);
+
+      if (count($this->session->order->get_order_items()) === 0) $this->session->order->order_status->payment->set_amount(0);
+      else $this->session->order->order_status->payment->set_accumulated_amount($this->session->order->get_order_items());
+
+      $this->session->set_storing_session_response();
+      return $this->get_session();
+  }
+  
+  
   public function add_order_item(int $product_id, int $new_quantity) : Session_Response\Session_Response {
+
+    if ($new_quantity <= 0) {
+      $error_message = "quantity cannot not be less than 0. When creating new product-object";
+      new Error\Error(__FILE__, $error_message, $fatal_error=true);
+    }
     
     // find item in database
     $product_service = new Product_Service\Product_Service();
@@ -45,13 +66,6 @@ class Session_Service
 
     // is item already added to object?
     if ($this->session->order->get_order_item($product_id)->order_item === null) {
-
-      if ($new_quantity <= 0) {
-        $error_message = "quantity cannot not be less than 0. When creating new product-object";
-        new Error\Error(__FILE__, $error_message, $fatal_error=false);
-        $this->session->set_storing_session_response();
-        return $this->get_session();
-      }
 
       $new_order_item = new Order_Item\Order_Item($product_reponse->name, $product_reponse->id, $product_reponse->price, $new_quantity);
       $this->session->order->add_order_item($new_order_item);
@@ -63,10 +77,41 @@ class Session_Service
     return $this->get_session();
   }
 
+  private function customer_is_satisfied() : bool {
+    if ($this->session->customer->get_fullname() === null) return false;
+    if ($this->session->customer->address->get_street() === null) return false;
+    if ($this->session->customer->address->get_postal_code() === null) return false;
+    if ($this->session->customer->address->get_city() === null) return false;
+
+    return true;
+  }
+
+  private function shipment_is_satisfied() : bool {
+    if ($this->session->shipment->address->get_street_name() === null) return false;
+    if ($this->session->shipment->address->get_street_number() === null) return false;
+    if ($this->session->shipment->address->get_postal_code() === null) return false;
+    if ($this->session->shipment->address->get_city() === null) return false;
+
+    return true;
+  }
+
+
+  private function payment_is_satisfied() : bool {
+    if ($this->session->order->order_status->payment->get_amount() === null) return false;
+
+    return true;
+  }
+
 
   public function get_session() : Session_Response\Session_Response {
-    $session_response = new Session_Response\Session_Response();    
-    $session_response->session = $this->session;    
+
+    $this->session->customer->set_customer_details_satisfied($this->customer_is_satisfied());
+    $this->session->shipment->set_shipment_details_satisfied($this->shipment_is_satisfied());
+    $this->session->order->order_status->payment->set_payment_details_satisfied($this->payment_is_satisfied());
+
+    $session_response = new Session_Response\Session_Response();
+    $session_response->session = $this->session;
+
     return $session_response;
   }
 }

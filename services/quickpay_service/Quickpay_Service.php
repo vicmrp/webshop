@@ -22,6 +22,20 @@ require __DIR__.'/../../global-requirements.php';
 class Quickpay_Service
 {
 
+  public function create_payment()
+  {
+
+    // check if customer details are satisfied
+
+    // check if shipment details are satisfied
+
+
+    $quickpay = new Quickpay();
+
+    // $quickpay-
+    
+  }
+
   public function get_payment_link()
   {
 

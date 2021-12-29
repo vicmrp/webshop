@@ -84,7 +84,8 @@ class Session implements \JsonSerializable, ISession {
 
   public function construct_session_from_repository(object $active_session_response) : void 
   {
-    $this->session_id = $active_session_response->session->session_id;    
+    $this->session_id = $active_session_response->session->session_id;
+    $this->customer->set_customer_details_satisfied($active_session_response->session->customer->customer_details_satisfied);
     $this->customer->set_fullname($active_session_response->session->customer->fullname);
     $this->customer->contact->set_phone($active_session_response->session->customer->contact->phone);
     $this->customer->contact->set_email($active_session_response->session->customer->contact->email);

@@ -5,6 +5,7 @@ require_once __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_f
 use vezit\classes\session\order\order_item as Order_Item;
 use vezit\classes\session\order\order_status as Order_Status;
 use vezit\dto\order_item\response as Order_Item_Response;
+use vezit\classes\error\Error;
 
 class Order implements \JsonSerializable {
 
@@ -16,7 +17,6 @@ class Order implements \JsonSerializable {
     $this->order_status = new Order_Status\Order_Status();
 
   }
-
 
 
   public function set_order_id($order_id) {
@@ -35,6 +35,19 @@ class Order implements \JsonSerializable {
   public function get_order_status()
   {
     return $this->order_status;
+  }
+
+  public function remove_order_item($product_id) : void
+  {
+    if($this->get_order_item($product_id)->order_item === null) {
+      $error_message = "there is no item to remove";
+      new Error(__FILE__, $error_message, $fatal_error=true);
+    }
+
+    for ($i=0; $i < count($this->order_items); $i++) {
+      if($this->order_items[$i]->get_product_id() === $product_id)
+        unset($this->order_items[$i]);
+    }
   }
 
   public function add_order_item(Order_Item\Order_Item $order_item) : void {
@@ -68,7 +81,7 @@ class Order implements \JsonSerializable {
   }
 
   public function get_order_item(int $product_id) : Order_Item_Response\Order_Item_Response {
-    $order_item_response = new Order_Item_Response\Order_Item_Response();
+    $order_item_response = new Order_Item_Response\Order_Item_Response();    
     for ($i=0; $i < count($this->order_items); $i++) {
       if($this->order_items[$i]->get_product_id() === $product_id)
         $order_item_response->order_item = $this->order_items[$i];

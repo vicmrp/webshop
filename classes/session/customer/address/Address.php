@@ -3,9 +3,9 @@ namespace vezit\classes\session\customer\address;
 
 class Address implements \JsonSerializable {
 
-  private $street;
-  private $postal_code;
-  private $city;
+  private $street = null;
+  private $postal_code = null;
+  private $city = null;
 
   public function __construct() {
 
@@ -36,7 +36,7 @@ class Address implements \JsonSerializable {
     $this->city = $city;
   }
 
-  public function get_city($city)
+  public function get_city()
   {
     return $this->city;
   }
