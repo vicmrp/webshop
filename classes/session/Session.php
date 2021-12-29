@@ -98,6 +98,8 @@ class Session implements \JsonSerializable, ISession {
     $this->order->set_order_id($active_session_response->session->order->order_id);
     $this->order->order_status->payment->set_accepted($active_session_response->session->order->order_status->payment->accepted);
     $this->order->order_status->payment->set_amount($active_session_response->session->order->order_status->payment->amount);
+    $this->order->order_status->payment->set_payment_details_satisfied($active_session_response->session->order->order_status->payment->payment_details_satisfied);
+    $this->order->order_status->payment->set_payment_quickpay_id($active_session_response->session->order->order_status->payment->payment_quickpay_id);
     $this->order->order_status->email->set_confirmation_sent($active_session_response->session->order->order_status->email->confirmation_sent);
     $this->order->order_status->email->set_invoice_sent($active_session_response->session->order->order_status->email->invoice_sent);
     foreach ((array)$active_session_response->session->order->order_items as $order_item) {
@@ -106,6 +108,7 @@ class Session implements \JsonSerializable, ISession {
     
     $this->shipment->set_tracking_number($active_session_response->session->shipment->tracking_number);
     $this->shipment->set_order_collected($active_session_response->session->shipment->order_collected);
+    $this->shipment->set_shipment_details_satisfied(true);
     $this->shipment->address->set_street_name($active_session_response->session->shipment->address->street_name);
     $this->shipment->address->set_street_number($active_session_response->session->shipment->address->street_number);
     $this->shipment->address->set_postal_code($active_session_response->session->shipment->address->postal_code);

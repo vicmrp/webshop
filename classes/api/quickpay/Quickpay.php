@@ -26,13 +26,13 @@ class Quickpay
   // 1. Create a new payment
   // https://learn.quickpay.net/tech-talk/guides/payments/#create-a-new-payment
   // -------------------------------------------------------------------------- //
-  public function call_set_payment(string $order_id) : void {
+  public function call_set_payment(string $order_id) : object {
     global $g_quickpay_apikey;
 
     $url = 'https://api.quickpay.net/payments';
     $apikey = $g_quickpay_apikey;
     $create_newpayment_json_response = shell_exec("curl -u ':$apikey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X POST -d '{\"order_id\":\"$order_id\",\"currency\":\"dkk\"}' $url 2> /dev/null");
-    $this->payment = json_decode($create_newpayment_json_response);
+    return json_decode($create_newpayment_json_response);
     // echo "<pre>" . json_encode($create_newpayment_json_response , JSON_PRETTY_PRINT) . "</pre>"; die();
   }
   // -------------------------------------------------------------------------- //

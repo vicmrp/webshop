@@ -5,10 +5,21 @@ class Payment implements \JsonSerializable {
   private $accepted = false;
   private $currency = 'DKK';
   private $amount = null;
+  private $payment_quickpay_id = null;
   private $payment_details_satisfied = null;
 
   public function __construct() {
 
+  }
+
+  public function set_payment_quickpay_id($payment_quickpay_id)
+  {
+    $this->payment_quickpay_id = $payment_quickpay_id;
+  }
+
+  public function get_payment_quickpay_id()
+  {
+    return $this->payment_quickpay_id;
   }
 
   public function set_payment_details_satisfied($payment_details_satisfied)

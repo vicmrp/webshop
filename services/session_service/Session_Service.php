@@ -13,7 +13,7 @@ require __DIR__.'/../../global-requirements.php';
 
 class Session_Service
 {
-  private $session;
+  public $session;
 
   public function __construct()
   {
