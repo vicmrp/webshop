@@ -26,7 +26,7 @@ class Quickpay
   // 1. Create a new payment
   // https://learn.quickpay.net/tech-talk/guides/payments/#create-a-new-payment
   // -------------------------------------------------------------------------- //
-  public function call_set_payment(string $order_id) : object {
+  public function call_create_payment(string $order_id) : object {
     global $g_quickpay_apikey;
 
     $url = 'https://api.quickpay.net/payments';
@@ -43,15 +43,17 @@ class Quickpay
   // 2. Authorize payment using a link
   // https://learn.quickpay.net/tech-talk/guides/payments
   // -------------------------------------------------------------------------- //
-  public function call_get_paymentlink(string $order_id, int $price) : void {
+  public function call_create_or_update_paymentlink(string $id, string $price) {
     
     global $g_quickpay_apikey;
     $apikey = $g_quickpay_apikey;    
-    $id = $this->payment->id;
+    $id = urlencode($id);
+    $price = urlencode($price);
     $url = "https://api.quickpay.net/payments/$id/link";
     $paymentlink = 
     shell_exec("curl -u ':$apikey' -H 'content-type:application/json' -H 'Accept-Version:v10' -X PUT -d '{\"amount\":\"$price\"}' $url 2> /dev/null");
-    $this->paymentlink = json_decode($paymentlink);
+    
+    return json_decode($paymentlink);
   }
   // -------------------------------------------------------------------------- //
 

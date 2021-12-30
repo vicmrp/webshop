@@ -45,10 +45,13 @@ function get_response() : object {
 
     case "create_payment":
 
-      $quickpay = new Quickpay_Service();
-      return $quickpay->create_payment();
+      $quickpay_service = new Quickpay_Service();
+      return $quickpay_service->create_payment();
 
 
+    case 'get_payment_link':
+      $quickpay_service = new Quickpay_Service();
+      return $quickpay_service->get_payment_link();
 
     default:
       $error_message = "Unknown functioncall: " . $endpoint->get_parameter->functioncall;

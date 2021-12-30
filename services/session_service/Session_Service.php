@@ -97,7 +97,8 @@ class Session_Service
 
 
   private function payment_is_satisfied() : bool {
-    if ($this->session->order->order_status->payment->get_amount() === null) return false;
+    if ($this->session->order->order_status->payment->get_amount() === null || 
+    $this->session->order->order_status->payment->get_amount() <= 0) return false;
 
     return true;
   }
@@ -108,7 +109,8 @@ class Session_Service
     $this->session->customer->set_customer_details_satisfied($this->customer_is_satisfied());
     $this->session->shipment->set_shipment_details_satisfied($this->shipment_is_satisfied());
     $this->session->order->order_status->payment->set_payment_details_satisfied($this->payment_is_satisfied());
-
+    $this->session->set_storing_session_response();
+    
     $session_response = new Session_Response\Session_Response();
     $session_response->session = $this->session;
 

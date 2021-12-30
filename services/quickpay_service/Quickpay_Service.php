@@ -59,13 +59,18 @@ class Quickpay_Service
     $quickpay = new Quickpay();
 
 
-    echo $this->session_service->session->order->get_order_id();
-    $test = $quickpay->call_set_payment($this->session_service->session->order->get_order_id());
-    die(var_dump($test));
+    // echo $this->session_service->session->order->get_order_id();
+    // $test = $quickpay->call_set_payment($this->session_service->session->order->get_order_id());
+    // die(var_dump($test));
 
     $this->session_service->session->order->order_status->payment->set_payment_quickpay_id($this->session_service->session->order->get_order_id());
-    $payment_quickpay_id = $quickpay->call_set_payment($this->session_service->session->order->get_order_id())->id;
-    $this->session->order->order_status->payment->set_payment_quickpay_id($payment_quickpay_id);
+    $create_payment_response = $quickpay->call_create_payment($this->session_service->session->order->get_order_id());
+    // echo $create_payment_response->id;
+    // echo $create_payment_response->merchant_id;
+    // die(json_encode($create_payment_response, JSON_PRETTY_PRINT));
+    
+    $this->session_service->session->order->order_status->payment->set_payment_quickpay_id($create_payment_response->id);
+    $this->session_service->session->set_storing_session_response();
 
     return $this->session_service->get_session();
 
@@ -76,15 +81,35 @@ class Quickpay_Service
   public function get_payment_link()
   {
 
+    // die(json_encode($this->session_service->session, JSON_PRETTY_PRINT));
+
+    if  ($this->session_service->session->customer->get_customer_details_satisfied() !== true) 
+      new Error(__FILE__, "customer details are not satisfied for payment", $fatal_error=true);
+
+    if  ($this->session_service->session->shipment->get_shipment_details_satisfied() !== true) 
+      new Error(__FILE__, "shipment details are not satisfied for payment", $fatal_error=true);
+
+    if  ($this->session_service->session->order->order_status->payment->get_payment_details_satisfied() !== true) 
+      new Error(__FILE__, "payment details are not satisfied for payment", $fatal_error=true);
+
+
+    if ($this->session_service->session->order->order_status->payment->get_payment_quickpay_id() === null)
+    {
+      $this->create_payment();
+    }
+
     // Get total price
-    $session = new Session();
-    $total_amount = $session->order->payment->get_accumulated_amount();
-    $order_id = $session->order->get_order_id();
+
+    $total_amount = (string)$this->session_service->session->order->order_status->payment->get_accumulated_amount();
+    $id = (string)$this->session_service->session->order->order_status->payment->get_payment_quickpay_id();
 
 
     $quickpay = new Quickpay();
+    $create_or_update_paymentlink_response = $quickpay->call_create_or_update_paymentlink($id, $total_amount);
 
-
+    // die(json_encode($create_or_update_paymentlink_response, JSON_PRETTY_PRINT));
+    // $this->session_service->session->set_storing_session_response();
+    return $create_or_update_paymentlink_response;
 
   }
 }
