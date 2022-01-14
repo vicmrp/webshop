@@ -1,0 +1,4 @@
+basket - overblik over indkøbskurv. Kig, Fjern, ændre
+customer_detailes - kundeoplysninger navn, addresse, kontaktoplysninger
+shipment_address - vælg pakke destination
+godkend din ordre.

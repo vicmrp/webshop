@@ -17,6 +17,13 @@
             "type": "pwa-msedge",
             "url": "https://steengede.com/admin/",
             "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Home",
+            "request": "launch",
+            "type": "pwa-msedge",
+            "url": "https://steengede.com/home/",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }
