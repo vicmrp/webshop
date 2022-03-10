@@ -18,10 +18,18 @@ const global = {
     const basket = new Basket()
     basket.addItem("cat6 UTP Dataudtag RJ45 1-stik - Hvid", "77632", 2320, 6)
     // basket.addItem("cat 5e U/UTP Netværkskabel samler.", "CCGP89005WT", 960, 4)
+  },
+
+  productService: () => {
+    const productService = new ProductService();
+    productService.getAllProducts().then(e => {
+      console.log(e);
+    })
+    
   }
   
 }
 
 global.header()
 global.basket()
-
+global.productService()

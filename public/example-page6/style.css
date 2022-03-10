@@ -30,6 +30,7 @@ main {
 .home-column-1-content > img {
   border-radius: 20px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
 }
 
 .home-column-1-content-firstname {
@@ -43,8 +44,8 @@ main {
 }
 
 .home-column-2-book {
-  width: 100%;
-  height: 50%;
+  width: 500px;
+  height: 320px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -53,26 +54,57 @@ main {
 .home-column-2-book-buybox-outer {
   width: 50%;
   height: 80%;
-  background-color: white;
-  border-radius: 20px;
+  background-color: #f2f2f2;
+  border-radius: 0px;
   border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
+
+.home-column-2-book-buybox-inner-picture {
+
+  height: auto;
+  text-align: center;
+}
+
 
 .home-column-2-book-buybox-inner-picture > * {
   max-width: 50%;
   height: auto;
+  text-align: center;
 }
 
 .home-column-2-book-buybox-inner-description {
   
 }
 
-.home-column-2-book-buybox-inner-price {
-
+.home-column-2-book-buybox-inner-container {
+  width: 200px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.home-column-2-book-buybox-inner-buy-button {
+.home-column-2-book-buybox-inner-container-price {
+  position: relative;
+  left: 20px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-family: sans-serif;
+  padding: 5px 7px;
+}
 
+.home-column-2-book-buybox-inner-container-buy-btn {
+  background-color: #f9a320;
+  border: 1px solid #fff;
+  padding: 5px 7px;
+  color: #fff;
+  box-shadow: 0 0 1px 1px rgb(249 163 32 / 50%);
+  border-radius: 4px;
 }
 
 .home-column-2-book-1 {
