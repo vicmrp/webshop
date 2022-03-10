@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [        
         {
-            "name": "Login",
+            "name": "Listen for XDebug",
             "request": "launch",
-            "type": "pwa-msedge",
-            "url": "https://steengede.com/login/",
-            "webRoot": "${workspaceFolder}"
+            "type": "php",
+            "port": 9000
         },
         {
-            "name": "Admin",
+            "name": "Launch currently open script",
+            "type": "php",
             "request": "launch",
-            "type": "pwa-msedge",
-            "url": "https://steengede.com/admin/",
-            "webRoot": "${workspaceFolder}"
+            "program": "${file}",
+            "cwd": "${fileDirname}",
+            "port": 9000
         }
     ]
 }

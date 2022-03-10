@@ -4,17 +4,24 @@ import Login from './login.js'
 // import IsUserLoggedInResponse from '../models/is-user-logged-in-response.js'
 
 export default class Header extends Interface {
-  #btnHeaderLogout
+  #homeBtn
+  #logoutBtn
 
-  constructor(btnHeaderLogout) { 
+  constructor(elements) { 
     super()
-    this.#btnHeaderLogout = btnHeaderLogout
+    this.#homeBtn   = elements.homeBtn
+    this.#logoutBtn = elements.logoutBtn
 
-    this.#btnHeaderLogout.addEventListener("click", async () => {
+
+    this.#logoutBtn.addEventListener("click", async () => {
       const login = new Login()
       login.requestLogoutUser().then(object => {
         console.log(object);
       })
+    })
+
+    this.#homeBtn.addEventListener("click", () => {
+      location.href = `${location.protocol}//${location.hostname}`
     })
   }
 }

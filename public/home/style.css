@@ -1,39 +1,26 @@
-main {
-  /* Positioning */
-  justify-content: center;
-  align-items: center;
-
-  /* Display & Box Model */
-  display: flex;
+body {
+  margin: 0;
   width: 100vw;
-  height: calc(100vh);
+  height: 100vh;
+}
+
+main {
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - 80px);
+  text-align: left;
+}
+
+.profile-container {
+  display: grid;
+}
+
+#profile-picture {
+  width: 80%;
+  max-width: 600px;
+
+}
+
+#profile-description-container {
   
-  /* Color */
-  background-color: white;
-  /* Text */
-
-  /* Other */
-}
-
-
-
-
-
-#product-div > div {
-  margin-top: 1vh;
-  border: 1px solid black;
-  height: 300px;
-  width: 200px;
-  /* border */
-
-
-}
-#product-div > div:hover {
-  cursor: pointer;
-}
-
-
-
-#product-div img {
-  max-width: 100px;
 }

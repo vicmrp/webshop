@@ -1,6 +1,8 @@
 /* Et skal kun bruge en - altså et id må kun bruges til et element */
 /* som udgangspunkt bruger man class'er til at style med og id til at scriptet med. */ 
 
+
+
 ._header_header {
     width: 100%;
     height:80px;

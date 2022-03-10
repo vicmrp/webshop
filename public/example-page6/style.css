@@ -1,0 +1,114 @@
+main {
+  width: 100%;
+}
+
+.home {
+  max-width: 100%;
+  height: calc(100vh - 80px);
+  background-color: #f7f7f7;
+}
+
+.home-grid {
+  width: calc(100% - 0px);
+  height: inherit;  
+  display: grid;
+  grid-template-columns: 1fr 1fr;  
+}
+
+.home-column-1 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-column-1-content {
+  position: relative;
+}
+
+.home-column-1-content > img {
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.home-column-1-content-firstname {
+  /* position: absolute; */
+  /* top: 0; */
+
+}
+
+.home-column-2 {
+
+}
+
+.home-column-2-book {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-column-2-book-buybox-outer {
+  width: 50%;
+  height: 80%;
+  background-color: white;
+  border-radius: 20px;
+  border: 1px solid black;
+}
+
+.home-column-2-book-buybox-inner-picture > * {
+  max-width: 50%;
+  height: auto;
+}
+
+.home-column-2-book-buybox-inner-description {
+  
+}
+
+.home-column-2-book-buybox-inner-price {
+
+}
+
+.home-column-2-book-buybox-inner-buy-button {
+
+}
+
+.home-column-2-book-1 {
+
+}
+
+.home-column-2-book-2 {
+
+}
+
+.home-grid-column-2 {
+
+  
+}
+
+::-webkit-scrollbar {
+  /* width: 1px; */
+}
+
+.about {
+  width: calc(100% - 0px);
+  height: 100vh;
+  background-color: beige;
+  margin: 0 auto;
+}
+
+.book-1 {
+  width: calc(100% - 0px);
+  height: 100vh;
+  background-color: forestgreen;
+  margin: 0 auto;
+}
+
+.book-2 {
+  width: calc(100% - 0px);
+  height: 100vh;
+  background-color: purple;
+  margin: 0 auto;
+}

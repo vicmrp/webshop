@@ -24,6 +24,27 @@
             "type": "pwa-msedge",
             "url": "https://steengede.com/home/",
             "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Example-page1",
+            "request": "launch",
+            "type": "pwa-msedge",
+            "url": "https://steengede.com/example-page1/",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Example-page2",
+            "request": "launch",
+            "type": "pwa-msedge",
+            "url": "https://steengede.com/example-page2/",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Example-page6",
+            "request": "launch",
+            "type": "pwa-msedge",
+            "url": "https://steengede.com/example-page6/",
+            "webRoot": "${workspaceFolder}"
         }
     ]
 }
