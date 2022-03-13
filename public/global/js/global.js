@@ -1,35 +1,40 @@
-import Header from './classes/header.js'
-import Basket from './classes/basket.js'
+import HeaderService from './services/header-service.js'
+import SessionService from './services/session-service.js'
+// export default global
 
-
-
-const global = {
-  header: function () {
-
+const globalElementsID = {
+  header: () => {
     const elements = {
-      homeBtn: document.getElementById('_header_logo_container'),
-      logoutBtn: document.getElementById('_header_logout')
+      homeBtn: document.getElementById('_header_logo_container')
     }
-
-    new Header(elements)
-  },
-
-  basket: () => {
-    const basket = new Basket()
-    basket.addItem("cat6 UTP Dataudtag RJ45 1-stik - Hvid", "77632", 2320, 6)
-    // basket.addItem("cat 5e U/UTP Netværkskabel samler.", "CCGP89005WT", 960, 4)
-  },
-
-  productService: () => {
-    const productService = new ProductService();
-    productService.getAllProducts().then(e => {
-      console.log(e);
-    })
-    
+    new HeaderService(elements)
   }
-  
+}
+globalElementsID.header()
+
+export const global = {
+  sessionService: new SessionService()
 }
 
-global.header()
-global.basket()
-global.productService()
+// global.sessionService.getSession().then(response => {
+//   console.log(response);
+// })
+
+// global.sessionService.addOrderItem(1,5).then(response => {
+//   console.log(response);
+// })
+
+// global.sessionService.addOrderItem(2,0).then(response => {
+//   console.log(response);
+// })
+
+// global.sessionService.setCustomer("Victor Reipur", "26129604", "victor.reipur@gmail.com", "vinkelvej 12d, 3tv", "2800", "Lyngby", null, null)
+// .then(() => {
+//   global.sessionService.setShipmentAddress(3).then(() => {
+//     global.sessionService.createPayment().then(() => {
+//       global.sessionService.getPaymentLink().then(response => {
+//         console.log(response);
+//       })
+//     })
+//   })
+// })

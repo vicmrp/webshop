@@ -1,6 +1,6 @@
-import Interface from './interface.js'
+import InterfaceService from './interface-service.js'
 
-export default class Basket extends Interface {
+export default class BasketService extends InterfaceService {
   
   addItem(productName, productId, price, quantitity) {
 

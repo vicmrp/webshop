@@ -1,4 +1,4 @@
-export default class Interface {
+export default class InterfaceService {
 
   async callServerByFetchReturnObject(url, options = null) {
     const fetchResponse = await fetch(url, options)

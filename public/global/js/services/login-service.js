@@ -1,8 +1,8 @@
-import Interface from './interface.js'
+import InterfaceService from './interface-service.js'
 import LoginResponse from '../models/login-response.js'
 import IsUserLoggedInResponse from '../models/is-user-logged-in-response.js'
 
-export default class Login extends Interface {
+export default class LoginService extends InterfaceService {
 
   
   #iUsername
