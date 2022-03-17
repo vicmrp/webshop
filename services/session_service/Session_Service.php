@@ -7,7 +7,6 @@ use vezit\dto\session\response as Session_Response;
 use vezit\classes\session\order\order_item as Order_Item;
 use vezit\services\product_service as Product_Service;
 use vezit\classes\error as Error;
-use vezit\services\postnord_service as Postnord_Service;
 
 require __DIR__.'/../../global-requirements.php';
 
