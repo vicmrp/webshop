@@ -1,19 +1,25 @@
-import HeaderService from './services/header-service.js'
+import Header from './classes/header.js'
 import SessionService from './services/session-service.js'
 // export default global
 
-const globalElementsID = {
-  header: () => {
-    const elements = {
-      homeBtn: document.getElementById('_header_logo_container')
-    }
-    new HeaderService(elements)
-  }
-}
-globalElementsID.header()
+// const globalElementsID = {
+//   header: () => {
+//     const elements = {
+//       homeBtn: document.getElementById('_header_logo_container')
+//     }
+//     new HeaderService(elements)
+//   }
+// }
+// globalElementsID.header()
 
 export const global = {
-  sessionService: new SessionService()
+  sessionService: new SessionService(),
+  header: {
+    elements: {
+      homeBtn: document.getElementById('header-logo-container')
+    },
+    header: new Header(this.elements)
+  }
 }
 
 // global.sessionService.getSession().then(response => {

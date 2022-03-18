@@ -1,4 +1,7 @@
 secret/*
+
 composer/vendor/*
+!composer/vendor/composer.json
+
 public/_temp_database/session/*.json
 public/old/*

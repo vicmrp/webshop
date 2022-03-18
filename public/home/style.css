@@ -40,7 +40,9 @@ main {
 }
 
 .home-column-2 {
-
+  display: grid;
+  align-items: center;
+  justify-content: center;
 }
 
 .home-column-2-book {
@@ -52,8 +54,10 @@ main {
 }
 
 .home-column-2-book-buybox-outer {
-  width: 50%;
-  height: 80%;
+  width: 40vw;
+  height: 40vh;
+  max-width: 60%;
+  max-height: 30vh;
   background-color: #f2f2f2;
   border-radius: 0px;
   border: 1px solid black;
