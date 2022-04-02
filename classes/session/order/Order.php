@@ -2,9 +2,9 @@
 namespace vezit\classes\session\order;
 require_once __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
-use vezit\classes\session\order\order_item as Order_Item;
-use vezit\classes\session\order\order_status as Order_Status;
-use vezit\dto\order_item\response as Order_Item_Response;
+use vezit\classes\session\order\order_item\Order_Item;
+use vezit\classes\session\order\order_status\Order_Status;
+use vezit\dto\order_item\response\Order_Item_Response;
 use vezit\classes\error\Error;
 
 class Order implements \JsonSerializable {
@@ -14,8 +14,7 @@ class Order implements \JsonSerializable {
   private $order_items = array(); // skal indenholde objekter af typen Order_Items
   
   public function __construct() {
-    $this->order_status = new Order_Status\Order_Status();
-
+    $this->order_status = new Order_Status();
   }
 
 
@@ -50,12 +49,12 @@ class Order implements \JsonSerializable {
     }
   }
 
-  public function add_order_item(Order_Item\Order_Item $order_item) : void {
+  public function add_order_item(Order_Item $order_item) : void {
     array_push($this->order_items, $order_item);
     $this->order_status->payment->set_accumulated_amount($this->order_items);
   }
 
-  public function set_change_quantity_order_item(int $product_id, int $new_quantity) : Order_Item_Response\Order_Item_Response {
+  public function set_change_quantity_order_item(int $product_id, int $new_quantity) : Order_Item_Response {
     
     if($this->get_order_item($product_id)->order_item === null)
       return $this->get_order_item($product_id);
@@ -80,8 +79,8 @@ class Order implements \JsonSerializable {
     return $this->order_items;
   }
 
-  public function get_order_item(int $product_id) : Order_Item_Response\Order_Item_Response {
-    $order_item_response = new Order_Item_Response\Order_Item_Response();    
+  public function get_order_item(int $product_id) : Order_Item_Response {
+    $order_item_response = new Order_Item_Response();    
     for ($i=0; $i < count($this->order_items); $i++) {
       if($this->order_items[$i]->get_product_id() === $product_id)
         $order_item_response->order_item = $this->order_items[$i];

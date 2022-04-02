@@ -2,7 +2,7 @@
 
 function f(int $p): int
 {
-        return $p * 2;
+        return $p * 4;
 }
 
 $a = 1;
