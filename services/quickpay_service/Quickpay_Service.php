@@ -17,7 +17,7 @@ use vezit\services\session_service\Session_Service;
 use vezit\classes\api\quickpay\Quickpay;
 
 
-require __DIR__.'/../../global-requirements.php';
+require_once __DIR__.'/../../global-requirements.php';
 
 class Quickpay_Service
 {

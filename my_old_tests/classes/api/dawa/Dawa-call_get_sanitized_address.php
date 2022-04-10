@@ -5,7 +5,7 @@ namespace vezit\classes\api\dawa;
 # php -f tests/classes/api/dawa/Dawa-call_get_sanitized_address.php
 
 
-require __DIR__.'/../../../../global-requirements.php';
+require_once __DIR__.'/../../../../global-requirements.php';
 
 
 

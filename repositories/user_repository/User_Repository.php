@@ -2,7 +2,7 @@
 
 namespace vezit\repositories\user_repository;
 
-require __DIR__.'/../../global-requirements.php';
+require_once __DIR__.'/../../global-requirements.php';
 
 use vezit\entities\user as Entity;
 use vezit\classes\error as Error;

@@ -2,7 +2,7 @@
 
 namespace vezit\repositories\product_repository;
 
-require __DIR__.'/../../../global-requirements.php';
+require_once __DIR__.'/../../../global-requirements.php';
 
 
 

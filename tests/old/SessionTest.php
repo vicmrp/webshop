@@ -1,6 +1,6 @@
 <?php
 
-// require __DIR__.'/../../global-requirements.php';
+// require_once __DIR__.'/../../global-requirements.php';
 
 // use vezit\repositories\session\Session;
 

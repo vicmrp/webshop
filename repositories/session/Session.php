@@ -1,7 +1,7 @@
 <?php
 namespace vezit\repositories\session;
 
-require __DIR__.'/../../global-requirements.php';
+require_once __DIR__.'/../../global-requirements.php';
 
 class Session implements ISession {
 

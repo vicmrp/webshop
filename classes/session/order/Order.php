@@ -40,7 +40,7 @@ class Order implements \JsonSerializable {
   {
     if($this->get_order_item($product_id)->order_item === null) {
       $error_message = "there is no item to remove";
-      new Error(__FILE__, $error_message, $fatal_error=true);
+      new Error(__FILE__, $error_message, $fatal_error=false);
     }
 
     for ($i=0; $i < count($this->order_items); $i++) {

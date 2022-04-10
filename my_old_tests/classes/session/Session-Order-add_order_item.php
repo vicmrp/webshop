@@ -4,7 +4,7 @@ use vezit\classes\session\order\order_item as Order_Item;
 
 # php -f tests/classes/session/Session-Order-add_order_item.php
 
-require __DIR__.'/../../../global-requirements.php';
+require_once __DIR__.'/../../../global-requirements.php';
 
 $session = new Session();
 

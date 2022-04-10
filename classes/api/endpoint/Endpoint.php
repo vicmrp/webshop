@@ -2,7 +2,7 @@
 
 namespace vezit\classes\api\endpoint;
 
-require __DIR__.'/../../../global-requirements.php';
+require_once __DIR__.'/../../../global-requirements.php';
 
 use vezit\classes\error as Error;
 

@@ -3,7 +3,7 @@
 namespace vezit\classes\api\postnord;
 use vezit\classes\api\dawa as Dawa;
 use vezit\dto\postnord\request as Request;
-require __DIR__.'/../../../../global-requirements.php';
+require_once __DIR__.'/../../../../global-requirements.php';
 
 # php -f tests/classes/api/postnord/Postnord-call_get_servicepoints.php
 $sanitized_address_response = Dawa\Dawa::call_get_sanitized_address('Vinkelvej 12D, 3tv', "2800");

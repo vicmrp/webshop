@@ -16,7 +16,7 @@ use vezit\dto\postnord\request as Request;
 use vezit\dto\postnord\response as Response;
 use vezit\services\session_service as Session_Service;
 
-require __DIR__.'/../../global-requirements.php';
+require_once __DIR__.'/../../global-requirements.php';
 
 class Postnord_Service
 {

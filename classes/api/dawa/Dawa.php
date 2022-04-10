@@ -4,7 +4,7 @@
 namespace vezit\classes\api\dawa;
 use vezit\dto\dawa\response as Response;
 
-require __DIR__.'/../../../global-requirements.php';
+require_once __DIR__.'/../../../global-requirements.php';
 
 
 

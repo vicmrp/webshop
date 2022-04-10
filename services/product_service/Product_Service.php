@@ -2,7 +2,7 @@
 
 namespace vezit\services\product_service;
 
-require __DIR__.'/../../global-requirements.php';
+require_once __DIR__.'/../../global-requirements.php';
 
 use vezit\dto\product\response as Product_Response;
 use vezit\repositories\product_repository as Product_Repository;

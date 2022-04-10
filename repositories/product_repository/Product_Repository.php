@@ -1,7 +1,7 @@
 <?php
 namespace vezit\repositories\product_repository;
 
-require __DIR__.'/../../global-requirements.php';
+require_once __DIR__.'/../../global-requirements.php';
 
 use vezit\entities\product as Entity;
 use vezit\classes\error as Error;

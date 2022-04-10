@@ -1,5 +1,5 @@
 <?php namespace vezit\classes\session;
-require __DIR__.'/../../global-requirements.php';
+require_once __DIR__.'/../../global-requirements.php';
 
 use vezit\classes\session\customer\Customer;
 use vezit\classes\session\order\Order;
@@ -33,11 +33,11 @@ class Session implements \JsonSerializable, ISession {
       $active_session_response = json_decode($_SESSION["active_session_response"]);
       $this->construct_session_from_repository($active_session_response);
     } else {
-      $this->session_id = self::new_session_id();
+      $this->session_id = $this->new_session_id();
       $this->order->set_order_id($this->session_id);
     }
-
   }
+
 
 
 
@@ -63,21 +63,26 @@ class Session implements \JsonSerializable, ISession {
 
 
 
-  public static function new_session_id() : string {
-    
-    function session_id_is_unique(string $session_id) : bool
-    {
-      $array_of_session_ids = _scandir(_from_top_folder().'/temp_database/session');
-      foreach($array_of_session_ids as $file_session_id)
-      { 
-        if ($session_id == substr($file_session_id, 0, -5)) return false;
-      }
-      return true;
+  private function session_id_is_unique(string $session_id) : bool
+  {
+    $array_of_session_ids = _scandir(_from_top_folder().'/temp_database/session');
+    foreach($array_of_session_ids as $file_session_id)
+    { 
+      if ($session_id == substr($file_session_id, 0, -5)) return false;
     }
+    return true;
+  }
 
+
+
+
+
+
+  public function new_session_id() : string 
+  {
     while (true) 
     {
-      if (session_id_is_unique($new_session_id = strval(rand(1000000, 9999999))))
+      if ($this->session_id_is_unique($new_session_id = strval(rand(1000000, 9999999))))
       {
         return $new_session_id;
       }
@@ -155,7 +160,7 @@ class Session implements \JsonSerializable, ISession {
 
 
 
-  
+
 
 
 

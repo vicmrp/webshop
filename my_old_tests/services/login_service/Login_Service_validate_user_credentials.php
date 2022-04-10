@@ -1,7 +1,7 @@
 <?php
 namespace vezit\services\login_service;
 
-require __DIR__.'/../../../global-requirements.php';
+require_once __DIR__.'/../../../global-requirements.php';
 
 use vezit\dto\login\resquest as Request;
 
