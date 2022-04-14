@@ -37,20 +37,20 @@ class Session_Service_Test extends \PHPUnit\Framework\TestCase
 
 
   
-  /** @test */
-  public function check_that__remove_order_item__returns_expected_type() {
+  // /** @test */
+  // public function check_that__remove_order_item__returns_expected_type() {
     
 
 
-    $mock_repo = $this->createMock(Session::class);
+  //   $mock_repo = $this->createMock(Session::class);
 
-    // $mock_repo->expects($this->once());
+  //   // $mock_repo->expects($this->once());
 
-    $mock_repo->method('order->remove_order_item')->willReturn(true);
+  //   $mock_repo->method('order->remove_order_item')->willReturn(true);
 
 
-    $this->assertInstanceOf(Session_Response::class, $this->session_service->remove_order_item(1));
-  }
+  //   $this->assertInstanceOf(Session_Response::class, $this->session_service->remove_order_item(1));
+  // }
 
 
   // public function test_that_add_order_item_returns_correct_items()
