@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"name": "steengede.com",
+			"path": "."
+		}
+	],
+	"settings": {
+		"workbench.colorTheme": "Default Dark+",
+		"[html]": {
+			"editor.tabSize": 2
+		},
+		"[css]": {
+			"editor.tabSize": 2
+		},
+		"[powershell]": {
+			"editor.tabSize": 2
+		}
+	}
+}
