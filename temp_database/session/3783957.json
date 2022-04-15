@@ -1,9 +1,0 @@
-{
-    "order": {
-        "order_status": {
-            "payment": {
-                "accepted": true
-            }
-        }
-    }
-}
