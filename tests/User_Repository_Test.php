@@ -49,7 +49,7 @@ class User_Repository_Test extends TestCase
 
         $mock_user_repository = $this->createMock(User_Repository::class);
         $mock_user_repository->method('get_user_by_id')->willReturn($mock_user);
-
+//
 
         // Act
         $email = "victor.reipur@gmail.com";
