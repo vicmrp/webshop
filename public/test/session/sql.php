@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/../../../global-requirements.php';
+require __DIR__.'/../../../global-requirements.php';
 
 use vezit\classes\db_conn as Db_Conn;
 use vezit\classes\session\customer as Customer;
@@ -12,7 +12,7 @@ class MyClass extends Db_Conn\Db_Conn implements \JsonSerializable
   public function myFunc2()
   {
     return $this->dbname;
-  } 
+  }
 
   public function jsonSerialize()
   {

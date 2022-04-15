@@ -1,7 +1,8 @@
 secret/*
 
-composer/*
-!composer/composer.json
+vendor/*
 
-public/_temp_database/session/*.json
+temp_database/session/*.json
 public/old/*
+
+.phpunit.result.cache

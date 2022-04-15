@@ -2,7 +2,7 @@
 
 namespace vezit\services\product_service;
 
-require_once __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 
 use vezit\dto\product\response as Product_Response;
 use vezit\repositories\product_repository as Product_Repository;
@@ -25,9 +25,9 @@ class Product_Service {
     }
     return $list_of_products_response;
   }
-  
+
   public function get_by_id(int $id) : Product_Response\Product_Response {
-    
+
     $product_repository = new Product_Repository\Product_Repository();
 
     $repository_reponse = $product_repository->find($id);

@@ -1,7 +1,7 @@
 <?php
 namespace vezit\services\login_service;
 
-use vezit\dto\login\resquest as Login_Request;
+use vezit\dto\login\request as Login_Request;
 use vezit\dto\login\response as Login_Response;
 
 interface ILogin_Service {

@@ -1,6 +1,6 @@
 <?php
 // ----- global ----- //
-require_once __DIR__.'/global-requirements.php';
+require __DIR__.'/global-requirements.php';
 
 // ----- Namespace ----- //
 use vezit\classes\api\quickpay as Quickpay;

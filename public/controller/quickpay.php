@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-require_once __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 
 use vezit\classes\api\endpoint\Endpoint;
 use vezit\classes\api\quickpay\Quickpay;
@@ -25,19 +25,19 @@ function get_response() : object {
       $login_service = new Login_Service();
       if(isset($_SESSION['session_var_active']) === false) {
         $error_message = "session_var_active is not set - you are not logged in.";
-        new Error(__FILE__, $error_message, $fatal_error=true);       
+        new Error(__FILE__, $error_message, $fatal_error=true);
       }
       $quickpay = new Quickpay();
       return $quickpay->call_get_payments();
-    
+
     case 'get_payment_by_id':
       // Requires login
       $login_service = new Login_Service();
       if(isset($_SESSION['session_var_active']) === false) {
         $error_message = "session_var_active is not set - you are not logged in.";
-        new Error(__FILE__, $error_message, $fatal_error=true);       
+        new Error(__FILE__, $error_message, $fatal_error=true);
       }
-      $quickpay = new Quickpay();      
+      $quickpay = new Quickpay();
       $endpoint->set_expected_body_properties(array('id'));
 
       return $quickpay->call_get_payment_by_id((int)$endpoint->body->id);

@@ -1,49 +1,55 @@
 <?php
+
 namespace vezit\services\login_service;
+require __DIR__ . '/../../global-requirements.php';
 
-require_once __DIR__.'/../../global-requirements.php';
 
-use vezit\dto\login\resquest as Login_Request;
-use vezit\dto\login\response as Login_Response;
-use vezit\repositories\user_repository as User_Repository;
+use vezit\dto\login\request\Login_Request;
+use vezit\dto\login\response\Login_Response;
+use vezit\dto\login\response\Is_User_Logged_In_Response;
+use vezit\repositories\user_repository\User_Repository;
 
-class Login_Service implements ILogin_Service {
-  
+class Login_Service implements ILogin_Service
+{
 
-  public function validate_user_credentials(Login_Request\Login_Request $login_request) : Login_Response\Login_Response {
+    public function __construct (private User_Repository $user_repository)
+    {
+    }
 
-    $user_repository = new User_Repository\User_Repository();
-    
-    $user_entity = $user_repository->get_user_by_email($login_request->username);
-    $access_granted = password_verify($login_request->password, $user_entity->hash);
+    public function validate_user_credentials(Login_Request $login_request): Login_Response
+    {
 
-    if ($access_granted) $_SESSION['session_var_active'] = true;  
+        $user_entity = $this->user_repository->get_user_by_email($login_request->username);
+        $access_granted = (bool)password_verify($login_request->password, $user_entity->hash);
 
-    $login_response = new Login_Response\Login_Response();
-    $login_response->username =  $login_request->username;
-    $login_response->access_granted = $access_granted ? true : false;
-    $login_response->session_var_active = $_SESSION['session_var_active'];
-    
-    return $login_response;
-  }
+        if ($access_granted) $_SESSION['session_var_active'] = true;
 
-  public function check_if_user_is_logged_in() : Login_Response\Is_User_Logged_In_Response {
+        $login_response = new Login_Response();
+        $login_response->username =  $login_request->username;
+        $login_response->access_granted = $access_granted ? true : false;
+        $login_response->session_var_active = $_SESSION['session_var_active'];
 
-    $is_user_logged_in_response = new Login_Response\Is_User_Logged_In_Response();
+        return $login_response;
+    }
 
-    $is_user_logged_in_response->user_is_logged_in = isset($_SESSION['session_var_active']) ? true : false;
+    public function check_if_user_is_logged_in(): Is_User_Logged_In_Response
+    {
 
-    return $is_user_logged_in_response;
+        $is_user_logged_in_response = new Is_User_Logged_In_Response();
 
-  }
+        $is_user_logged_in_response->user_is_logged_in = isset($_SESSION['session_var_active']) ? true : false;
 
-  public function logout() : Login_Response\Is_User_Logged_In_Response {
-    $logout_response = new Login_Response\Is_User_Logged_In_Response();
-    if (isset($_SESSION['session_var_active']))
-      unset($_SESSION['session_var_active']);
+        return $is_user_logged_in_response;
+    }
 
-    $logout_response->user_is_logged_in = false;
-    
-    return $logout_response;
-  }
+    public function logout(): Is_User_Logged_In_Response
+    {
+        $logout_response = new Is_User_Logged_In_Response();
+        if (isset($_SESSION['session_var_active']))
+            unset($_SESSION['session_var_active']);
+
+        $logout_response->user_is_logged_in = false;
+
+        return $logout_response;
+    }
 }

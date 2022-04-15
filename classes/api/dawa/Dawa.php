@@ -4,7 +4,7 @@
 namespace vezit\classes\api\dawa;
 use vezit\dto\dawa\response as Response;
 
-require_once __DIR__.'/../../../global-requirements.php';
+require __DIR__.'/../../../global-requirements.php';
 
 
 
@@ -25,10 +25,10 @@ class Dawa {
         // $betegnelse = urlencode("$street_name_and_house_number" . ", " . "$postal_code");
         $betegnelse = urlencode("$street_name_and_house_number, $postal_code");
         $dawa_json_response = shell_exec("curl --location --request GET 'https://api.dataforsyningen.dk/datavask/adresser?betegnelse=$betegnelse' 2> /dev/null");
-        
+
         $dawa_response = json_decode($dawa_json_response);
 
-        $sanitized_address_response = new Response\Sanitized_Address_Response();  
+        $sanitized_address_response = new Response\Sanitized_Address_Response();
         $sanitized_address_response->city =             $dawa_response->resultater[0]->adresse->postnrnavn;
         $sanitized_address_response->postal_code =      $dawa_response->resultater[0]->adresse->postnr;
         $sanitized_address_response->street_name =      $dawa_response->resultater[0]->adresse->adresseringsvejnavn;

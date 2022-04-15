@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-require_once __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 
 use vezit\classes\api\endpoint as E;
 use vezit\classes\api\postnord\Postnord;
@@ -40,7 +40,7 @@ function get_response() : object {
       $index = $endpoint->body->index;
       // return (object)"$index";
       return $postnord_service->set_shipment_address($index);
-      
+
     default:
       $error_message = "Unknown functioncall: " . $endpoint->get_parameter->functioncall;
       new Error\Error(__FILE__, $error_message, $fatal_error=true);

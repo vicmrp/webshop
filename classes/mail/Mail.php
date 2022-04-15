@@ -1,8 +1,8 @@
 <?php
 namespace vezit\classes\mail;
 
-require_once __DIR__.'/../../global-requirements.php';
-require_once _from_top_folder().'/composer/vendor/autoload.php';
+require __DIR__.'/../../global-requirements.php';
+require_once _from_top_folder().'/vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -10,7 +10,7 @@ use PHPMailer\PHPMailer\Exception;
 
 class Mail
 {
-  
+
   // ----- Eksempel ----- //
   // use vezit\classes\mail as Mail;
   // (array)$recipients = array(array("victor.reipur@gmail.com", "Victor Reipur"));
@@ -24,15 +24,15 @@ class Mail
       string $body,
       array  $attachments = null,
       array  $setFrom = array(
-        'dev.victor.reipur@gmail.com', 
-        'Victor Reipur'       
+        'dev.victor.reipur@gmail.com',
+        'Victor Reipur'
     )): void {
     try {
 
       global $g_smtp_mail_credential;
       // Instantiation and passing `true` enables exceptions
       $mail = new PHPMailer(true);
-    
+
       // Server settings
       // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                       // Enable verbose debug output
       $mail->isSMTP();                                                // Send using SMTP
@@ -45,10 +45,10 @@ class Mail
       $mail->CharSet    = 'UTF-8';
       // Afsender
       $mail->setFrom($setFrom[0], $setFrom[1]);
-      
+
       // Recipients
       foreach ($recipients as $recipient) {
-        $mail->addAddress($recipient[0], $recipient[1]); 
+        $mail->addAddress($recipient[0], $recipient[1]);
       }
 
       if ($attachments !== null) {
@@ -63,9 +63,9 @@ class Mail
       $mail->Subject =  $subject;
       $mail->Body    =  $body;
       $mail->send();
-      
-    } catch (Exception $e) { 
-      error_log($e, 0); 
+
+    } catch (Exception $e) {
+      error_log($e, 0);
       echo "Error 500";
     }
   }

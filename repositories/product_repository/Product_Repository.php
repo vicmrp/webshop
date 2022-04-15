@@ -1,7 +1,7 @@
 <?php
 namespace vezit\repositories\product_repository;
 
-require_once __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 
 use vezit\entities\product as Entity;
 use vezit\classes\error as Error;
@@ -10,7 +10,7 @@ use vezit\entities\product\Products;
 class Product_Repository implements IProduct_Repository {
 
   // Create connection
-  public function __construct() { 
+  public function __construct() {
     // -- sql -- //
     global $g_db_conn;
     $this->db_conn = new \mysqli($g_db_conn->servername, $g_db_conn->username, $g_db_conn->password, $g_db_conn->dbname);
@@ -27,7 +27,7 @@ class Product_Repository implements IProduct_Repository {
     $stmt->execute();
     $result = $stmt->get_result();
     $enitities = mysqli_fetch_all ($result, MYSQLI_ASSOC);
-    
+
     $products = new Entity\Products();
     foreach ($enitities as $key => $entity) {
       $product = new Entity\Product();
@@ -43,7 +43,7 @@ class Product_Repository implements IProduct_Repository {
   }
 
   public function find(int $id) : Entity\Product {
-    
+
     $sql = "SELECT * FROM `Product` WHERE Product.Id=?";
     $stmt = $this->db_conn->prepare($sql);
     $stmt->bind_param("i", $id);
@@ -54,7 +54,7 @@ class Product_Repository implements IProduct_Repository {
       $error_message = "Id does not exist: " . $this->db_conn->connect_error;
       new Error\Error(__FILE__, $error_message, $fatal_error=true);
     }
-    
+
     $entity = $result->fetch_assoc();
     $response = new Entity\Product();
     $response->id = $entity['Id'];
@@ -68,17 +68,17 @@ class Product_Repository implements IProduct_Repository {
 
   public function insert(object $product) : void
   {
-    
+
   }
-  
+
   public function update(string $id, object $product) : void
   {
-    
+
   }
 
   public function delete(object $product) : void
   {
-    
+
   }
 
 }

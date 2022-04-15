@@ -1,5 +1,5 @@
 <?php namespace vezit\classes\session;
-require_once __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 
 use vezit\classes\session\customer\Customer;
 use vezit\classes\session\order\Order;
@@ -26,7 +26,7 @@ class Session implements \JsonSerializable, ISession {
     $this->customer = new Customer();
     $this->order = new Order();
     $this->shipment = new Shipment();
-    
+
 
     // Check if session already exist
     if (isset($_SESSION["active_session_response"]) === true) {
@@ -67,7 +67,7 @@ class Session implements \JsonSerializable, ISession {
   {
     $array_of_session_ids = _scandir(_from_top_folder().'/temp_database/session');
     foreach($array_of_session_ids as $file_session_id)
-    { 
+    {
       if ($session_id == substr($file_session_id, 0, -5)) return false;
     }
     return true;
@@ -78,9 +78,9 @@ class Session implements \JsonSerializable, ISession {
 
 
 
-  public function new_session_id() : string 
+  public function new_session_id() : string
   {
-    while (true) 
+    while (true)
     {
       if ($this->session_id_is_unique($new_session_id = strval(rand(1000000, 9999999))))
       {
@@ -105,7 +105,7 @@ class Session implements \JsonSerializable, ISession {
 
 
 
-  
+
 
 
 
@@ -122,7 +122,7 @@ class Session implements \JsonSerializable, ISession {
 
 
 
-  public function construct_session_from_repository(object $active_session_response) : void 
+  public function construct_session_from_repository(object $active_session_response) : void
   {
     $this->session_id = $active_session_response->session->session_id;
     $this->customer->set_customer_details_satisfied($active_session_response->session->customer->customer_details_satisfied);
@@ -145,7 +145,7 @@ class Session implements \JsonSerializable, ISession {
     foreach ((array)$active_session_response->session->order->order_items as $order_item) {
       $this->order->add_order_item(new Order_Item($order_item->product_name, $order_item->product_id, $order_item->price, $order_item->quantity));
     }
-    
+
     $this->shipment->set_tracking_number($active_session_response->session->shipment->tracking_number);
     $this->shipment->set_order_collected($active_session_response->session->shipment->order_collected);
     $this->shipment->set_shipment_details_satisfied(true);
@@ -169,7 +169,7 @@ class Session implements \JsonSerializable, ISession {
     $result = array();
     foreach($all_vars as $key => $value)
     {
-      if (($key == "db_conn")) break;      
+      if (($key == "db_conn")) break;
       $result[$key]=$value;
     }
     return $result;

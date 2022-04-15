@@ -1,10 +1,10 @@
 <?php
 // ----- global ----- //
-require_once __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_folder().'/
+require __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
 // Starter sessionen
 if (session_status() === PHP_SESSION_NONE) {
-  session_start();  
+  session_start();
 }
 
 // Namespaces

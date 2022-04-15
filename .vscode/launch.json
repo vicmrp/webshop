@@ -10,7 +10,7 @@
             "type": "pwa-msedge",
             "url": "https://steengede.com/home/",
             "webRoot": "${workspaceFolder}/public"
-        },    
+        },
         {
             "name": "Listen for XDebug",
             "request": "launch",

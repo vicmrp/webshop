@@ -3,7 +3,7 @@ namespace vezit\classes\session\customer\contact;
 
 
 
-require_once __DIR__.'/../../../../global-requirements.php'; // __DIR__._from_top_folder().'/
+require __DIR__.'/../../../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
 
 

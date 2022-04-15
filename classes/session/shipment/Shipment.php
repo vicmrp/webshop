@@ -1,7 +1,7 @@
 <?php
 namespace vezit\classes\session\shipment;
 
-require_once __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_folder().'/
+require __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
 use vezit\classes\session\shipment\address as Address;
 

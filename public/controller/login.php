@@ -1,10 +1,10 @@
-<?php 
+<?php
 
-require_once __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 
 use vezit\classes\api\endpoint as E;
 use vezit\classes\error as Error;
-use vezit\dto\login\resquest as Login_Request;
+use vezit\dto\login\request as Login_Request;
 use vezit\services\login_service as Service;
 
 
@@ -24,7 +24,7 @@ switch ($endpoint->get_parameter->functioncall) {
 
     $login_service = new Service\Login_Service();
     $login_response = $login_service->validate_user_credentials($login_request);
-    $response = $login_response;    
+    $response = $login_response;
     break;
 
   case 'logout':
@@ -36,7 +36,7 @@ switch ($endpoint->get_parameter->functioncall) {
   case 'check_if_user_is_logged_in':
     $login_service = new Service\Login_Service();
     $login_response = $login_service->check_if_user_is_logged_in();
-    $response = $login_response;   
+    $response = $login_response;
     break;
 
   default:

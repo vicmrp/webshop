@@ -1,7 +1,7 @@
 <?php
 namespace vezit\classes\session;
 
-// require_once __DIR__.'/../../global-requirements.php';
+// require __DIR__.'/../../global-requirements.php';
 
 interface ISession {
 

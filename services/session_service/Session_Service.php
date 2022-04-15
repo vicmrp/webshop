@@ -8,7 +8,7 @@ use vezit\classes\session\order\order_item\Order_Item;
 use vezit\services\product_service\Product_Service;
 use vezit\classes\error\Error;
 
-require_once __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 
 class Session_Service
 {
@@ -34,8 +34,8 @@ class Session_Service
     return $this->get_session();
   }
 
-  
-  
+
+
   public function remove_order_item($product_id) : Session_Response
   {
       // find item in database
@@ -50,15 +50,15 @@ class Session_Service
       $this->session->set_storing_session_response();
       return $this->get_session();
   }
-  
-  
+
+
   public function add_order_item(int $product_id, int $new_quantity) : Session_Response {
 
     if ($new_quantity <= 0) {
       $error_message = "quantity cannot not be less than 0. When creating new product-object";
       new Error(__FILE__, $error_message, $fatal_error=true);
     }
-    
+
     // find item in database
     $product_service = new Product_Service();
     $product_reponse = $product_service->get_by_id($product_id);
@@ -96,7 +96,7 @@ class Session_Service
 
 
   private function payment_is_satisfied() : bool {
-    if ($this->session->order->order_status->payment->get_amount() === null || 
+    if ($this->session->order->order_status->payment->get_amount() === null ||
     $this->session->order->order_status->payment->get_amount() <= 0) return false;
 
     return true;
@@ -109,7 +109,7 @@ class Session_Service
     $this->session->shipment->set_shipment_details_satisfied($this->shipment_is_satisfied());
     $this->session->order->order_status->payment->set_payment_details_satisfied($this->payment_is_satisfied());
     $this->session->set_storing_session_response();
-    
+
     $session_response = new Session_Response();
     $session_response->session = $this->session;
 

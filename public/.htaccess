@@ -7,6 +7,8 @@ Allow from 10.0.0.0/8
 Allow from 172.16.0.0/12
 Allow from 192.168.0.0/16
 Allow from 80.167.68.32
+Allow from 127.0.0.1
+Allow from ::1
 
 # Quickpay - callback
 Allow from 193.162.142.0/24
@@ -19,13 +21,10 @@ Allow from 80.161.155.226
 # Allow from 185.26.61.45
 
 # Julian adgang til Julian
-Allow from 87.59.235.56
+# Allow from 87.59.235.56
 
 # DTU
 Allow from 192.38.90.76
 
 # DTU telenor
-Allow from 2.131.83.204
-
-# Herlev hospital
-Allow from 128.0.73.54
+# Allow from 2.131.83.204

@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-require_once __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 header('Content-Type: application/json; charset=utf-8');
 
 use vezit\classes\api\endpoint\Endpoint;
@@ -12,7 +12,7 @@ use vezit\services\session_service\Session_Service;
 
 
 function get_response() : object {
-  
+
   $endpoint = new Endpoint($controller_file_location = __FILE__);
   $endpoint->set_expected_get_parameters($required_get_parameters = array('functioncall'));
 
@@ -49,7 +49,7 @@ function get_response() : object {
 
 
 
-    
+
     case 'add_order_item':
       $endpoint->set_expected_body_properties(array('product_id', 'quantity'));
       $product_id = (int)$endpoint->body->product_id;
@@ -77,7 +77,7 @@ function get_response() : object {
 
 
 
-    
+
     case 'set_customer':
       $endpoint->set_expected_body_properties(
         array('fullname', 'phone', 'email',
@@ -89,7 +89,7 @@ function get_response() : object {
       $session_service->set_customer($customer_details);
       return $session_service->set_customer($customer_details);
 
-      
+
 
 
 

@@ -1,10 +1,10 @@
 <?php
 
 namespace vezit\classes\error;
-require_once __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 
 class Error {
-  public $error_message;  
+  public $error_message;
 
   public function __construct(string $filepath, string $error_message, bool $fatal_error) {
 
@@ -14,6 +14,6 @@ class Error {
     // if ($fatal_error) {
     //   $this->error_message = "PHP vicre Fatal error: $error_message in $filepath";
     //   die(json_encode($this, JSON_PRETTY_PRINT) . PHP_EOL);
-    // } 
+    // }
   }
 }

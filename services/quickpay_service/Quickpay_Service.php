@@ -17,7 +17,7 @@ use vezit\services\session_service\Session_Service;
 use vezit\classes\api\quickpay\Quickpay;
 
 
-require_once __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 
 class Quickpay_Service
 {
@@ -34,7 +34,7 @@ class Quickpay_Service
   {
     // $session = new Session();
     // $session_service = new Session_Service();
-    
+
     // $this->session_service->get_session();
     // check if customer details are satisfied
 
@@ -43,13 +43,13 @@ class Quickpay_Service
     // echo $session->shipment->get_shipment_details_satisfied();
     // echo $session->order->order_status->payment->get_payment_details_satisfied();
 
-    if  ($this->session_service->session->customer->get_customer_details_satisfied() !== true) 
+    if  ($this->session_service->session->customer->get_customer_details_satisfied() !== true)
       new Error(__FILE__, "customer details are not satisfied for payment", $fatal_error=true);
 
-    if  ($this->session_service->session->shipment->get_shipment_details_satisfied() !== true) 
+    if  ($this->session_service->session->shipment->get_shipment_details_satisfied() !== true)
       new Error(__FILE__, "shipment details are not satisfied for payment", $fatal_error=true);
 
-    if  ($this->session_service->session->order->order_status->payment->get_payment_details_satisfied() !== true) 
+    if  ($this->session_service->session->order->order_status->payment->get_payment_details_satisfied() !== true)
       new Error(__FILE__, "payment details are not satisfied for payment", $fatal_error=true);
 
     if ($this->session_service->session->order->order_status->payment->get_payment_quickpay_id() !== null)
@@ -68,14 +68,14 @@ class Quickpay_Service
     // echo $create_payment_response->id;
     // echo $create_payment_response->merchant_id;
     // die(json_encode($create_payment_response, JSON_PRETTY_PRINT));
-    
+
     $this->session_service->session->order->order_status->payment->set_payment_quickpay_id($create_payment_response->id);
     $this->session_service->session->set_storing_session_response();
 
     return $this->session_service->get_session();
 
 
-    
+
   }
 
   public function get_payment_link()
@@ -83,13 +83,13 @@ class Quickpay_Service
 
     // die(json_encode($this->session_service->session, JSON_PRETTY_PRINT));
 
-    if  ($this->session_service->session->customer->get_customer_details_satisfied() !== true) 
+    if  ($this->session_service->session->customer->get_customer_details_satisfied() !== true)
       new Error(__FILE__, "customer details are not satisfied for payment", $fatal_error=true);
 
-    if  ($this->session_service->session->shipment->get_shipment_details_satisfied() !== true) 
+    if  ($this->session_service->session->shipment->get_shipment_details_satisfied() !== true)
       new Error(__FILE__, "shipment details are not satisfied for payment", $fatal_error=true);
 
-    if  ($this->session_service->session->order->order_status->payment->get_payment_details_satisfied() !== true) 
+    if  ($this->session_service->session->order->order_status->payment->get_payment_details_satisfied() !== true)
       new Error(__FILE__, "payment details are not satisfied for payment", $fatal_error=true);
 
 

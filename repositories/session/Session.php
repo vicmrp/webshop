@@ -1,7 +1,7 @@
 <?php
 namespace vezit\repositories\session;
 
-require_once __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 
 class Session implements ISession {
 
@@ -38,7 +38,7 @@ class Session implements ISession {
 
     // if entity has accepted move to accepted
 
-    // $accepted = 
+    // $accepted =
 
   }
 
@@ -48,5 +48,5 @@ class Session implements ISession {
 
   }
 
-  
+
 }

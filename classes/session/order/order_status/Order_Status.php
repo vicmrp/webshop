@@ -1,6 +1,6 @@
 <?php
 namespace vezit\classes\session\order\order_status;
-require_once __DIR__.'/../../../../global-requirements.php'; // __DIR__._from_top_folder().'/
+require __DIR__.'/../../../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
 use vezit\classes\session\order\order_status\payment as Payment;
 use vezit\classes\session\order\order_status\email as Email;
@@ -20,7 +20,7 @@ class Order_Status implements \JsonSerializable {
   {
     $this->payment = $payment;
   }
-  
+
   public function get_payment()
   {
     return $this->payment;

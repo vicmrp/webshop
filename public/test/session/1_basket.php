@@ -1,13 +1,13 @@
 <?php
 // ----- global ----- //
-require_once __DIR__.'/../../../global-requirements.php'; // _from_top_folder().
+require __DIR__.'/../../../global-requirements.php'; // _from_top_folder().
 
 use vezit\classes\session\order\order_item as Order_Item;
 use vezit\classes\session as Session;
 
 // Starts session
 if (session_status() === PHP_SESSION_NONE) {
-  session_start();  
+  session_start();
 }
 
 $session = new Session\Session();

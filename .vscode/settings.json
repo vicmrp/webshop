@@ -1,20 +1,27 @@
 {
-    // Specifies the color theme used in the workbench.
     "workbench.colorTheme": "Default Dark+",
     "liveServer.settings.port": 5502,
-    "[JavaScript]": {
-        "editor.tabSize": 2
-    },
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": true,
+    "files.trimTrailingWhitespace": true,
     "[html]": {
+        "editor.insertSpaces": true,
         "editor.tabSize": 2
     },
     "[css]": {
-        "editor.tabSize": 2
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4
     },
-    "[powershell]": {
+    "[javascript]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4
+    },
+    "[json]": {
+        "editor.insertSpaces": true,
         "editor.tabSize": 2
     },
     "[php]": {
-        "editor.tabSize": 2
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4
     }
 }

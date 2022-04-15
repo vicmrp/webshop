@@ -16,7 +16,7 @@ use vezit\dto\postnord\request as Request;
 use vezit\dto\postnord\response as Response;
 use vezit\services\session_service as Session_Service;
 
-require_once __DIR__.'/../../global-requirements.php';
+require __DIR__.'/../../global-requirements.php';
 
 class Postnord_Service
 {
@@ -31,10 +31,10 @@ class Postnord_Service
 
 
     $sanitized_address_response = Dawa\Dawa::call_get_sanitized_address(
-      (string)$this->session->customer->address->get_street(), 
+      (string)$this->session->customer->address->get_street(),
       (string)$this->session->customer->address->get_postal_code()
     );
-    
+
 
     $postnord_service_points_request = new Request\Postnord_Service_Points_Request();
     $postnord_service_points_request->sanitized_address_response = $sanitized_address_response;
@@ -54,9 +54,9 @@ class Postnord_Service
     $postnord_service_points_response = new Response\Postnord_Service_Points_Response();
     $postnord_service_points_response->service_points = json_decode($_SESSION['postnord_service_points_response'])->service_points;
 
-    
 
-    
+
+
     foreach($postnord_service_points_response->service_points as $shipment_address)  {
       if ($shipment_address->index === $index) {
         $this->session->shipment->address->set_street_name($shipment_address->street_name);
@@ -69,7 +69,7 @@ class Postnord_Service
         return  $session_service->get_session();
       }
     }
-    
+
     $error_message = "index is out of range. index: $index";
     new Error\Error(__FILE__, $error_message, $fatal_error=true);
 

@@ -3,7 +3,7 @@ namespace vezit\classes\session\customer;
 
 
 
-require_once __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_folder().'/
+require __DIR__.'/../../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
 
 use vezit\classes\session\customer\address as Address;

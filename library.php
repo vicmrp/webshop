@@ -5,7 +5,8 @@
 
 // globale funtioner skal have underscore foran
 
-function _generate_random_string($length = 10) {
+function _generate_random_string($length = 10)
+{
     // $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $characters = '23456789abcdefghkmnpqrstuvwxyzABCDEFGHJKMNOPQRSTUVWXYZ'; // uden ijlo01IL
     $charactersLength = strlen($characters);
@@ -26,7 +27,7 @@ function _generate_random_string($length = 10) {
 // -------------- _to_top_folder($top_folder) : string '../../' -------------- //
 // Denne funtion kan automatisk definere finde ud af hvor
 // mange undermapper den en fil ligger.
-// api/quickpay/callback.php skal require 
+// api/quickpay/callback.php skal require
 // classes/api/quickpay
 //
 // Derfor skal det sta saledes:
@@ -35,21 +36,21 @@ function _generate_random_string($length = 10) {
 // implementering
 // looper fra nederste submappe op imod target mappe (puplic)
 // og tæller for hvert hop op ad.
-// I vores eksempel hopper vi to gange op. 
+// I vores eksempel hopper vi to gange op.
 // Functionen hvil altsa retunere en string '../../'
 
-// svagheder. du ma ikke have en under mappe som har 
+// svagheder. du ma ikke have en under mappe som har
 // samme navn som root folder.
 
 // parameter (root_folder)
-// function _to_top_folder($top_folder) 
+// function _to_top_folder($top_folder)
 // {
 //     return dirname(__FILE__);
 // }
 // -------------- _to_top_folder($top_folder) : string '../../' -------------- //
 
 
-// denne funtion benytter at en dirname(__FILE__) retunere 
+// denne funtion benytter at en dirname(__FILE__) retunere
 // den fulde sti hen til der hvor filen ligger
 // derfor sa længe at library.php ligger i root (top folderen)
 // sa kan du benytte denne funtion til et relativt folder punkt
@@ -60,13 +61,37 @@ function _from_top_folder()
 
 
 
-function _scandir(string $dir) : array
+function _scandir(string $dir): array
 {
     return array_values(array_diff(scandir($dir), array('..', '.')));
 }
 
 
 
-function _return_evaluated_user_credentials() {
+function _return_evaluated_user_credentials()
+{
+}
 
+function _get_all_namespaces(array $folders)
+{
+    switch (PHP_OS) {
+        case 'WINNT':
+            $slash = '\\';
+            break;
+        case 'Linux':
+            $slash = '/';
+            break;
+    }
+
+    foreach ($folders as $folder) {
+        // ----- namespaces - inkludere alle klasserne ----- //
+        $directories = new RecursiveDirectoryIterator(_from_top_folder() . $slash . $folder);
+        foreach (new RecursiveIteratorIterator($directories) as $filename) {
+            try {
+                if (!is_dir($filename)) require_once $filename;
+            } catch (\Throwable $th) {
+                throw $th;
+            }
+        }
+    }
 }

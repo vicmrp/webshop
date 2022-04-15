@@ -2,7 +2,7 @@
 namespace vezit\classes\api\postnord;
 use vezit\dto\postnord\request as Request;
 use vezit\dto\postnord\response as Response;
-require_once __DIR__.'/../../../global-requirements.php';
+require __DIR__.'/../../../global-requirements.php';
 
 
 class Postnord {
