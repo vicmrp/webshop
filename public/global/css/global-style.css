@@ -1,0 +1,21 @@
+/* Et skal kun bruge en - altså et id må kun bruges til et element */
+/* som udgangspunkt bruger man class'er til at style med og id til at scriptet med. */ 
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+/* header {
+    display: none;
+}
+
+main {
+    display: none;
+}
+
+footer {
+    display: none;
+} */
