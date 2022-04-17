@@ -14,20 +14,10 @@ class User_Repository implements IUser_Repository
 
     private $mysqli = null;
 
-    // Create connection
-    public function __construct(Mysqli $mysqli)
+    public function __construct()
     {
-        $this->mysqli = $mysqli;
+        $this->mysqli = new Mysqli;
     }
-    // {
-    //     // // -- sql -- //
-    //     // global $g_db_conn;
-    //     // $this->db_conn = new \Mysqli($g_db_conn->servername, $g_db_conn->username, $g_db_conn->password, $g_db_conn->dbname);
-    //     // if ($this->db_conn->connect_error) {
-    //     //     die("Connection failed: " . $this->db_conn->connect_error); // Check connection
-    //     // }
-    //     // // -- sql -- //
-    // }
 
     public function get_user_by_id(int $id): User
     {

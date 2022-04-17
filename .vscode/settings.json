@@ -23,5 +23,8 @@
     "[php]": {
         "editor.insertSpaces": true,
         "editor.tabSize": 4
-    }
+    },
+    "editor.hover.enabled": true,
+    "editor.hover.delay": 1000,
+    "intelephense.diagnostics.undefinedMethods": false
 }

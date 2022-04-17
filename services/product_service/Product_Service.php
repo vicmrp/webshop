@@ -26,7 +26,7 @@ class Product_Service {
     return $list_of_products_response;
   }
 
-  public function get_by_id(int $id) : Product_Response\Product_Response {
+  public function get_product_by_id(int $id) : Product_Response\Product_Response {
 
     $product_repository = new Product_Repository\Product_Repository();
 

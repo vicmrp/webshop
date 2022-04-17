@@ -4,7 +4,6 @@ require __DIR__ . '/../global-requirements.php';
 
 use \PHPUnit\Framework\TestCase;
 use vezit\repositories\user_repository\User_Repository;
-use vezit\classes\mysqli\Mysqli;
 use vezit\entities\user\User;
 
 
@@ -12,7 +11,7 @@ class User_Repository_Test extends TestCase
 {
     protected function setUp(): void
     {
-        $this->user_repository = new User_Repository(new Mysqli());
+        $this->user_repository = new User_Repository();
     }
 
 
@@ -36,9 +35,14 @@ class User_Repository_Test extends TestCase
     public function get_user_by_id_shall_return_a_specified_email_using_mocking()
     {
         // Arrange
-        $mock_repo = $this->createMock(Mysqli::class);
-
         $mock_email = "victor.reipur@gmail.com";
+
+        // $mock_user = $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock();
+
+        // $mock_user->id = 1;
+        // $mock_user->email = $mock_email;
+        // $mock_user->hash = "hash";
+        // $mock_user->role = 0;
 
         $mock_user = $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock();
 
@@ -48,8 +52,8 @@ class User_Repository_Test extends TestCase
         $mock_user->role = 0;
 
         $mock_user_repository = $this->createMock(User_Repository::class);
+
         $mock_user_repository->method('get_user_by_id')->willReturn($mock_user);
-//
 
         // Act
         $email = "victor.reipur@gmail.com";
@@ -57,5 +61,4 @@ class User_Repository_Test extends TestCase
         // Assert
         $this->assertSame($email, $mock_user_repository->get_user_by_id(1)->email);
     }
-
 }

@@ -7,7 +7,7 @@ require_once __DIR__.'/../../../global-requirements.php';
 $session_service = new Session_Service();
 
 
-$customer_info = 
+$customer_info_from_database =
 array(
   'fullname'=>'Victor Reipur',
   'phone'=>'26129604',
@@ -21,4 +21,4 @@ array(
 
 
 // var_dump($session_service->get_session());
-echo json_encode($session_service->set_customer($customer_info), JSON_PRETTY_PRINT);
+echo json_encode($session_service->set_customer_info_from_database($customer_info), JSON_PRETTY_PRINT);

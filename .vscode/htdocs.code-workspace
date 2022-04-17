@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+    ],
+    "settings": {
+        "workbench.colorTheme": "Default Dark+",
+        "liveServer.settings.port": 5502,
+        "intelephense.diagnostics.undefinedMethods": false
+    }
+}
