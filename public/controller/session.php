@@ -7,7 +7,7 @@ use vezit\classes\api\endpoint\Endpoint;
 use vezit\classes\api\quickpay\Quickpay;
 use vezit\classes\error\Error;
 use vezit\services\session_service\Session_Service;
-
+use vezit\services\product_service\Product_Service;
 
 
 
@@ -20,7 +20,7 @@ function get_response() : object {
 
 
 
-  $session_service = new Session_Service();
+  $session_service = new Session_Service(new Product_Service);
 
   switch ($endpoint->get_parameter->functioncall) {
 
