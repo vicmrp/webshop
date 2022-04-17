@@ -1,7 +1,14 @@
 <?php
+
 namespace vezit\dto\session\response;
+
+require __DIR__ . '/../../../global-requirements.php';
+
+use vezit\dto\class\session\Session;
 
 class Session_Response
 {
-  public $session = null;
+    function __construct(public Session $session)
+    {
+    }
 }
