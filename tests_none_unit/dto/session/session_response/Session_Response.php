@@ -35,5 +35,7 @@ $shipment = new Shipment($tracking_number = "", $order_collected = false, $shipm
 $session = new Session($session_id = 1, $customer, $order, $shipment);
 $session_response = new Session_Response($session);
 
+echo serialize($session_response);
+
 // dd($session_response);
-echo json_encode($session_response, JSON_PRETTY_PRINT);
+// echo json_encode($session_response, JSON_PRETTY_PRINT);
