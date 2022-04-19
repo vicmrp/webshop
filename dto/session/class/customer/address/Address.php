@@ -5,7 +5,7 @@ class Address {
 
   public function __construct(
       public string $street,
-      public int $postal_code,
+      public string $postal_code,
       public string $city
   ) {}
 

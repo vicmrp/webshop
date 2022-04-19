@@ -43,7 +43,7 @@ class Login_Service_Test extends TestCase
 
 
         // Assert
-        $this->assertSame($this->username, $login_response->username);
+        $this->assertSame($this->login_request->username, $login_response->username);
     }
 
 

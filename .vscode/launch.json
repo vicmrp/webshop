@@ -8,7 +8,7 @@
             "name": "Home",
             "request": "launch",
             "type": "pwa-msedge",
-            "url": "https://steengede.com/home/",
+            "url": "https://localhost/home/",
             "webRoot": "${workspaceFolder}/public"
         },
         {

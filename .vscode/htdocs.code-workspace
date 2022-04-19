@@ -1,12 +1,38 @@
 {
-	"folders": [
-		{
-			"path": ".."
-		}
+    "folders": [
+        {
+            "path": ".."
+        }
     ],
     "settings": {
         "workbench.colorTheme": "Default Dark+",
         "liveServer.settings.port": 5502,
+        "editor.detectIndentation": false,
+        "editor.insertSpaces": true,
+        "files.trimTrailingWhitespace": true,
+        "[html]": {
+            "editor.insertSpaces": true,
+            "editor.tabSize": 2
+        },
+        "[css]": {
+            "editor.insertSpaces": true,
+            "editor.tabSize": 4
+        },
+        "[javascript]": {
+            "editor.insertSpaces": true,
+            "editor.tabSize": 4
+        },
+        "[json]": {
+            "editor.insertSpaces": true,
+            "editor.tabSize": 2
+        },
+        "[php]": {
+            "editor.insertSpaces": true,
+            "editor.tabSize": 4
+        },
+        "editor.hover.enabled": true,
+        "editor.hover.delay": 1000,
         "intelephense.diagnostics.undefinedMethods": false
+        // "intelephense.diagnostics.undefinedProperties": false
     }
 }

@@ -1,20 +1,24 @@
 <?php
 require __DIR__ . '/../global-requirements.php';
 
-use vezit\dto\session\response\Session_Response;
-use vezit\classes\session\Session;
-use vezit\services\login_service\Login_Service;
-use vezit\services\session_service\Session_Service;
-use vezit\repositories\user_repository\User_Repository;
+
+use vezit\dto\class\session\order\order_item\Order_Item;
+use vezit\dto\class\session\order\order_status\Order_Status;
+use vezit\dto\class\session\order\Order;
 use vezit\dto\login\request\Login_Request;
-use \PHPUnit\Framework\TestCase;
 use vezit\dto\product\response\Product_Response;
+use vezit\dto\session\response\Session_Response;
+use vezit\dto\session\Session;
+use vezit\repositories\user_repository\User_Repository;
+use vezit\services\login_service\Login_Service;
 use vezit\services\product_service\Product_Service;
+use vezit\services\session_service\Session_Service;
+use \PHPUnit\Framework\TestCase;
 
 class Session_Service_Test extends TestCase {
     protected function setUp() : void
     {
-        $this->session_service = new Session_Service(new Session, new Product_Service);
+        $this->session_service = new Session_Service(new Product_Service);
     }
 
     protected function tearDown() : void
@@ -24,50 +28,50 @@ class Session_Service_Test extends TestCase {
 
 
     /** @test */
-    public function set_customer_shall_return_correct_instance_of_class()
+    public function get_session_shall_return_correct_instance_of_class_when_object_is_unserialized_from_stored_session_variable()
     {
-        $customer_info_from_database =
-            array(
-            'fullname'=>'Victor Reipur',
-            'phone'=>'26129604',
-            'email'=>'victor.reipur@gmail.com',
-            'street'=>'vinkelvej 12d, 3tv',
-            'postal_code'=>'2800',
-            'city'=>'Lyngby',
-            'cvr_number'=>null,
-            'company_name'=>null
-            );
+        // Setup
+        $this->session_service->get_session();
 
-        $session_response = $this->session_service->set_customer_info_from_database($customer_info_from_database);
+        // Do something
+        $session_response = $this->session_service->get_session();
+
+        // Assert
         $this->assertInstanceOf(Session_Response::class, $session_response);
     }
 
 
     /** @test */
-    public function remove_order_item_from_session_shall_return_correct_instance_of_class_using_mock()
+    public function get_session__an_exception_will_be_thrown_when_trying_add_wrong_type_of_data_to_sub_objects_inside_session_reponse()
     {
-
-
         // Setup
-        $mock_product_response = new Product_Response;
-        $mock_product_response->id = 1;
-        $mock_product_response->name = 'Test Product';
-        $mock_product_response->price = 100;
-        $mock_product_response->description = 'Test Product Description';
-
-        $mock_product_service = $this->createMock(Product_Service::class);
-        $mock_product_service->method('get_product_by_id')->willReturn($mock_product_response);
-
-
-
-
+        $session_response = $this->session_service->get_session();
         // Do something
+        try {
+
+            $session_response->session->order->order_id = "femtem";
+            $this->fail("A TypeError should have been thrown");
+
+
+        } catch (TypeError $error) {
+            $this->assertStringStartsWith('Cannot assign string', $error->getMessage());
+        }
 
         // Assert
-
-
-
-        $session_response = $this->session_service->remove_order_item_from_session(1);
         $this->assertInstanceOf(Session_Response::class, $session_response);
+    }
+
+
+    /** @test */
+    public function get_session__you_should_be_able_to_change_the_order_items()
+    {
+        $session_response = $this->session_service->get_session();
+
+        $order_item = new Order_Item("product_name", 1, 100, 1);
+        $order_items = [$order_item];
+
+        $session_response->session->order->set_order_items($order_items);
+
+        $this->assertInstanceOf(Order_Item::class, $session_response->session->order->get_order_items()[0]);
     }
 }
