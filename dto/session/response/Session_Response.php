@@ -8,7 +8,7 @@ use vezit\dto\class\session\Session;
 
 class Session_Response
 {
-    function __construct(public Session $session)
+    function __construct(public Session $session = new Session)
     {
     }
 }

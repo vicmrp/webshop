@@ -27,8 +27,19 @@ class Session_Service
     {
     }
 
+    public function unset_session() : object {
+        if (isset($_SESSION["session_response"]) === true)
+        {
+            unset($_SESSION["session_response"]);
+            return (object)['session_has_been_unset' => true];
+        }
+        return (object)['session_has_been_unset' => false];
+    }
+
+
     public function get_session(): Session_Response
     {
+
 
         // henter session hvis den eksistere ellers skabes der en ny.
         if (isset($_SESSION["session_response"]) === true)
@@ -38,28 +49,40 @@ class Session_Service
         }
 
 
-        $customer_address = new Customer_Address($street = '', $postal_code = '0000', $city = '');
-        $customer_contact = new Customer_Contact($phone_number = '', $email = '');
-        $customer_company = new Customer_Company($cvr_number = '', $company_name = '');
-        $customer = new Customer($fullname = '', $customer_details_satisfied = true, $customer_address, $customer_contact, $customer_company);
+        // $customer_address = new Customer_Address;
+        // $customer_contact = new Customer_Contact;
+        // $customer_company = new Customer_Company;
+        // $customer = new Customer;
 
-        $order_payment = new Order_Payment($accepted = false, $currency = 'DKK', $total_amount = 100, $payment_quickpay_id = 1, $payment_details_satisfied = false);
-        $email = new Email($confirmation_sent = false, $invoice_sent_to_customer = false);
-        $order_status = new Order_Status($order_payment, $email);
-        // $order_item = new Order_Item($product_name = '', $product_id = 0, $price = 100, $quantity = 1);
-        $order = new Order($order_id = 1, $order_items = [], $order_status);
+        // $order_payment = new Order_Payment;
+        // $email = new Email;
+        // $order_status = new Order_Status();
+        // // $order_item = new Order_Item($product_name = '', $product_id = 0, $price = 100, $quantity = 1);
+        // $order = new Order();
 
-        $shipment_address = new Shipment_Address($street_name = '', $street_number = '', $postal_code = '0000', $city = '');
-        $shipment = new Shipment($tracking_number = '', $order_collected = false, $shipment_details_satisfied = false, $shipment_address);
-        $session = new Session($session_id = 1, $customer, $order, $shipment);
-        $session_response = new Session_Response($session);
+        // $shipment_address = new Shipment_Address($street_name = '', $street_number = '', $postal_code = '', $city = '');
+        // $shipment = new Shipment($tracking_number = '', $order_collected = false, $shipment_details_satisfied = false, $shipment_address);
+        // $session = new Session($session_id = 1, $customer, $order, $shipment);
+        $session_response = new Session_Response;
 
         $_SESSION["session_response"] = serialize($session_response);
 
         return $session_response;
     }
 
-    private function set_storing_session_response(): void
+
+    public function set_customer() : Session_Response
     {
+        $session_response = $this->get_session();
+
+        $customer = $session_response->session->customer;
+
+        $customer->fullname = 'Victor Reipur';
+
+        $_SESSION["session_response"] = serialize($session_response);
+
+        return $this->get_session();
+
     }
+
 }

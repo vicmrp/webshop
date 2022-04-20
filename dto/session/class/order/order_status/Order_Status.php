@@ -12,8 +12,8 @@ class Order_Status
 {
 
     public function __construct(
-        public Payment $payment,
-        public Email $email
+        public Payment $payment = new Payment,
+        public Email $email = new Email
     ) {
     }
 }

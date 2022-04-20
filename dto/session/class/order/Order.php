@@ -15,9 +15,9 @@ class Order implements JsonSerializable
 
 
     public function __construct(
-        public int $order_id,
-        private array $order_items,
-        public Order_Status $order_status,
+        public int $order_id = 0,
+        private array $order_items = [],
+        public Order_Status $order_status = new Order_Status,
     ) {
         array_walk($order_items, function ($order_item) {
             if (!($order_item instanceof Order_Item)) {

@@ -2,17 +2,33 @@
 
 require __DIR__.'/../../global-requirements.php';
 
-use vezit\classes\api\endpoint as E;
-use vezit\classes\error as Error;
-use vezit\dto\login\request as Login_Request;
-use vezit\services\login_service as Service;
-use \vezit\repositories\user_repository\User_Repository;
+use vezit\classes\api\endpoint\Endpoint;
+use vezit\classes\error\Error;
+use vezit\dto\login\request\Login_Request;
+use vezit\services\login_service\Login_Service;
+
+use vezit\dto\class\session\Session;
+use vezit\dto\class\session\customer\Customer as Customer;
+use vezit\dto\class\session\customer\address\Address as Customer_Address;
+use vezit\dto\class\session\customer\company\Company as Customer_Company;
+use vezit\dto\class\session\customer\contact\Contact as Customer_Contact;
+use vezit\dto\class\session\order\Order;
+use vezit\dto\class\session\order\order_item\Order_Item;
+use vezit\dto\class\session\order\order_status\Order_Status;
+use vezit\dto\class\session\order\order_status\email\Email;
+use vezit\dto\class\session\order\order_status\payment\Payment as Order_Payment;
+use vezit\dto\class\session\shipment\Shipment;
+use vezit\dto\class\session\shipment\address\Address as Shipment_Address;
+use vezit\repositories\user_repository\User_Repository;
+
+
+
 
 $s_required_get_parameters = array('functioncall');
-$s_endpoint = new E\Endpoint($controller_file_location = __FILE__);
+$s_endpoint = new Endpoint($controller_file_location = __FILE__);
 $s_endpoint->set_expected_get_parameters($s_required_get_parameters);
-$s_login_request = new Login_Request\Login_Request();
-$s_login_service = new Service\Login_Service(new User_Repository);
+$s_login_request = new Login_Request();
+$s_login_service = new Login_Service(new User_Repository);
 
 switch ($s_endpoint->get_parameter->functioncall) {
 
@@ -40,7 +56,7 @@ switch ($s_endpoint->get_parameter->functioncall) {
 
   default:
     $error_message = "Unknown functioncall: " . $s_endpoint->get_parameter->functioncall;
-    new Error\Error(__FILE__, $error_message, $fatal_error=true);
+    new Error(__FILE__, $error_message, $fatal_error=true);
     break;
 }
 
