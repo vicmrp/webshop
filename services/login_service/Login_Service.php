@@ -13,7 +13,7 @@ use vezit\classes\mysqli\Mysqli;
 class Login_Service implements ILogin_Service
 {
 
-    public function __construct(private User_Repository $user_repository)
+    public function __construct(private User_Repository $_user_repository = new User_Repository)
     {
     }
 
@@ -21,7 +21,7 @@ class Login_Service implements ILogin_Service
     public function validate_user_credentials(Login_Request $login_request): Login_Response
     {
 
-        $user_entity = $this->user_repository->get_user_by_email($login_request->username);
+        $user_entity = $this->_user_repository->get_user_by_email($login_request->username);
         $access_granted = (bool)password_verify($login_request->password, $user_entity->hash);
 
         $_SESSION['session_var_active'] = $access_granted ? true : false;

@@ -1,8 +1,7 @@
 <?php
 
-namespace vezit\dto\session\response;
 
-require __DIR__ . '/../../../../global-requirements.php';
+require __DIR__ . '/../../../global-requirements.php';
 
 use vezit\dto\session\Session;
 use vezit\dto\class\session\customer\Customer as Customer;
@@ -33,9 +32,8 @@ $order = new Order($order_id = 1, $order_items = [$order_item], $order_status);
 $shipment_address = new Shipment_Address($street_name = "Street", $street_number = "17", $postal_code = 2800, $city = "Lyngby");
 $shipment = new Shipment($tracking_number = "", $order_collected = false, $shipment_details_satisfied = false, $shipment_address);
 $session = new Session($session_id = 9150356, $customer, $order, $shipment);
-$session_response = new Session_Response($session);
 
-// echo serialize($session_response);
+// echo serialize($session);
 
-// dd($session_response);
-echo json_encode($session_response, JSON_PRETTY_PRINT);
+// dd($session);
+echo json_encode($session, JSON_PRETTY_PRINT);

@@ -75,7 +75,7 @@ class Login_Service_Test extends TestCase
 
 
     /** @test */
-    public function check_if_user_is_logged_in_shall_return_correct_instance_of_class()
+    public function check_if_user_is_logged_in__shall_return_correct_instance_of_class()
     {
         $is_user_logged_in_response = $this->login_service->check_if_user_is_logged_in();
         $this->assertInstanceOf(Is_User_Logged_In_Response::class, $is_user_logged_in_response);

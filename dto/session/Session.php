@@ -1,8 +1,8 @@
 <?php
 
-namespace vezit\dto\class\session;
+namespace vezit\dto\session;
 
-require __DIR__ . '/../../../global-requirements.php';
+require __DIR__ . '/../../global-requirements.php';
 
 use vezit\dto\class\session\customer\Customer as Customer;
 use vezit\dto\class\session\order\Order;

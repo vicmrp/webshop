@@ -16,14 +16,14 @@ class User_Repository_Test extends TestCase
 
 
     /** @test */
-    public function expects_get_user_by_id_to_return_type_of_user()
+    public function get_user_by_id__shall_return__correct_type()
     {
         $this->assertInstanceOf(User::class, $this->user_repository->get_user_by_id(1));
     }
 
 
     /** @test */
-    public function get_user_by_id_shall_return_a_specified_email_non_mocking()
+    public function get_user_by_id__shall_return_a_specified_email_non_mocking()
     {
 
         $email = "test@steengede.com";
@@ -32,18 +32,10 @@ class User_Repository_Test extends TestCase
 
 
     /** @test */
-    public function get_user_by_id_shall_return_a_specified_email_using_mocking()
+    public function get_user_by_id__shall_return_a_specified_email_using_mocking()
     {
         // Arrange
         $mock_email = "victor.reipur@gmail.com";
-
-        // $mock_user = $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock();
-
-        // $mock_user->id = 1;
-        // $mock_user->email = $mock_email;
-        // $mock_user->hash = "hash";
-        // $mock_user->role = 0;
-
         $mock_user = $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock();
 
         $mock_user->id = 1;
