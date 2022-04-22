@@ -5,9 +5,9 @@ namespace vezit\dto\class\session\order;
 require __DIR__ . '/../../../../global-requirements.php'; // __DIR__._from_top_folder().'/
 
 use JsonSerializable;
-use vezit\dto\class\session\order\order_item\Order_Item;
-use vezit\dto\class\session\order\order_status\Order_Status;
-use vezit\dto\class\order_item\response\Order_Item_Response;
+use vezit\dto\class\session\order\item\Item;
+use vezit\dto\class\session\order\status\Status;
+use vezit\dto\class\item\response\Item_Response;
 use vezit\classes\error\Error;
 
 class Order implements JsonSerializable
@@ -15,26 +15,26 @@ class Order implements JsonSerializable
 
 
     public function __construct(
-        public int $order_id = 0,
-        private array $order_items = [],
-        public Order_Status $order_status = new Order_Status,
+        public int $id = 0,
+        private array $items = [],
+        public Status $status = new Status,
     ) {
-        array_walk($order_items, function ($order_item) {
-            if (!($order_item instanceof Order_Item)) {
+        array_walk($items, function ($item) {
+            if (!($item instanceof Item)) {
                 throw new \Exception('Order_Items must be an instance of Order_Item');
             }
         });
     }
 
 
-    public function set_order_items(array $order_items)
+    public function set_order_items(array $items)
     {
-        array_walk($order_items, function ($order_item) {
-            if (!($order_item instanceof Order_Item)) {
+        array_walk($items, function ($item) {
+            if (!($item instanceof Item)) {
                 throw new \Exception('Order_Items must be an instance of Order_Item');
             }
         });
-        $this->order_items = $order_items;
+        $this->items = $items;
     }
 
     public function get_order_items()

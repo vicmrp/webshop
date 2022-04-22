@@ -18,7 +18,7 @@ use \PHPUnit\Framework\TestCase;
 class Session_Service_Test extends TestCase {
     protected function setUp() : void
     {
-        $this->session_service = new Session_Service(new Product_Service);
+        $this->session_service = new Session_Service();
     }
 
     protected function tearDown() : void
@@ -28,7 +28,7 @@ class Session_Service_Test extends TestCase {
 
 
     /** @test */
-    public function get_session_shall_return_correct_instance_of_class_when_object_is_unserialized_from_stored_session_variable()
+    public function get_session__shall_return_correct_instance_of_class_when_object_is_unserialized_from_stored_session_variable()
     {
         // Setup
         $this->session_service->get_session();
@@ -75,3 +75,5 @@ class Session_Service_Test extends TestCase {
         $this->assertInstanceOf(Order_Item::class, $session_response->session->order->get_order_items()[0]);
     }
 }
+
+public function

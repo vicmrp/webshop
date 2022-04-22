@@ -1,5 +1,5 @@
 <?php
-namespace vezit\dto\class\session\order\order_status\email;
+namespace vezit\dto\class\session\order\status\email;
 
 
 class Email {

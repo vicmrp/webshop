@@ -23,7 +23,7 @@ require __DIR__ . '/../../global-requirements.php';
 class Session_Service
 {
 
-    public function __construct(private Product_Service $product_service)
+    public function __construct(private Product_Service $_product_service = new Product_Service)
     {
     }
 
@@ -48,21 +48,6 @@ class Session_Service
             return $session_response;
         }
 
-
-        // $customer_address = new Customer_Address;
-        // $customer_contact = new Customer_Contact;
-        // $customer_company = new Customer_Company;
-        // $customer = new Customer;
-
-        // $order_payment = new Order_Payment;
-        // $email = new Email;
-        // $order_status = new Order_Status();
-        // // $order_item = new Order_Item($product_name = '', $product_id = 0, $price = 100, $quantity = 1);
-        // $order = new Order();
-
-        // $shipment_address = new Shipment_Address($street_name = '', $street_number = '', $postal_code = '', $city = '');
-        // $shipment = new Shipment($tracking_number = '', $order_collected = false, $shipment_details_satisfied = false, $shipment_address);
-        // $session = new Session($session_id = 1, $customer, $order, $shipment);
         $session_response = new Session_Response;
 
         $_SESSION["session_response"] = serialize($session_response);
@@ -82,7 +67,6 @@ class Session_Service
         $_SESSION["session_response"] = serialize($session_response);
 
         return $this->get_session();
-
     }
 
 }
