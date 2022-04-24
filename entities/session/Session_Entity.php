@@ -14,7 +14,7 @@ class Session_Entity
 {
 
     public function __construct(
-        public ?int      $session_pk                                     = null,
+        public ?int     $session_pk                                     = null,
         public int      $session_id                                     = 0,
         public string   $customer_fullname                              = '',
         public bool     $customer_details_satisfied_for_payment         = false,
