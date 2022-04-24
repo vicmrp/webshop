@@ -3,7 +3,6 @@
 namespace vezit\repositories\session_repository;
 
 use vezit\entities\session\Session_Entity;
-use vezit\dto\session\Session;
 use vezit\classes\mysqli\Mysqli;
 
 require __DIR__ . '/../../global-requirements.php';
@@ -35,6 +34,8 @@ class Session_Repository implements ISession_Repository
 
     public function insert(Session_Entity $session_entity): bool
     {
+
+
         $sql = "
         INSERT INTO `session`
         (
