@@ -7,6 +7,7 @@ require __DIR__ . '/../global-requirements.php';
 use \PHPUnit\Framework\TestCase;
 use vezit\entities\session\Session_Entity;
 use vezit\dto\session\Session;
+use vezit\entities\class\order\item\Item;
 use vezit\repositories\session_repository\Session_Repository;
 
 class Session_Repository_Test extends TestCase
@@ -38,8 +39,23 @@ class Session_Repository_Test extends TestCase
     {
 
 
+        $order_id = 12;
+
         $session_entity = new Session_Entity(
+            $session_pk                                     = null,
+            $order_id                                       = $order_id
         );
+
+
+        $item = new Item(
+            $session_order_items_pk = null,
+            $order_id = $order_id,
+            $product_id = 1,
+            $product_name = 'roman',
+            $price = 12000,
+            $quantity = 1
+        );
+        $session_entity->set_order_items($array_of_items = [$item]);
 
 
         $succes = $this->session_repository->insert($session_entity);

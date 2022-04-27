@@ -2,16 +2,8 @@
 require __DIR__ . '/../global-requirements.php';
 
 
-use vezit\dto\class\session\order\order_item\Order_Item;
-use vezit\dto\class\session\order\order_status\Order_Status;
-use vezit\dto\class\session\order\Order;
-use vezit\dto\login\request\Login_Request;
-use vezit\dto\product\response\Product_Response;
+use vezit\dto\class\session\order\item\Item;
 use vezit\dto\session\response\Session_Response;
-use vezit\dto\session\Session;
-use vezit\repositories\user_repository\User_Repository;
-use vezit\services\login_service\Login_Service;
-use vezit\services\product_service\Product_Service;
 use vezit\services\session_service\Session_Service;
 use \PHPUnit\Framework\TestCase;
 
@@ -67,13 +59,15 @@ class Session_Service_Test extends TestCase {
     {
         $session_response = $this->session_service->get_session();
 
-        $order_item = new Order_Item("product_name", 1, 100, 1);
+        $order_item = new Item("product_name", 1, 100, 1);
         $order_items = [$order_item];
 
         $session_response->session->order->set_order_items($order_items);
 
         $this->assertInstanceOf(Order_Item::class, $session_response->session->order->get_order_items()[0]);
     }
+
+
+
 }
 
-public function
