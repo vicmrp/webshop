@@ -38,9 +38,15 @@ class Session_Repository implements ISession_Repository
 
         $sql = "
         INSERT INTO `session`
-        (
-        `session_pk`"                                       .   // i
-        ",`session_id`"                                     .   // i
+        ("                                                  .
+        "`order_id`"                                        .   // i
+        ",`order_status_payment_accepted`"                  .   // i
+        ",`order_status_payment_currency`"                  .   // s
+        ",`order_status_payment_amount`"                    .   // i
+        ",`order_status_payment_quickpay_id`"               .   // i
+        ",`order_status_payment_details_satisfied`"         .   // i
+        ",`order_status_email_confirmation_sent`"           .   // i
+        ",`order_status_email_invoice_sent_to_customer`"    .   // i
         ",`customer_fullname`"                              .   // s
         ",`customer_details_satisfied_for_payment`"         .   // s
         ",`customer_address_street`"                        .   // s
@@ -50,14 +56,6 @@ class Session_Repository implements ISession_Repository
         ",`customer_contact_email`"                         .   // s
         ",`customer_company_cvr_number`"                    .   // i
         ",`customer_company_name`"                          .   // s
-        ",`order_id`"                                       .   // i
-        ",`order_status_payment_accepted`"                  .   // i
-        ",`order_status_payment_currency`"                  .   // s
-        ",`order_status_payment_amount`"                    .   // i
-        ",`order_status_payment_quickpay_id`"               .   // i
-        ",`order_status_payment_details_satisfied`"         .   // i
-        ",`order_status_email_confirmation_sent`"           .   // i
-        ",`order_status_email_invoice_sent_to_customer`"    .   // i
         ",`shipment_tracking_number`"                       .   // i
         ",`shipment_order_collected`"                       .   // i
         ",`shipment_details_satisfied`"                     .   // i
@@ -65,12 +63,19 @@ class Session_Repository implements ISession_Repository
         ",`shipment_address_street_number`"                 .   // s
         ",`shipment_address_postal_code`"                   .   // i
         ",`shipment_address_city`"                          .   // s
-        ")  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        ")  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
         $stmt->bind_param(
-            "iisssisisisiisiiiiiiiissis",
-            $session_entity->session_pk,
-            $session_entity->session_id,
+            "iisiiiiisssisisisiiissis",
+
+            $session_entity->order_id,
+            $session_entity->order_status_payment_accepted,
+            $session_entity->order_status_payment_currency,
+            $session_entity->order_status_payment_amount,
+            $session_entity->order_status_payment_quickpay_id,
+            $session_entity->order_status_payment_details_satisfied,
+            $session_entity->order_status_email_confirmation_sent,
+            $session_entity->order_status_email_invoice_sent_to_customer,
             $session_entity->customer_fullname,
             $session_entity->customer_details_satisfied_for_payment,
             $session_entity->customer_address_street,
@@ -80,14 +85,6 @@ class Session_Repository implements ISession_Repository
             $session_entity->customer_contact_email,
             $session_entity->customer_company_cvr_number,
             $session_entity->customer_company_name,
-            $session_entity->order_id,
-            $session_entity->order_status_payment_accepted,
-            $session_entity->order_status_payment_currency,
-            $session_entity->order_status_payment_amount,
-            $session_entity->order_status_payment_quickpay_id,
-            $session_entity->order_status_payment_details_satisfied,
-            $session_entity->order_status_email_confirmation_sent,
-            $session_entity->order_status_email_invoice_sent_to_customer,
             $session_entity->shipment_tracking_number,
             $session_entity->shipment_order_collected,
             $session_entity->shipment_details_satisfied,
@@ -97,16 +94,48 @@ class Session_Repository implements ISession_Repository
             $session_entity->shipment_address_city
         );
 
-        if($stmt->execute())
+
+        if(!($stmt->execute()))
         {
-            $stmt->close();
-            return true;
-        }
-        else
-        {
+            throw new \Exception("Could not execute statement: " . $stmt->error);
             $stmt->close();
             return false;
         }
+
+        array_walk($session_entity->get_order_items(), function($item)
+        {
+            $sql = "
+            INSERT INTO `session_order_items`
+            ("                                                  .
+            "`order_item_order_id`"                             .   // i
+            ",`order_item_product_id`"                          .   // i
+            ",`order_item_product_name`"                        .   // s
+            ",`order_item_product_price`"                       .   // i
+            ",`order_item_product_quantity`"                    .   // i
+            ",`order_item_product_total_price`"                 .   // i
+            ")  VALUES (?, ?, ?, ?, ?)";
+
+
+            $stmt2 = $this->_mysqli->get_db_conn()->prepare($sql);
+            $stmt2->bind_param(
+                "iissi",
+                $item->order_item_order_id,
+                $item->order_item_product_id,
+                $item->order_item_product_name,
+                $item->order_item_product_price,
+                $item->order_item_product_quantity,
+                $item->order_item_product_total_price
+            );
+
+            if(!($stmt2->execute()))
+            {
+                throw new \Exception("Could not execute statement: " . $stmt2->error);
+                $stmt2->close();
+                return false;
+            }
+        });
+
+        return true;
     }
 
 

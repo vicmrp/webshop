@@ -8,10 +8,12 @@ class Item
 {
 
     public function __construct(
-        public int $id = 0,
-        public string $name = '',
-        public int $price = 0,
-        public int $quantity = 0
+        public ?int $session_order_items_pk = null,
+        public ?int $order_id = null,
+        public ?int $product_id = null,
+        public ?string $product_name = null,
+        public ?int $price = null,
+        public ?int $quantity = null
     ) {}
 
 
