@@ -4,6 +4,7 @@ namespace vezit\repositories\session_repository;
 
 
 use vezit\entities\Session;
+use vezit\entities\Session_Order_Item;
 use vezit\classes\mysqli\Mysqli;
 
 require __DIR__ . '/../../global-requirements.php';
@@ -14,12 +15,27 @@ class Session_Repository implements ISession_Repository
     public function __construct(private $_mysqli = new Mysqli)
     {}
 
+    public function get_all() : array {
+
+        $array_of_sessions = $this->_get_all_session_table();
 
 
+        foreach ($array_of_sessions as $session) {
+            $session_order_items = $this->_get_by_order_id_from__session_order_item_table($session->order_id);
+            $session->set_order_items($session_order_items);
+        }
 
 
+        // $sessions = [];
+        // foreach ($entities as $entity) {
+        //     $sessions[] = $this->_session($entity);
+        // }
 
-    public function _get_all_from_session_table(): array
+        return $array_of_sessions;
+    }
+
+
+    private function _get_all_session_table(): array
     {
         $sql = "SELECT * FROM `session`";
         $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
@@ -36,7 +52,10 @@ class Session_Repository implements ISession_Repository
         return $sessions;
     }
 
-    public function _find_by_pk_from_session_table(int $session_pk): Session
+
+
+
+    private function _find_by_pk_from_session_table(int $session_pk): Session
     {
 
         $sql = "SELECT * FROM `session` WHERE session_pk=?";
@@ -50,7 +69,28 @@ class Session_Repository implements ISession_Repository
         return $this->_session($entity);
     }
 
-    public function _find_by_order_id_from_session_table(int $order_id): Session
+
+    private function _get_by_order_id_from__session_order_item_table(int $order_id): array
+    {
+        $sql = "SELECT * FROM `session_order_item` WHERE order_id=?";
+        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
+        $stmt->bind_param("i", $order_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $entities = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+
+        $session_order_items = [];
+        foreach ($entities as $entity) {
+            $session_order_items[] = $this->_session_order_item($entity);
+        }
+
+        return $session_order_items;
+
+    }
+
+
+    private function _find_by_order_id_from_session_table(int $order_id): Session
     {
 
         $sql = "SELECT * FROM `session` WHERE order_id=?";
@@ -65,7 +105,7 @@ class Session_Repository implements ISession_Repository
     }
 
 
-    public function _insert_into_session_table(Session $session): bool
+    private function _insert_into_session_table(Session $session): bool
     {
 
 
@@ -140,7 +180,7 @@ class Session_Repository implements ISession_Repository
     }
 
 
-    public function _update_session_table(int $order_id, Session $session): bool
+    private function _update_session_table(int $order_id, Session $session): bool
     {
 
         $sql = "
@@ -213,7 +253,7 @@ class Session_Repository implements ISession_Repository
     }
 
 
-    public function _delete_session_table(int $order_id): bool
+    private function _delete_session_table(int $order_id): bool
     {
         $sql = "DELETE FROM `session` WHERE `order_id` = ?";
         $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
@@ -230,8 +270,26 @@ class Session_Repository implements ISession_Repository
     }
 
 
+    private function _session_order_item(array $entity) : Session_Order_Item
+    {
+
+        return new Session_Order_Item(
+            $entity['session_order_item_pk'],
+            $entity['order_id'],
+            $entity['product_id'],
+            $entity['product_name'],
+            $entity['price'],
+            $entity['quantity']
+        );
+    }
+
     private function _session(array $entity): Session
     {
+
+
+
+
+
         return new Session(
             $entity['session_pk'],
             $entity['order_id'],
@@ -258,6 +316,7 @@ class Session_Repository implements ISession_Repository
             $entity['shipment_address_street_number'],
             $entity['shipment_address_postal_code'],
             $entity['shipment_address_city']
+
         );
     }
 
