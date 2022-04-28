@@ -1,6 +1,6 @@
 <?php
 
-namespace vezit\entities\user;
+namespace vezit\entities;
 
 class User {
 

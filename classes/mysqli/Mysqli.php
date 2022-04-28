@@ -6,15 +6,15 @@ class Mysqli
 {
     private $db_conn = null;
 
-    function __construct()
+    function __construct(private $db_host = null, private $db_user  = null, private $db_pass = null, private $db_name = null)
     {
-        // -- sql -- //
-        global $g_db_conn;
-        $this->db_conn = new \Mysqli($g_db_conn->servername, $g_db_conn->username, $g_db_conn->password, $g_db_conn->dbname);
-        if ($this->db_conn->connect_error) {
-            die("Connection failed: " . $this->db_conn->connect_error); // Check connection
+        if ($this->db_host && $this->db_user && $this->db_pass && $this->db_name) {
+            $this->db_conn = new \mysqli($this->db_host, $this->db_user, $this->db_pass, $this->db_name);
+        } else {
+            global $g_db_conn;
+            $this->db_conn = new \mysqli($g_db_conn->servername, $g_db_conn->username, $g_db_conn->password, $g_db_conn->dbname);
         }
-        // -- sql -- //
+
     }
 
     function get_db_conn()

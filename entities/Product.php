@@ -1,7 +1,7 @@
 <?php
 
 
-namespace vezit\entities\product;
+namespace vezit\entities;
 
 class Product
 {

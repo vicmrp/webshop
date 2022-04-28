@@ -2,9 +2,8 @@
 
 namespace vezit\repositories\session_repository;
 
-use vezit\dto\session as DTO;
-use vezit\entities\class\order\item\Item;
-use vezit\entities\session\Session;
+
+use vezit\entities\Session;
 use vezit\classes\mysqli\Mysqli;
 
 require __DIR__ . '/../../global-requirements.php';
@@ -26,7 +25,7 @@ class Session_Repository implements ISession_Repository
 
         $sessions = [];
         foreach ($entities as $entity) {
-            $sessions[] = $this->session($entity);
+            $sessions[] = $this->_session($entity);
         }
 
         return $sessions;
@@ -43,7 +42,7 @@ class Session_Repository implements ISession_Repository
         $entity = $result->fetch_assoc();
         $stmt->close();
 
-        return $this->session($entity);
+        return $this->_session($entity);
     }
 
     public function find_by_order_id(int $order_id): Session
@@ -57,17 +56,11 @@ class Session_Repository implements ISession_Repository
         $entity = $result->fetch_assoc();
         $stmt->close();
 
-        return $this->session($entity);
+        return $this->_session($entity);
     }
 
 
-
-
-
-
-
-
-    public function insert(DTO\Session $session): bool
+    public function insert_to_session_table(Session $session): bool
     {
 
 
@@ -137,66 +130,102 @@ class Session_Repository implements ISession_Repository
             return false;
         }
 
-        $items = $session_entity->get_order_items();
-        array_walk($items, function($item)
-        {
-            $sql = "
-            INSERT INTO `session_order_items`
-            ("                                       .
-            "`order_id`"                             .   // i
-            ",`product_id`"                          .   // i
-            ",`product_name`"                        .   // s
-            ",`price`"                               .   // i
-            ",`quantity`"                            .   // i
-            ")  VALUES (?, ?, ?, ?, ?)";
-
-
-
-            $stmt2 = $this->_mysqli->get_db_conn()->prepare($sql);
-            $stmt2->bind_param(
-                "iissi",
-                $item->order_id,
-                $item->product_id,
-                $item->product_name,
-                $item->price,
-                $item->quantity
-            );
-
-            if(!($stmt2->execute()))
-            {
-                throw new \Exception("Could not execute statement: " . $stmt2->error);
-                $stmt2->close();
-                return false;
-            }
-        });
-
+        $stmt->close();
         return true;
     }
 
 
-    public function update(): void
+    public function update_session_table(int $order_id, Session $session): bool
     {
 
+        $sql = "
+        UPDATE `session`
+        SET
+        `order_status_payment_accepted` =                   ?
+        ,`order_status_payment_currency` =                  ?
+        ,`order_status_payment_amount` =                    ?
+        ,`order_status_payment_quickpay_id` =               ?
+        ,`order_status_payment_details_satisfied` =         ?
+        ,`order_status_email_confirmation_sent` =           ?
+        ,`order_status_email_invoice_sent_to_customer` =    ?
+        ,`customer_fullname` =                              ?
+        ,`customer_details_satisfied_for_payment` =         ?
+        ,`customer_address_street` =                        ?
+        ,`customer_address_postal_code` =                   ?
+        ,`customer_address_city` =                          ?
+        ,`customer_contact_phone` =                         ?
+        ,`customer_contact_email` =                         ?
+        ,`customer_company_cvr_number` =                    ?
+        ,`customer_company_name` =                          ?
+        ,`shipment_tracking_number` =                       ?
+        ,`shipment_order_collected` =                       ?
+        ,`shipment_details_satisfied` =                     ?
+        ,`shipment_address_street_name` =                   ?
+        ,`shipment_address_street_number` =                 ?
+        ,`shipment_address_postal_code` =                   ?
+        ,`shipment_address_city` =                          ?
+        WHERE `order_id` = ?";
+        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
+        $stmt->bind_param(
+            "isiiiiisssisisisisiiissi",
+            $session->order_status_payment_accepted,
+            $session->order_status_payment_currency,
+            $session->order_status_payment_amount,
+            $session->order_status_payment_quickpay_id,
+            $session->order_status_payment_details_satisfied,
+            $session->order_status_email_confirmation_sent,
+            $session->order_status_email_invoice_sent_to_customer,
+            $session->customer_fullname,
+            $session->customer_details_satisfied_for_payment,
+            $session->customer_address_street,
+            $session->customer_address_postal_code,
+            $session->customer_address_city,
+            $session->customer_contact_phone,
+            $session->customer_contact_email,
+            $session->customer_company_cvr_number,
+            $session->customer_company_name,
+            $session->shipment_tracking_number,
+            $session->shipment_order_collected,
+            $session->shipment_details_satisfied,
+            $session->shipment_address_street_name,
+            $session->shipment_address_street_number,
+            $session->shipment_address_postal_code,
+            $session->shipment_address_city,
+            $order_id
+        );
+
+        if(!($stmt->execute()))
+        {
+            throw new \Exception("Could not execute statement: " . $stmt->error);
+            $stmt->close();
+            return false;
+        }
+
+        $stmt->close();
+        return true;
 
 
     }
 
 
-    public function delete(): void
+    public function delete_session_table(int $order_id): bool
     {
+        $sql = "DELETE FROM `session` WHERE `order_id` = ?";
+        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
+        $stmt->bind_param("i", $order_id);
+        if(!($stmt->execute()))
+        {
+            throw new \Exception("Could not execute statement: " . $stmt->error);
+            $stmt->close();
+            return false;
+        }
+
+        $stmt->close();
+        return true;
     }
 
 
-
-
-
-
-
-
-
-
-
-    private function session(array $entity): Session
+    private function _session(array $entity): Session
     {
         return new Session(
             $entity['session_pk'],
@@ -226,4 +255,6 @@ class Session_Repository implements ISession_Repository
             $entity['shipment_address_city']
         );
     }
+
+
 }

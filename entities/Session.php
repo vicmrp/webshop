@@ -1,21 +1,16 @@
 <?php
 
-namespace vezit\entities\session;
+namespace vezit\entities;
 
-require __DIR__ . '/../../global-requirements.php';
-
-use vezit\entities\class\customer\Customer;
-use vezit\entities\class\order\Order;
-use vezit\entities\class\shipment\Shipment;
-use vezit\entities\class\order\item\Item;
+require __DIR__ . '/../global-requirements.php';
 
 
 class Session
 {
 
     public function __construct(
-        public   ?int        $session_pk                                     = null,
-        public   ?int        $order_id                                       = null,
+        public   ?int       $session_pk                                     = null,
+        public   ?int       $order_id                                       = null,
         public   bool       $order_status_payment_accepted                  = false,
         public   string     $order_status_payment_currency                  = '',
         public   int        $order_status_payment_amount                    = 0,
@@ -28,20 +23,18 @@ class Session
         public   string     $customer_address_street                        = '',
         public   int        $customer_address_postal_code                   = 0,
         public   string     $customer_address_city                          = '',
-        public   string     $customer_contact_phone                         = '',
+        public   int        $customer_contact_phone                         = 0,
         public   string     $customer_contact_email                         = '',
-        public   ?int       $customer_company_cvr_number                    = 0,
-        public   ?string    $customer_company_name                          = '',
+        public   ?int       $customer_company_cvr_number                    = null,
+        public   ?string    $customer_company_name                          = null,
         public   int        $shipment_tracking_number                       = 0,
         public   bool       $shipment_order_collected                       = false,
         public   bool       $shipment_details_satisfied                     = false,
         public   string     $shipment_address_street_name                   = '',
-        public   int        $shipment_address_street_number                 = 0,
+        public   string     $shipment_address_street_number                 = '',
         public   int        $shipment_address_postal_code                   = 0,
         public   string     $shipment_address_city                          = ''
-    )
-    {
-    }
+    ) {}
 
 
 
