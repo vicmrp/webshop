@@ -2,7 +2,9 @@
 
 namespace vezit\repositories\session_repository;
 
-use vezit\entities\session\Session_Entity;
+use vezit\dto\session as DTO;
+use vezit\entities\class\order\item\Item;
+use vezit\entities\session\Session;
 use vezit\classes\mysqli\Mysqli;
 
 require __DIR__ . '/../../global-requirements.php';
@@ -13,8 +15,24 @@ class Session_Repository implements ISession_Repository
     public function __construct(private $_mysqli = new Mysqli)
     {}
 
+    public function get_all(): array
+    {
+        $sql = "SELECT * FROM `session`";
+        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $entities = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
 
-    public function find(int $session_pk): Session_Entity
+        $sessions = [];
+        foreach ($entities as $entity) {
+            $sessions[] = $this->session($entity);
+        }
+
+        return $sessions;
+    }
+
+    public function find_by_pk(int $session_pk): Session
     {
 
         $sql = "SELECT * FROM `session` WHERE session_pk=?";
@@ -22,17 +40,34 @@ class Session_Repository implements ISession_Repository
         $stmt->bind_param("i", $session_pk);
         $stmt->execute();
         $result = $stmt->get_result();
-        $array = $result->fetch_assoc();
+        $entity = $result->fetch_assoc();
         $stmt->close();
 
-        return new Session_Entity(
-            $session_pk = $array['session_pk'],
-            $serialized_session = $array['serialized_session']
-        );
+        return $this->session($entity);
+    }
+
+    public function find_by_order_id(int $order_id): Session
+    {
+
+        $sql = "SELECT * FROM `session` WHERE order_id=?";
+        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
+        $stmt->bind_param("i", $order_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $entity = $result->fetch_assoc();
+        $stmt->close();
+
+        return $this->session($entity);
     }
 
 
-    public function insert(Session_Entity $session_entity): bool
+
+
+
+
+
+
+    public function insert(DTO\Session $session): bool
     {
 
 
@@ -68,30 +103,30 @@ class Session_Repository implements ISession_Repository
         $stmt->bind_param(
             "iisiiiiisssisisisiiissis",
 
-            $session_entity->order_id,
-            $session_entity->order_status_payment_accepted,
-            $session_entity->order_status_payment_currency,
-            $session_entity->order_status_payment_amount,
-            $session_entity->order_status_payment_quickpay_id,
-            $session_entity->order_status_payment_details_satisfied,
-            $session_entity->order_status_email_confirmation_sent,
-            $session_entity->order_status_email_invoice_sent_to_customer,
-            $session_entity->customer_fullname,
-            $session_entity->customer_details_satisfied_for_payment,
-            $session_entity->customer_address_street,
-            $session_entity->customer_address_postal_code,
-            $session_entity->customer_address_city,
-            $session_entity->customer_contact_phone,
-            $session_entity->customer_contact_email,
-            $session_entity->customer_company_cvr_number,
-            $session_entity->customer_company_name,
-            $session_entity->shipment_tracking_number,
-            $session_entity->shipment_order_collected,
-            $session_entity->shipment_details_satisfied,
-            $session_entity->shipment_address_street_name,
-            $session_entity->shipment_address_street_number,
-            $session_entity->shipment_address_postal_code,
-            $session_entity->shipment_address_city
+            $session->order_id,
+            $session->order_status_payment_accepted,
+            $session->order_status_payment_currency,
+            $session->order_status_payment_amount,
+            $session->order_status_payment_quickpay_id,
+            $session->order_status_payment_details_satisfied,
+            $session->order_status_email_confirmation_sent,
+            $session->order_status_email_invoice_sent_to_customer,
+            $session->customer_fullname,
+            $session->customer_details_satisfied_for_payment,
+            $session->customer_address_street,
+            $session->customer_address_postal_code,
+            $session->customer_address_city,
+            $session->customer_contact_phone,
+            $session->customer_contact_email,
+            $session->customer_company_cvr_number,
+            $session->customer_company_name,
+            $session->shipment_tracking_number,
+            $session->shipment_order_collected,
+            $session->shipment_details_satisfied,
+            $session->shipment_address_street_name,
+            $session->shipment_address_street_number,
+            $session->shipment_address_postal_code,
+            $session->shipment_address_city
         );
 
 
@@ -102,29 +137,29 @@ class Session_Repository implements ISession_Repository
             return false;
         }
 
-        array_walk($session_entity->get_order_items(), function($item)
+        $items = $session_entity->get_order_items();
+        array_walk($items, function($item)
         {
             $sql = "
             INSERT INTO `session_order_items`
-            ("                                                  .
-            "`order_item_order_id`"                             .   // i
-            ",`order_item_product_id`"                          .   // i
-            ",`order_item_product_name`"                        .   // s
-            ",`order_item_product_price`"                       .   // i
-            ",`order_item_product_quantity`"                    .   // i
-            ",`order_item_product_total_price`"                 .   // i
+            ("                                       .
+            "`order_id`"                             .   // i
+            ",`product_id`"                          .   // i
+            ",`product_name`"                        .   // s
+            ",`price`"                               .   // i
+            ",`quantity`"                            .   // i
             ")  VALUES (?, ?, ?, ?, ?)";
+
 
 
             $stmt2 = $this->_mysqli->get_db_conn()->prepare($sql);
             $stmt2->bind_param(
                 "iissi",
-                $item->order_item_order_id,
-                $item->order_item_product_id,
-                $item->order_item_product_name,
-                $item->order_item_product_price,
-                $item->order_item_product_quantity,
-                $item->order_item_product_total_price
+                $item->order_id,
+                $item->product_id,
+                $item->product_name,
+                $item->price,
+                $item->quantity
             );
 
             if(!($stmt2->execute()))
@@ -139,27 +174,56 @@ class Session_Repository implements ISession_Repository
     }
 
 
-    public function update(string $session_id, object $payment): void
+    public function update(): void
     {
 
-        if ($payment->accepted) {
-            $json = file_get_contents(_from_top_folder() . "/_temp_database/session/$session_id.json");
-
-            $session = json_decode($json);
-            $session->order->order_status->payment->accepted = true;
-
-            $json = json_encode($session, JSON_PRETTY_PRINT);
-
-            unlink(_from_top_folder() . "/_temp_database/session/$session_id.json");
-
-            file_put_contents(_from_top_folder() . "/_temp_database/session/$session_id.json", $json);
-        }
 
 
     }
 
 
-    public function delete(object $entity): void
+    public function delete(): void
     {
+    }
+
+
+
+
+
+
+
+
+
+
+
+    private function session(array $entity): Session
+    {
+        return new Session(
+            $entity['session_pk'],
+            $entity['order_id'],
+            $entity['order_status_payment_accepted'],
+            $entity['order_status_payment_currency'],
+            $entity['order_status_payment_amount'],
+            $entity['order_status_payment_quickpay_id'],
+            $entity['order_status_payment_details_satisfied'],
+            $entity['order_status_email_confirmation_sent'],
+            $entity['order_status_email_invoice_sent_to_customer'],
+            $entity['customer_fullname'],
+            $entity['customer_details_satisfied_for_payment'],
+            $entity['customer_address_street'],
+            $entity['customer_address_postal_code'],
+            $entity['customer_address_city'],
+            $entity['customer_contact_phone'],
+            $entity['customer_contact_email'],
+            $entity['customer_company_cvr_number'],
+            $entity['customer_company_name'],
+            $entity['shipment_tracking_number'],
+            $entity['shipment_order_collected'],
+            $entity['shipment_details_satisfied'],
+            $entity['shipment_address_street_name'],
+            $entity['shipment_address_street_number'],
+            $entity['shipment_address_postal_code'],
+            $entity['shipment_address_city']
+        );
     }
 }
