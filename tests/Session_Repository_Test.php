@@ -18,10 +18,10 @@ class Session_Repository_Test extends TestCase
 
 
     /** @test */
-    public function get_all__shall_return_correct_type()
+    public function _get_all_from_session_table__shall_return_correct_type()
     {
         // Act
-        $array_of_sessions = $this->session_repository->get_all();
+        $array_of_sessions = $this->session_repository->_get_all_from_session_table();
 
         // Assert
         foreach ($array_of_sessions as $session) {
@@ -40,14 +40,14 @@ class Session_Repository_Test extends TestCase
 
 
     /** @test */
-    public function find_by_pk__shall_return_correct_type()
+    public function _find_by_pk_from_session_table__shall_return_correct_type()
     {
         // Setup
-        $array_of_session = $this->session_repository->get_all();
+        $array_of_session = $this->session_repository->_get_all_from_session_table();
         $session_pk = $array_of_session[0]->session_pk;
 
         // Assert
-        $this->assertInstanceOf(Session::class, $this->session_repository->find_by_pk($session_pk));
+        $this->assertInstanceOf(Session::class, $this->session_repository->_find_by_pk_from_session_table($session_pk));
     }
 
 
@@ -58,14 +58,14 @@ class Session_Repository_Test extends TestCase
 
 
     /** @test */
-    public function find_by_order_id__shall_return_correct_type()
+    public function _find_by_order_id_from_session_table__shall_return_correct_type()
     {
         // Setup
-        $array_of_session = $this->session_repository->get_all();
+        $array_of_session = $this->session_repository->_get_all_from_session_table();
         $order_id = $array_of_session[0]->order_id;
 
         // Act
-        $session_entity = $this->session_repository->find_by_order_id($order_id);
+        $session_entity = $this->session_repository->_find_by_order_id_from_session_table($order_id);
 
         // Assert
         $this->assertInstanceOf(Session::class, $session_entity);
@@ -76,11 +76,11 @@ class Session_Repository_Test extends TestCase
 
 
     /** @test */
-    public function insert__check_if_you_can_insert_a_session_object_to_database()
+    public function _insert_into_session_table__check_if_you_can_insert_a_session_object_to_database()
     {
         // Arrange
         // Hent seneste order_id fra fra
-        $array_of_sessions = $this->session_repository->get_all();
+        $array_of_sessions = $this->session_repository->_get_all_from_session_table();
 
         // Soter sa første element i arrayet er højeste order_id
         usort($array_of_sessions, function ($a, $b) {
@@ -123,7 +123,7 @@ class Session_Repository_Test extends TestCase
         );
 
 
-        $success = $this->session_repository->insert_to_session_table($session_entity);
+        $success = $this->session_repository->_insert_into_session_table($session_entity);
 
         $this->assertTrue($success , true);
 
@@ -133,11 +133,11 @@ class Session_Repository_Test extends TestCase
 
 
     /** @test */
-    public function update_to_session_table__check_if_you_can_update_a_session_object_to_database()
+    public function _update_session_table__check_if_you_can_update_a_session_object_to_database()
     {
         // Arrange
         // Hent seneste order_id fra fra
-        $array_of_sessions = $this->session_repository->get_all();
+        $array_of_sessions = $this->session_repository->_get_all_from_session_table();
 
         // Soter sa første element i arrayet er højeste order_id
         usort($array_of_sessions, function ($a, $b) {
@@ -155,7 +155,7 @@ class Session_Repository_Test extends TestCase
 
 
         // Act
-        $success = $this->session_repository->update_session_table($order_id, $session_entity);
+        $success = $this->session_repository->_update_session_table($order_id, $session_entity);
 
         // Assert
         $this->assertTrue($success , true);
@@ -163,11 +163,11 @@ class Session_Repository_Test extends TestCase
 
 
     /** @test */
-    public function delete_session_table__check_if_you_can_delete_a_session_object_in_database()
+    public function _delete_session_table__check_if_you_can_delete_a_session_object_in_database()
     {
         // Arrange
         // Hent seneste order_id fra fra
-        $array_of_sessions = $this->session_repository->get_all();
+        $array_of_sessions = $this->session_repository->_get_all_from_session_table();
 
         // Soter sa første element i arrayet er højeste order_id
         usort($array_of_sessions, function ($a, $b) {
@@ -180,6 +180,6 @@ class Session_Repository_Test extends TestCase
         $order_id = $array_of_sessions[0]->order_id;
 
         // Assert
-        $this->assertTrue($this->session_repository->delete_session_table($order_id) , true);
+        $this->assertTrue($this->session_repository->_delete_session_table($order_id) , true);
     }
 }

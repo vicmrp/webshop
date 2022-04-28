@@ -9,6 +9,7 @@ class Session
 {
 
     public function __construct(
+        // Repræsenterer en session i databasen
         public   ?int       $session_pk                                     = null,
         public   ?int       $order_id                                       = null,
         public   bool       $order_status_payment_accepted                  = false,
@@ -33,9 +34,33 @@ class Session
         public   string     $shipment_address_street_name                   = '',
         public   string     $shipment_address_street_number                 = '',
         public   int        $shipment_address_postal_code                   = 0,
-        public   string     $shipment_address_city                          = ''
-    ) {}
+        public   string     $shipment_address_city                          = '',
+
+        // sub-entities - en undertabel
+        private  array $session_order_items = [],
+    )
+    {
+        array_walk($session_order_items, function ($session_order_item) {
+            if (!($session_order_item instanceof Session_Order_Item)) {
+                throw new \Exception('Order_Item must be an instance of Session_Order_Item');
+            }
+        });
+    }
 
 
+    public function get_session_order_items(): array
+    {
+        return $this->session_order_items;
+    }
 
+
+    public function set_order_items(array $session_order_items)
+    {
+        array_walk($session_order_items, function ($session_order_item) {
+            if (!($session_order_item instanceof Session_Order_Item)) {
+                throw new \Exception('Order_Items must be an instance of Order_Item');
+            }
+        });
+        $this->session_order_items = $session_order_items;
+    }
 }

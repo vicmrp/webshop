@@ -14,7 +14,12 @@ class Session_Repository implements ISession_Repository
     public function __construct(private $_mysqli = new Mysqli)
     {}
 
-    public function get_all(): array
+
+
+
+
+
+    public function _get_all_from_session_table(): array
     {
         $sql = "SELECT * FROM `session`";
         $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
@@ -31,7 +36,7 @@ class Session_Repository implements ISession_Repository
         return $sessions;
     }
 
-    public function find_by_pk(int $session_pk): Session
+    public function _find_by_pk_from_session_table(int $session_pk): Session
     {
 
         $sql = "SELECT * FROM `session` WHERE session_pk=?";
@@ -45,7 +50,7 @@ class Session_Repository implements ISession_Repository
         return $this->_session($entity);
     }
 
-    public function find_by_order_id(int $order_id): Session
+    public function _find_by_order_id_from_session_table(int $order_id): Session
     {
 
         $sql = "SELECT * FROM `session` WHERE order_id=?";
@@ -60,7 +65,7 @@ class Session_Repository implements ISession_Repository
     }
 
 
-    public function insert_to_session_table(Session $session): bool
+    public function _insert_into_session_table(Session $session): bool
     {
 
 
@@ -135,7 +140,7 @@ class Session_Repository implements ISession_Repository
     }
 
 
-    public function update_session_table(int $order_id, Session $session): bool
+    public function _update_session_table(int $order_id, Session $session): bool
     {
 
         $sql = "
@@ -208,7 +213,7 @@ class Session_Repository implements ISession_Repository
     }
 
 
-    public function delete_session_table(int $order_id): bool
+    public function _delete_session_table(int $order_id): bool
     {
         $sql = "DELETE FROM `session` WHERE `order_id` = ?";
         $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
