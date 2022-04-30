@@ -17,7 +17,7 @@ class Session_Repository implements ISession_Repository
 
     public function get_all() : array {
 
-        $array_of_sessions = $this->_get_all_session_table();
+        $array_of_sessions = $this->_get_all_from__session_table();
 
 
         foreach ($array_of_sessions as $session) {
@@ -26,16 +26,68 @@ class Session_Repository implements ISession_Repository
         }
 
 
-        // $sessions = [];
-        // foreach ($entities as $entity) {
-        //     $sessions[] = $this->_session($entity);
-        // }
-
         return $array_of_sessions;
     }
 
 
-    private function _get_all_session_table(): array
+    public function get_by_order_id(int $order_id) : Session {
+
+        $session = $this->_get_by_order_id_from__session_table($order_id);
+
+        $session_order_items = $this->_get_by_order_id_from__session_order_item_table($order_id);
+
+        $session->set_order_items($session_order_items);
+
+        return $session;
+
+    }
+
+
+
+    public function insert(Session $session) : bool {
+
+        if (!($this->_insert_into__session_table($session))) {
+            return false;
+        }
+
+        if (!($this->_insert_into__session_order_item_table($session))) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    public function update(int $order_id, Session $session) : bool {
+
+        if (!($this->_update_session_table($order_id, $session))) {
+            return false;
+        }
+
+        foreach($session->get_session_order_items() as $session_order_item) {
+            if (!($this->_update_session_order_item_table($order_id, $session_order_item->product_id, $session_order_item))) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function delete(int $order_id) : bool {
+
+        if (!($this->_delete_from__session_table($order_id))) {
+            return false;
+        }
+
+        if (!($this->_delete_from__session_order_item_table($order_id))) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private function _get_all_from__session_table(): array
     {
         $sql = "SELECT * FROM `session`";
         $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
@@ -46,8 +98,10 @@ class Session_Repository implements ISession_Repository
 
         $sessions = [];
         foreach ($entities as $entity) {
-            $sessions[] = $this->_session($entity);
+            $sessions += [$entity['order_id'] => $this->_session($entity)];
         }
+
+
 
         return $sessions;
     }
@@ -82,7 +136,7 @@ class Session_Repository implements ISession_Repository
 
         $session_order_items = [];
         foreach ($entities as $entity) {
-            $session_order_items[] = $this->_session_order_item($entity);
+            $session_order_items += [$entity['order_id'] => $this->_session_order_item($entity)];
         }
 
         return $session_order_items;
@@ -90,14 +144,27 @@ class Session_Repository implements ISession_Repository
     }
 
 
-    private function _find_by_order_id_from_session_table(int $order_id): Session
+    private function _get_by_order_id_from__session_table(int $order_id): Session
     {
 
         $sql = "SELECT * FROM `session` WHERE order_id=?";
         $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
         $stmt->bind_param("i", $order_id);
-        $stmt->execute();
+
+        if(!($stmt->execute()))
+        {
+            throw new \Exception("Could not execute statement: " . $stmt->error);
+        }
+
         $result = $stmt->get_result();
+
+        if($result->num_rows == 0)
+        {
+            throw new \Exception("Could not find session with order_id: " . $order_id);
+        }
+
+
+
         $entity = $result->fetch_assoc();
         $stmt->close();
 
@@ -105,7 +172,7 @@ class Session_Repository implements ISession_Repository
     }
 
 
-    private function _insert_into_session_table(Session $session): bool
+    private function _insert_into__session_table(Session $session): bool
     {
 
 
@@ -176,6 +243,43 @@ class Session_Repository implements ISession_Repository
         }
 
         $stmt->close();
+        return true;
+    }
+
+
+    public function _insert_into__session_order_item_table(Session $session): bool
+    {
+        $sql = "INSERT INTO `session_order_item`
+        (
+        ,`order_id`
+        ,`product_id`
+        ,`product_name`
+        ,`price`
+        ,`quantity`
+        ) VALUES (?, ?, ?, ?, ?)";
+
+        $session_order_items = $session->get_session_order_items();
+
+        foreach($session_order_items as $session_order_item)
+        {
+            $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
+            $stmt->bind_param("iisii",
+                $session_order_item->order_id,
+                $session_order_item->product_id,
+                $session_order_item->product_name,
+                $session_order_item->price,
+                $session_order_item->quantity,
+            );
+            if(!($stmt->execute()))
+            {
+                throw new \Exception("Could not execute statement: " . $stmt->error);
+                $stmt->close();
+                return false;
+            }
+
+            $stmt->close();
+
+        }
         return true;
     }
 
@@ -252,10 +356,57 @@ class Session_Repository implements ISession_Repository
 
     }
 
+    private function _update_session_order_item_table(int $order_id, int $product_id, Session_Order_Item $session_order_item) : bool
+    {
+        $sql = "
+        UPDATE `session_order_item`
+        SET
+        `product_name`     =                          ?
+        ,`price`            =                          ?
+        ,`quantity`         =                          ?
+        WHERE `order_id` = ? AND `product_id` = ?";
+
+        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
+        $stmt->bind_param(
+            "siiii",
+            $session_order_item->product_name,
+            $session_order_item->price,
+            $session_order_item->quantity,
+            $order_id,
+            $product_id
+        );
+
+        if(!($stmt->execute()))
+        {
+            throw new \Exception("Could not execute statement: " . $stmt->error);
+            $stmt->close();
+            return false;
+        }
+
+        $stmt->close();
+        return true;
+    }
 
     private function _delete_session_table(int $order_id): bool
     {
         $sql = "DELETE FROM `session` WHERE `order_id` = ?";
+        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
+        $stmt->bind_param("i", $order_id);
+        if(!($stmt->execute()))
+        {
+            throw new \Exception("Could not execute statement: " . $stmt->error);
+            $stmt->close();
+            return false;
+        }
+
+        $stmt->close();
+        return true;
+    }
+
+
+    private function _delete_session_order_item_table(int $order_id): bool
+    {
+        $sql = "DELETE FROM `session_order_item` WHERE `order_id` = ?";
         $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
         $stmt->bind_param("i", $order_id);
         if(!($stmt->execute()))

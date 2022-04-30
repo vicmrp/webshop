@@ -2,7 +2,7 @@
 namespace vezit\classes\mail;
 
 require __DIR__.'/../../global-requirements.php';
-require_once _from_top_folder().'/vendor/autoload.php';
+require_once g_from_top_folder().'/vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;

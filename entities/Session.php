@@ -40,9 +40,15 @@ class Session
         private  array $session_order_items = [],
     )
     {
+
         array_walk($session_order_items, function ($session_order_item) {
+
             if (!($session_order_item instanceof Session_Order_Item)) {
                 throw new \Exception('Order_Item must be an instance of Session_Order_Item');
+            }
+
+            if ($session_order_item->order_id !== $this->order_id) {
+                throw new \Exception('session_order_item->order_id must be the same as session->order_id');
             }
         });
     }

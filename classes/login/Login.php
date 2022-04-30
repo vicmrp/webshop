@@ -33,7 +33,7 @@ class Login implements ILogin
     $identity     = $this->identity;
     $groupmember  = $this->groupmember;
 
-    $from_top_folder = _from_top_folder();
+    $from_top_folder = g_from_top_folder();
     $command = "bash $from_top_folder/scripts/Test-ADAuthentication.sh --Username '$username' --Identity '$identity' --GroupMember $groupmember";
 
     $login_response = new response\Login_Response();

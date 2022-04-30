@@ -4,7 +4,7 @@ namespace vezit\dto\class\session\customer;
 
 
 
-require __DIR__ . '/../../../../global-requirements.php'; // __DIR__._from_top_folder().'/
+require __DIR__ . '/../../../../global-requirements.php'; // __DIR__.g_from_top_folder().'/
 
 use vezit\dto\class\session\customer\address\Address;
 use vezit\dto\class\session\customer\contact\Contact;

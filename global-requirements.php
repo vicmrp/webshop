@@ -19,4 +19,4 @@ require_once 'library.php';
 
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-_get_all_namespaces($g_namespaces = ['classes', 'dto', 'entities', 'services', 'repositories']);
+g_get_all_namespaces($g_namespaces = ['classes', 'dto', 'entities', 'services', 'repositories']);

@@ -1,6 +1,6 @@
 <?php
 // ----- global ----- //
-require __DIR__.'/../../../global-requirements.php'; // _from_top_folder().
+require __DIR__.'/../../../global-requirements.php'; // g_from_top_folder().
 
 use vezit\classes\session\order\order_item as Order_Item;
 use vezit\classes\session as Session;

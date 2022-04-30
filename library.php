@@ -5,7 +5,7 @@
 
 // globale funtioner skal have underscore foran
 
-function _generate_random_string($length = 10)
+function g_generate_random_string($length = 10)
 {
     // $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $characters = '23456789abcdefghkmnpqrstuvwxyzABCDEFGHJKMNOPQRSTUVWXYZ'; // uden ijlo01IL
@@ -54,14 +54,14 @@ function _generate_random_string($length = 10)
 // den fulde sti hen til der hvor filen ligger
 // derfor sa længe at library.php ligger i root (top folderen)
 // sa kan du benytte denne funtion til et relativt folder punkt
-function _from_top_folder()
+function g_from_top_folder()
 {
     return dirname(__FILE__);
 }
 
 
 
-function _scandir(string $dir): array
+function g_scandir(string $dir): array
 {
     return array_values(array_diff(scandir($dir), array('..', '.')));
 }
@@ -72,7 +72,7 @@ function _return_evaluated_user_credentials()
 {
 }
 
-function _get_all_namespaces(array $folders)
+function g_get_all_namespaces(array $folders)
 {
     switch (PHP_OS) {
         case 'WINNT':
@@ -85,7 +85,7 @@ function _get_all_namespaces(array $folders)
 
     foreach ($folders as $folder) {
         // ----- namespaces - inkludere alle klasserne ----- //
-        $directories = new RecursiveDirectoryIterator(_from_top_folder() . $slash . $folder);
+        $directories = new RecursiveDirectoryIterator(g_from_top_folder() . $slash . $folder);
         foreach (new RecursiveIteratorIterator($directories) as $filename) {
             try {
                 if (!is_dir($filename)) require_once $filename;
@@ -94,4 +94,15 @@ function _get_all_namespaces(array $folders)
             }
         }
     }
+}
+
+
+function g_find_object_by_id($id, $array_of_objects)
+{
+
+    if ( isset( $array_of_objects[$id] ) ) {
+        return $array_of_objects[$id];
+    }
+
+    return false;
 }

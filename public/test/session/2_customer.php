@@ -1,6 +1,6 @@
 <?php
 // ----- global ----- //
-require __DIR__.'/../../../global-requirements.php'; // _from_top_folder().'/
+require __DIR__.'/../../../global-requirements.php'; // g_from_top_folder().'/
 
 // Starter sessionen
 if (session_status() === PHP_SESSION_NONE) {
