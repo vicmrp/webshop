@@ -16,6 +16,7 @@ use vezit\dto\class\session\order\status\email\Email;
 use vezit\dto\class\session\order\status\payment\Payment;
 use vezit\dto\class\session\shipment\Shipment;
 use vezit\dto\class\session\shipment\address\Address as Shipment_Address;
+use vezit\dto\unset_session\response\Unset_Session_Response;
 use vezit\repositories\session_repository\Session_Repository;
 use vezit\services\product_service\Product_Service;
 use vezit\entities\session\Session_Entity;
@@ -29,13 +30,18 @@ class Session_Service
     {
     }
 
-    public function unset_session() : object {
+    public function unset_session() : Unset_Session_Response {
+
+        $unset_session_response = new Unset_Session_Response;
+
         if (isset($_SESSION["session_response"]) === true)
         {
             unset($_SESSION["session_response"]);
-            return (object)['session_has_been_unset' => true];
+            $unset_session_response->session_has_been_unset = true;
         }
-        return (object)['session_has_been_unset' => false];
+
+        $unset_session_response->session_has_been_unset = false;
+        return $unset_session_response;
     }
 
 
