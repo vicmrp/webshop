@@ -2,10 +2,10 @@
     "folders": [
         {
             "path": ".."
-        },
-        {
-            "path": "C:\\xampp\\php"
         }
+        // ,{
+        //     "path": "C:\\xampp\\php"
+        // }
     ],
     "settings": {
         "workbench.colorTheme": "Default Dark+",

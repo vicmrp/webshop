@@ -1,6 +1,4 @@
-<?php
-
-namespace vezit\entities;
+<?php namespace vezit\entities;
 
 require __DIR__ . '/../global-requirements.php';
 

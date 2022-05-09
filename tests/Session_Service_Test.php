@@ -1,13 +1,12 @@
 <?php
-require __DIR__ . '/../global-requirements.php';
-
-
 use vezit\dto\class\session\order\item\Item;
 use vezit\dto\session\response\Session_Response;
 use vezit\services\session_service\Session_Service;
 use \PHPUnit\Framework\TestCase;
+require __DIR__ . '/../global-requirements.php';
 
 class Session_Service_Test extends TestCase {
+
     protected function setUp() : void
     {
         $this->session_service = new Session_Service();

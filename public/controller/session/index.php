@@ -1,14 +1,11 @@
 <?php
 
-require __DIR__ . '/../../global-requirements.php';
+require __DIR__ . '/../../../global-requirements.php';
 header('Content-Type: application/json; charset=utf-8');
-
 use vezit\classes\api\endpoint\Endpoint;
 use vezit\classes\api\quickpay\Quickpay;
 use vezit\classes\error\Error;
 use vezit\services\session_service\Session_Service;
-use vezit\services\product_service\Product_Service;
-
 
 
 function get_response(): object
@@ -17,7 +14,7 @@ function get_response(): object
     $endpoint = new Endpoint($controller_file_location = __FILE__);
     $endpoint->set_expected_get_parameters($required_get_parameters = array('functioncall'));
 
-    $session_service = new Session_Service(new Product_Service);
+    $session_service = new Session_Service();
     switch ($endpoint->get_parameter->functioncall) {
 
 

@@ -6,9 +6,9 @@ class Shipment
 {
 
     public function __construct(
-        public string $tracking_number = '',
-        public bool $order_collected = false,
-        public bool $details_satisfied_for_payment = false,
-        public Address $address = new Address
+        public ?string  $tracking_number                = null,
+        public ?bool    $order_collected                = null,
+        public ?bool    $details_satisfied_for_payment  = null,
+        public Address  $address                        = new Address
     ) {}
 }

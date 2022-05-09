@@ -15,7 +15,8 @@ class Session_Repository implements ISession_Repository
     public function __construct(private $_mysqli = new Mysqli)
     {}
 
-    public function get_all() : array {
+    public function get_all() : array
+    {
 
         $array_of_sessions = $this->_get_all_from__session_table();
 
@@ -30,7 +31,8 @@ class Session_Repository implements ISession_Repository
     }
 
 
-    public function get_by_order_id(int $order_id) : Session {
+    public function get_by_order_id(int $order_id) : Session
+    {
 
         $session = $this->_get_by_order_id_from__session_table($order_id);
 
@@ -42,9 +44,8 @@ class Session_Repository implements ISession_Repository
 
     }
 
-
-
-    public function insert(Session $session) : bool {
+    public function insert(Session $session) : bool
+    {
 
         if (!($this->_insert_into__session_table($session))) {
             return false;
@@ -57,8 +58,8 @@ class Session_Repository implements ISession_Repository
         return true;
     }
 
-
-    public function update(int $order_id, Session $session) : bool {
+    public function update(int $order_id, Session $session) : bool
+    {
 
         if (!($this->_update_session_table($order_id, $session))) {
             return false;
@@ -73,7 +74,8 @@ class Session_Repository implements ISession_Repository
         return true;
     }
 
-    public function delete(int $order_id) : bool {
+    public function delete(int $order_id) : bool
+    {
 
         if (!($this->_delete_from__session_table($order_id))) {
             return false;
@@ -86,7 +88,6 @@ class Session_Repository implements ISession_Repository
         return true;
     }
 
-
     private function _get_all_from__session_table(): array
     {
         $sql = "SELECT * FROM `session`";
@@ -98,16 +99,13 @@ class Session_Repository implements ISession_Repository
 
         $sessions = [];
         foreach ($entities as $entity) {
-            $sessions += [$entity['order_id'] => $this->_session($entity)];
+            $sessions += [$entity['session_pk'] => $this->_session($entity)];
         }
 
 
 
         return $sessions;
     }
-
-
-
 
     private function _find_by_pk_from_session_table(int $session_pk): Session
     {
@@ -361,7 +359,7 @@ class Session_Repository implements ISession_Repository
         $sql = "
         UPDATE `session_order_item`
         SET
-        `product_name`     =                          ?
+        `product_name`     =                           ?
         ,`price`            =                          ?
         ,`quantity`         =                          ?
         WHERE `order_id` = ? AND `product_id` = ?";

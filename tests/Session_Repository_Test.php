@@ -1,13 +1,11 @@
 <?php
-require __DIR__ . '/../global-requirements.php';
-
-
-
-
 use \PHPUnit\Framework\TestCase;
 use vezit\entities\Session;
 use vezit\repositories\session_repository\Session_Repository;
 use vezit\classes\mysqli\Mysqli;
+require __DIR__ . '/../global-requirements.php';
+
+
 
 class Session_Repository_Test extends TestCase
 {

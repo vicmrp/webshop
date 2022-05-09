@@ -6,11 +6,11 @@ class Payment
 {
 
     public function __construct(
-        public bool $accepted = false,
-        public string $currency = 'DKK',
-        public int $amount = 0,
-        public int  $quickpay_id = 0,
-        public bool $details_satisfied_for_payment = false
+        public  ?bool   $accepted                           = null,
+        public  ?string $currency                           = null,
+        public  ?int    $amount                             = null,
+        public  ?int    $quickpay_id                        = null,
+        public  ?bool   $details_satisfied_for_payment      = null
     ) {}
 
 }

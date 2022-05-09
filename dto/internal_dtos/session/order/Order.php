@@ -6,18 +6,13 @@ require __DIR__ . '/../../../../global-requirements.php'; // __DIR__.g_from_top_
 
 class Order implements JsonSerializable
 {
-
+    private $items = array();
 
     private function _ensure_all_items_are_valid_before_applying(array $items) : bool
     {
-        array_walk($items, function (&$item) {
+        array_walk($items, function ($item) {
             if (!($item instanceof Item)) {
-                throw new \Exception('Element in Order_Items must be an instance of Order_Item');
-                return false;
-            }
-
-            if ($item === null) {
-                throw new \Exception('Element in Order_Items cannot be null');
+                throw new \Exception('Element in Order_Items must be an instance of Order_Item not ' . gettype($item));
                 return false;
             }
         });
@@ -28,12 +23,12 @@ class Order implements JsonSerializable
 
 
     public function __construct(
-        public int $id = 0,
-        $items = [],
+        public ?int $id = null,
+        array $items = [],
         public Status $status = new Status,
     )
     {
-        if($this->_ensure_all_items_are_valid_before_applying($this->items))
+        if($this->_ensure_all_items_are_valid_before_applying($items))
         {
             $this->items = $items;
         }
@@ -42,7 +37,7 @@ class Order implements JsonSerializable
 
     public function set_order_items(array $items)
     {
-        if($this->_ensure_all_items_are_valid_before_applying($this->items))
+        if($this->_ensure_all_items_are_valid_before_applying($items))
         {
             $this->items = $items;
         }
