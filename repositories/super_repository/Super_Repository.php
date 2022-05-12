@@ -6,7 +6,7 @@ use vezit\entities\Product;
 class Super_Repository
 {
     public function __construct(
-        private $_mysqli = new Mysqli
+        private Mysqli $_mysqli = new Mysqli
         ) {}
 
 
@@ -23,7 +23,7 @@ class Super_Repository
         return $enitities;
     }
 
-    public function get_one_entity(string $table, string $where_clause, string $identifier) : array {
+    public function get_all_by_where_clause(string $table, string $where_clause, string $identifier) : array {
 
 
 
@@ -42,10 +42,10 @@ class Super_Repository
             throw new \Exception("Could not find Product with id: " . $identifier);
         }
 
-        $entity = $result->fetch_assoc();
+        $entities = $result->fetch_all(MYSQLI_ASSOC);
         $stmt->close();
 
-        return $entity;
+        return $entities;
     }
     // -------- READ --------
 

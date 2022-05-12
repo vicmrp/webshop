@@ -9,11 +9,11 @@ class Session_Order_Item
 
     public function __construct(
         public  ?int $session_order_item_pk = null,
-        private int $order_id,
-        public  int $product_id,
-        public  string $product_name,
-        public  int $price,
-        public  int $quantity
+        public  ?int $session_pk_fk = null,
+        public  ?int $product_pk_fk = null,
+        public  ?string $name = null,
+        public  ?int $price = null,
+        public  ?int $quantity = null
     ) {}
 
 

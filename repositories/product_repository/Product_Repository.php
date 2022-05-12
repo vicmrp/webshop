@@ -25,10 +25,8 @@ class Product_Repository implements IProduct_Repository
         return $products;
     }
 
-    public function get_by_pk(int $product_pk) : Product {
-
-        $product = $this->_get_one_entity_from_product_table($product_pk);
-        return $product;
+    public function get_by_pk(int $pk) : Product {
+        return $this->_get_one_entity_from__product_table($pk);
     }
 
     public function insert(object $product): void
@@ -50,14 +48,14 @@ class Product_Repository implements IProduct_Repository
 
     }
 
-    private function _get_all_from_product_table(): Products {
+    private function _get_all_from__product_table(): Products {
 
         $products = new Products;
         (array)$array_of_products = [];
 
-        $enitities = $this->_super_repository->get_all("product");
+        $entities = $this->_super_repository->get_all("product");
 
-        foreach ($enitities as $entity) {
+        foreach ($entities as $entity) {
             $array_of_products += [$entity['product_pk'] => $this->_set_product($entity)];
 
         }
@@ -68,20 +66,17 @@ class Product_Repository implements IProduct_Repository
     }
 
 
-    private function _get_one_entity_from_product_table(int $product_pk) : Product {
+    private function _get_one_entity_from__product_table(int $pk) : Product {
+        define("TABLE"          , "product");
+        define("WHERE_CLAUSE"   , "product_pk");
+
 
         $entity = $this->_super_repository
-            ->get_one_entity($table="product", $where_clause="product_pk", $identifier=$product_pk);
+            ->get_one_entity($table=TABLE, $where_clause=WHERE_CLAUSE, $identifier=$pk);
 
-        $product = $this->_set_product($entity);
-
-
-        return $product;
+        return $this->_set_product($entity);
     }
 
-    private function _delete_from_product_table(int $product_pk) : void {
-
-    }
 
     private function _set_product(array $entity): Product
     {

@@ -1,7 +1,10 @@
 <?php
 use \PHPUnit\Framework\TestCase;
 use vezit\entities\Session;
+use vezit\entities\Sessions;
 use vezit\repositories\session_repository\Session_Repository;
+use vezit\repositories\super_repository\Super_Repository;
+use vezit\entities\Session_Order_Items;
 use vezit\classes\mysqli\Mysqli;
 require __DIR__ . '/../global-requirements.php';
 
@@ -11,27 +14,50 @@ class Session_Repository_Test extends TestCase
 {
     protected function setUp() : void
     {
-        $this->session_repository = new Session_Repository(new Mysqli('localhost', 'test', 'Passw0rd', 'test_user_v6_vezit_webshop'));
+        $this->session_repository = new Session_Repository(new Super_Repository(new Mysqli('localhost', 'test', 'Passw0rd', 'test_user_v6_vezit_webshop')));
+
     }
 
-
-
-
     /** @test */
-    public function get_all__shall_return_array_of_session_entities()
+    public function get_all__expects_to_return_object_of_sessions()
     {
         // Act
-        $array_of_sessions = $this->session_repository->get_all();
-
+        $sessions = $this->session_repository->get_all();
 
         // Assert
-        foreach ($array_of_sessions as $session) {
+        foreach ($sessions as $session) {
             if (!($session instanceof Session)) {
                 $this->fail('Session_Repository::get_all() shall return an array of Session_Entity objects');
             }
         }
 
-        $this->assertIsArray($array_of_sessions);
+        $this->assertInstanceOf(Sessions::class, $sessions);
+    }
+
+
+    /** @test */
+    public function get_by_pk__expects_to_return_1_session_object() {
+        // Setup
+        $sessions = $this->session_repository->get_all();
+
+        (int)$first_array_key = array_key_first($sessions->get_sessions());
+
+        $first_session_object_in_collection = $sessions->get_sessions()[$first_array_key];
+
+        // Act
+        $response_session = $this->session_repository->get_by_pk($first_session_object_in_collection->session_pk);
+
+        $response_session_pk = $response_session->session_pk;
+
+        $response_session_session_pk_fk = $response_session->session_order_items->get_session_order_items()[$response_session_pk]->session_pk_fk;
+
+        // session_order_items->set_session_order_items($array)
+
+        // Assert
+        $this->assertInstanceOf(Session::class, $response_session);
+        $this->assertEquals($first_session_object_in_collection->session_pk, $response_session->session_pk);
+        $this->assertEquals($response_session_pk, $response_session_session_pk_fk);
+
     }
 
 

@@ -40,7 +40,7 @@ class Product_Repository_Test extends TestCase
     /** @test */
     public function get_by_pk__should_return_correct_object()
     {
-        (object)$products =  $this->product_repository->get_all();
+        $products =  $this->product_repository->get_all();
 
         (array)$collection_of_products = $products->get_products();
 

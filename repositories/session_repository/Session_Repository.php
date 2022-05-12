@@ -4,45 +4,61 @@ namespace vezit\repositories\session_repository;
 
 
 use vezit\entities\Session;
+use vezit\entities\Sessions;
 use vezit\entities\Session_Order_Item;
 use vezit\classes\mysqli\Mysqli;
+use vezit\entities\Session_Order_Items;
+use vezit\repositories\super_repository\Super_Repository;
 
 require __DIR__ . '/../../global-requirements.php';
 
 class Session_Repository implements ISession_Repository
 {
 
-    public function __construct(private $_mysqli = new Mysqli)
+    public function __construct(private Super_Repository $_super_repository = new Super_Repository())
     {}
 
-    public function get_all() : array
+    public function get_all() : Sessions
     {
 
-        $array_of_sessions = $this->_get_all_from__session_table();
+        $sessions = $this->_get_all_from__session_table();
 
 
-        foreach ($array_of_sessions as $session) {
+        foreach ($sessions as $session) {
             $session_order_items = $this->_get_by_order_id_from__session_order_item_table($session->order_id);
-            $session->set_order_items($session_order_items);
+            $session->set_session_order_items($session_order_items);
         }
 
 
-        return $array_of_sessions;
+        return $sessions;
     }
 
 
-    public function get_by_order_id(int $order_id) : Session
-    {
+    public function get_by_pk(int $pk) : Session {
 
-        $session = $this->_get_by_order_id_from__session_table($order_id);
+        $session =  $this->get_one_entity_from__session_table($pk);
 
-        $session_order_items = $this->_get_by_order_id_from__session_order_item_table($order_id);
+        $session_order_items = $this->_get_all_from__session_order_item_table($fk = $session->session_pk);
 
-        $session->set_order_items($session_order_items);
+        $session->session_order_items = $session_order_items;
 
         return $session;
 
     }
+
+
+    // public function get_by_order_id(int $order_id) : Session
+    // {
+
+    //     // $session = $this->_get_by_order_id_from__session_table($order_id);
+
+    //     // $session_order_items = $this->_get_by_order_id_from__session_order_item_table($order_id);
+
+    //     // $session->set_order_items($session_order_items);
+
+    //     // return $session;
+
+    // }
 
     public function insert(Session $session) : bool
     {
@@ -88,56 +104,52 @@ class Session_Repository implements ISession_Repository
         return true;
     }
 
-    private function _get_all_from__session_table(): array
+    private function _get_all_from__session_table(): Sessions
     {
-        $sql = "SELECT * FROM `session`";
-        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $entities = $result->fetch_all(MYSQLI_ASSOC);
-        $stmt->close();
+        $sessions = new Sessions();
+        $array = [];
 
-        $sessions = [];
+        $entities = $this->_super_repository->get_all("session");
+
         foreach ($entities as $entity) {
-            $sessions += [$entity['session_pk'] => $this->_session($entity)];
+            $array += [$entity['session_pk'] => $this->_construct_session_dto($entity)];
         }
 
-
+        $sessions->set_sessions($array);
 
         return $sessions;
     }
 
-    private function _find_by_pk_from_session_table(int $session_pk): Session
+    private function get_one_entity_from__session_table(int $pk) : Session
     {
 
-        $sql = "SELECT * FROM `session` WHERE session_pk=?";
-        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
-        $stmt->bind_param("i", $session_pk);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $entity = $result->fetch_assoc();
-        $stmt->close();
+        // get seesion entity
+        $entities = $this->_super_repository
+            ->get_all_by_where_clause($table='session', $where_clause='session_pk', $identifier=$pk);
 
-        return $this->_session($entity);
+        if (null != $entities[0])
+            $entity = $entities[0];
+
+        return $this->_construct_session_dto($entity);
     }
 
 
-    private function _get_by_order_id_from__session_order_item_table(int $order_id): array
+    private function _get_all_from__session_order_item_table(int $fk): Session_Order_Items
     {
-        $sql = "SELECT * FROM `session_order_item` WHERE order_id=?";
-        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
-        $stmt->bind_param("i", $order_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $entities = $result->fetch_all(MYSQLI_ASSOC);
-        $stmt->close();
+        $session_order_item = new Session_Order_Item;
+        $session_order_items = new Session_Order_Items;
+        $array = [];
 
-        $session_order_items = [];
+
+        $entities = $this->_super_repository->get_all_by_where_clause($table="session_order_item", $where_clause="session_pk_fk", $identifier=$fk);
+
+
         foreach ($entities as $entity) {
-            $session_order_items += [$entity['order_id'] => $this->_session_order_item($entity)];
+            $array += [$entity['session_pk_fk'] => $this->_construct_session_order_item_dto($entity)];
         }
 
-        return $session_order_items;
+        $session_order_items->set_session_order_items($array);
+        return  $session_order_items;
 
     }
 
@@ -166,7 +178,7 @@ class Session_Repository implements ISession_Repository
         $entity = $result->fetch_assoc();
         $stmt->close();
 
-        return $this->_session($entity);
+        return $this->_set_session($entity);
     }
 
 
@@ -432,13 +444,23 @@ class Session_Repository implements ISession_Repository
         );
     }
 
-    private function _session(array $entity): Session
+
+
+
+
+    private function _construct_session_order_item_dto(array $entity) : Session_Order_Item {
+        return new Session_Order_Item(
+            $entity['session_order_item_pk'],
+            $entity['session_pk_fk'],
+            $entity['product_pk_fk'],
+            $entity['name'],
+            $entity['price'],
+            $entity['quantity']
+        );
+    }
+
+    private function _construct_session_dto(array $entity): Session
     {
-
-
-
-
-
         return new Session(
             $entity['session_pk'],
             $entity['order_id'],
