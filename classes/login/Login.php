@@ -6,7 +6,7 @@ require __DIR__.'/../../global-requirements.php';
 
 use vezit\classes\dto\login\response as response;
 
-class Login implements ILogin
+class Login
 {
   private $username;
   private $identity;

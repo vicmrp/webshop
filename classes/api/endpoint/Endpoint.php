@@ -6,7 +6,7 @@ require __DIR__.'/../../../global-requirements.php';
 
 use vezit\classes\error as Error;
 
-class Endpoint implements IEndpoint
+class Endpoint
 {
   public $get_parameter;
   public $body;
