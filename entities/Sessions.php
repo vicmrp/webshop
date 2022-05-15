@@ -6,7 +6,7 @@ class Sessions {
 
     private array $sessions = [];
 
-    public function set_sessions($sessions) : void {
+    public function set($sessions) : void {
 
         array_walk($sessions, function($session) {
             if (!($session instanceof Session)) {
@@ -18,7 +18,12 @@ class Sessions {
         $this->sessions = $sessions;
     }
 
-    public function get_sessions() : array {
+    public function get() : array {
         return $this->sessions;
+    }
+
+
+    public function __set($name, $value) {
+        throw new \Exception("Cannot add new property \$$name to instance of " . __CLASS__);
     }
 }

@@ -11,17 +11,17 @@ use vezit\classes\mysqli\Mysqli;
 use vezit\repositories\super_repository\Super_Repository;
 use vezit\entities\Products;
 
-class Product_Repository implements IProduct_Repository
+class Product_Repository
 {
 
     // Create connection
     public function __construct(
-        private $_super_repository = new Super_Repository
+        private Super_Repository $_super_repository = new Super_Repository
         )
     {}
 
     public function get_all(): Products {
-        $products = $this->_get_all_from_product_table();
+        $products = $this->_get_all_from__product_table();
         return $products;
     }
 
@@ -29,23 +29,20 @@ class Product_Repository implements IProduct_Repository
         return $this->_get_one_entity_from__product_table($pk);
     }
 
-    public function insert(object $product): void
+    public function update(int $pk, Product $product): bool
     {
+        return $this->_update__product_table($pk, $product);
     }
 
-    public function update(int $product_pk, Product $product): void
-    {
-        $this->_super_repository
-            ->update_entity(
-                $object_be_updated = $product,
-                $table = 'product',
-                $where_clause = 'product_pk',
-                $identifier=$product_pk);
-    }
-
-    public function delete(int $product_pk): void
-    {
-
+    private function _update__product_table(int $pk, Product $product) {
+        $fields_to_ignore = ['product_pk', 'datetime_created', 'datetime_last_modified'];
+        return $this->_super_repository
+        ->update_entity(
+            $object_be_updated = $product,
+            $table = 'product',
+            $where_clause = 'product_pk',
+            $identifier=$pk,
+            $fields_to_ignore);
     }
 
     private function _get_all_from__product_table(): Products {
@@ -56,32 +53,33 @@ class Product_Repository implements IProduct_Repository
         $entities = $this->_super_repository->get_all("product");
 
         foreach ($entities as $entity) {
-            $array_of_products += [$entity['product_pk'] => $this->_set_product($entity)];
-
+            $array_of_products += [$entity['product_pk'] => $this->_construct_product_dto($entity)];
         }
 
-        $products->set_products($array_of_products);
+        $products->set($array_of_products);
 
         return $products;
     }
 
 
     private function _get_one_entity_from__product_table(int $pk) : Product {
-        define("TABLE"          , "product");
-        define("WHERE_CLAUSE"   , "product_pk");
 
+        $entities = $this->_super_repository
+            ->get_all_by_where_clause($table='product', $where_clause='product_pk', $identifier=$pk);
 
-        $entity = $this->_super_repository
-            ->get_one_entity($table=TABLE, $where_clause=WHERE_CLAUSE, $identifier=$pk);
+            if (null != $entities[0])
+            $entity = $entities[0];
 
-        return $this->_set_product($entity);
+        return $this->_construct_product_dto($entity);
     }
 
 
-    private function _set_product(array $entity): Product
+    private function _construct_product_dto(array $entity): Product
     {
         return new Product(
             $entity['product_pk'],
+            new \DateTime($entity['datetime_created']),
+            new \DateTime($entity['datetime_last_modified']),
             $entity['name'],
             $entity['price'],
             $entity['quantity']

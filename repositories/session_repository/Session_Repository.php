@@ -12,7 +12,7 @@ use vezit\repositories\super_repository\Super_Repository;
 
 require __DIR__ . '/../../global-requirements.php';
 
-class Session_Repository implements ISession_Repository
+class Session_Repository
 {
 
     public function __construct(private Super_Repository $_super_repository = new Super_Repository())
@@ -24,8 +24,9 @@ class Session_Repository implements ISession_Repository
         $sessions = $this->_get_all_from__session_table();
 
 
-        foreach ($sessions as $session) {
-            $session_order_items = $this->_get_by_order_id_from__session_order_item_table($session->order_id);
+        foreach ($sessions->get() as $session) {
+
+            $session_order_items = $this->_get_all_from__session_order_item_table($fk = $session->session_pk);
             $session->set_session_order_items($session_order_items);
         }
 
@@ -40,25 +41,12 @@ class Session_Repository implements ISession_Repository
 
         $session_order_items = $this->_get_all_from__session_order_item_table($fk = $session->session_pk);
 
-        $session->session_order_items = $session_order_items;
+        $session->set_session_order_items($session_order_items);
 
         return $session;
 
     }
 
-
-    // public function get_by_order_id(int $order_id) : Session
-    // {
-
-    //     // $session = $this->_get_by_order_id_from__session_table($order_id);
-
-    //     // $session_order_items = $this->_get_by_order_id_from__session_order_item_table($order_id);
-
-    //     // $session->set_order_items($session_order_items);
-
-    //     // return $session;
-
-    // }
 
     public function insert(Session $session) : bool
     {
@@ -67,26 +55,36 @@ class Session_Repository implements ISession_Repository
             return false;
         }
 
-        if (!($this->_insert_into__session_order_item_table($session))) {
-            return false;
-        }
+        $sessions = $this->get_all()->get();
+        usort($sessions, function($a, $b) { return $a->session_pk - $b->session_pk; });
+        $fresh_session = $sessions[array_key_last($sessions)];
 
-        return true;
-    }
+        $session_pk_fk = $fresh_session->session_pk;
+        $session_order_items = $session->get_session_order_items();
 
-    public function update(int $order_id, Session $session) : bool
-    {
-
-        if (!($this->_update_session_table($order_id, $session))) {
-            return false;
-        }
-
-        foreach($session->get_session_order_items() as $session_order_item) {
-            if (!($this->_update_session_order_item_table($order_id, $session_order_item->product_id, $session_order_item))) {
+        foreach($session_order_items as $session_order_item) {
+            $session_order_item->session_pk_fk = $session_pk_fk;
+            if (!($this->_insert_into__session_order_item_table($session_order_item))) {
                 return false;
             }
         }
+        return true;
+    }
 
+    public function update(int $pk, Session $session) : bool
+    {
+
+        if (!($this->_update__session_table($pk, $session))) {
+            return false;
+        }
+
+        $session_order_items = $session->get_session_order_items();
+        foreach($session_order_items as $session_order_item) {
+            $fk = $session_order_item->session_pk_fk;
+            if (!($this->_update__session_order_item_table($fk, $session_order_item))) {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -115,7 +113,7 @@ class Session_Repository implements ISession_Repository
             $array += [$entity['session_pk'] => $this->_construct_session_dto($entity)];
         }
 
-        $sessions->set_sessions($array);
+        $sessions->set($array);
 
         return $sessions;
     }
@@ -133,10 +131,8 @@ class Session_Repository implements ISession_Repository
         return $this->_construct_session_dto($entity);
     }
 
-
     private function _get_all_from__session_order_item_table(int $fk): Session_Order_Items
     {
-        $session_order_item = new Session_Order_Item;
         $session_order_items = new Session_Order_Items;
         $array = [];
 
@@ -145,10 +141,10 @@ class Session_Repository implements ISession_Repository
 
 
         foreach ($entities as $entity) {
-            $array += [$entity['session_pk_fk'] => $this->_construct_session_order_item_dto($entity)];
+            $array += [$entity['session_order_item_pk'] => $this->_construct_session_order_item_dto($entity)];
         }
 
-        $session_order_items->set_session_order_items($array);
+        $session_order_items->set($array);
         return  $session_order_items;
 
     }
@@ -184,217 +180,38 @@ class Session_Repository implements ISession_Repository
 
     private function _insert_into__session_table(Session $session): bool
     {
-
-
-        $sql = "
-        INSERT INTO `session`
-        ("                                                  .
-        "`order_id`"                                        .   // i
-        ",`order_status_payment_accepted`"                  .   // i
-        ",`order_status_payment_currency`"                  .   // s
-        ",`order_status_payment_amount`"                    .   // i
-        ",`order_status_payment_quickpay_id`"               .   // i
-        ",`order_status_payment_details_satisfied`"         .   // i
-        ",`order_status_email_confirmation_sent`"           .   // i
-        ",`order_status_email_invoice_sent_to_customer`"    .   // i
-        ",`customer_fullname`"                              .   // s
-        ",`customer_details_satisfied_for_payment`"         .   // s
-        ",`customer_address_street`"                        .   // s
-        ",`customer_address_postal_code`"                   .   // i
-        ",`customer_address_city`"                          .   // s
-        ",`customer_contact_phone`"                         .   // i
-        ",`customer_contact_email`"                         .   // s
-        ",`customer_company_cvr_number`"                    .   // i
-        ",`customer_company_name`"                          .   // s
-        ",`shipment_tracking_number`"                       .   // i
-        ",`shipment_order_collected`"                       .   // i
-        ",`shipment_details_satisfied`"                     .   // i
-        ",`shipment_address_street_name`"                   .   // s
-        ",`shipment_address_street_number`"                 .   // s
-        ",`shipment_address_postal_code`"                   .   // i
-        ",`shipment_address_city`"                          .   // s
-        ")  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
-        $stmt->bind_param(
-            "iisiiiiisssisisisiiissis",
-
-            $session->order_id,
-            $session->order_status_payment_accepted,
-            $session->order_status_payment_currency,
-            $session->order_status_payment_amount,
-            $session->order_status_payment_quickpay_id,
-            $session->order_status_payment_details_satisfied,
-            $session->order_status_email_confirmation_sent,
-            $session->order_status_email_invoice_sent_to_customer,
-            $session->customer_fullname,
-            $session->customer_details_satisfied_for_payment,
-            $session->customer_address_street,
-            $session->customer_address_postal_code,
-            $session->customer_address_city,
-            $session->customer_contact_phone,
-            $session->customer_contact_email,
-            $session->customer_company_cvr_number,
-            $session->customer_company_name,
-            $session->shipment_tracking_number,
-            $session->shipment_order_collected,
-            $session->shipment_details_satisfied,
-            $session->shipment_address_street_name,
-            $session->shipment_address_street_number,
-            $session->shipment_address_postal_code,
-            $session->shipment_address_city
-        );
-
-
-        if(!($stmt->execute()))
-        {
-            throw new \Exception("Could not execute statement: " . $stmt->error);
-            $stmt->close();
-            return false;
-        }
-
-        $stmt->close();
-        return true;
+        $fields_to_ignore = ['session_pk', 'datetime_created', 'datetime_last_modified'];
+        return $this->_super_repository->insert_entity($session, 'session', $fields_to_ignore);
     }
 
 
-    public function _insert_into__session_order_item_table(Session $session): bool
+    public function _insert_into__session_order_item_table(Session_Order_Item $session_order_item): bool
     {
-        $sql = "INSERT INTO `session_order_item`
-        (
-        ,`order_id`
-        ,`product_id`
-        ,`product_name`
-        ,`price`
-        ,`quantity`
-        ) VALUES (?, ?, ?, ?, ?)";
-
-        $session_order_items = $session->get_session_order_items();
-
-        foreach($session_order_items as $session_order_item)
-        {
-            $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
-            $stmt->bind_param("iisii",
-                $session_order_item->order_id,
-                $session_order_item->product_id,
-                $session_order_item->product_name,
-                $session_order_item->price,
-                $session_order_item->quantity,
-            );
-            if(!($stmt->execute()))
-            {
-                throw new \Exception("Could not execute statement: " . $stmt->error);
-                $stmt->close();
-                return false;
-            }
-
-            $stmt->close();
-
-        }
-        return true;
+        $fields_to_ignore = ['session_order_item_pk', 'datetime_created', 'datetime_last_modified'];
+        return $this->_super_repository->insert_entity($session_order_item, $table = 'session_order_item', $fields_to_ignore);
     }
 
 
-    private function _update_session_table(int $order_id, Session $session): bool
+    private function _update__session_table(int $pk, Session $session): bool
     {
-
-        $sql = "
-        UPDATE `session`
-        SET
-        `order_status_payment_accepted` =                   ?
-        ,`order_status_payment_currency` =                  ?
-        ,`order_status_payment_amount` =                    ?
-        ,`order_status_payment_quickpay_id` =               ?
-        ,`order_status_payment_details_satisfied` =         ?
-        ,`order_status_email_confirmation_sent` =           ?
-        ,`order_status_email_invoice_sent_to_customer` =    ?
-        ,`customer_fullname` =                              ?
-        ,`customer_details_satisfied_for_payment` =         ?
-        ,`customer_address_street` =                        ?
-        ,`customer_address_postal_code` =                   ?
-        ,`customer_address_city` =                          ?
-        ,`customer_contact_phone` =                         ?
-        ,`customer_contact_email` =                         ?
-        ,`customer_company_cvr_number` =                    ?
-        ,`customer_company_name` =                          ?
-        ,`shipment_tracking_number` =                       ?
-        ,`shipment_order_collected` =                       ?
-        ,`shipment_details_satisfied` =                     ?
-        ,`shipment_address_street_name` =                   ?
-        ,`shipment_address_street_number` =                 ?
-        ,`shipment_address_postal_code` =                   ?
-        ,`shipment_address_city` =                          ?
-        WHERE `order_id` = ?";
-        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
-        $stmt->bind_param(
-            "isiiiiisssisisisisiiissi",
-            $session->order_status_payment_accepted,
-            $session->order_status_payment_currency,
-            $session->order_status_payment_amount,
-            $session->order_status_payment_quickpay_id,
-            $session->order_status_payment_details_satisfied,
-            $session->order_status_email_confirmation_sent,
-            $session->order_status_email_invoice_sent_to_customer,
-            $session->customer_fullname,
-            $session->customer_details_satisfied_for_payment,
-            $session->customer_address_street,
-            $session->customer_address_postal_code,
-            $session->customer_address_city,
-            $session->customer_contact_phone,
-            $session->customer_contact_email,
-            $session->customer_company_cvr_number,
-            $session->customer_company_name,
-            $session->shipment_tracking_number,
-            $session->shipment_order_collected,
-            $session->shipment_details_satisfied,
-            $session->shipment_address_street_name,
-            $session->shipment_address_street_number,
-            $session->shipment_address_postal_code,
-            $session->shipment_address_city,
-            $order_id
-        );
-
-        if(!($stmt->execute()))
-        {
-            throw new \Exception("Could not execute statement: " . $stmt->error);
-            $stmt->close();
-            return false;
-        }
-
-        $stmt->close();
-        return true;
-
-
+        $fields_to_ignore = ['session_pk', 'order_id', 'datetime_created', 'datetime_last_modified'];
+        return $this->_super_repository
+        ->update_entity(
+            $object_be_updated = $session,
+            $table = 'session',
+            $where_clause = 'session_pk',
+            $identifier=$pk,
+            $fields_to_ignore);
     }
 
-    private function _update_session_order_item_table(int $order_id, int $product_id, Session_Order_Item $session_order_item) : bool
+    private function _update__session_order_item_table(int $fk, Session_Order_Item $session_order_item) : bool
     {
-        $sql = "
-        UPDATE `session_order_item`
-        SET
-        `product_name`     =                           ?
-        ,`price`            =                          ?
-        ,`quantity`         =                          ?
-        WHERE `order_id` = ? AND `product_id` = ?";
-
-        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
-        $stmt->bind_param(
-            "siiii",
-            $session_order_item->product_name,
-            $session_order_item->price,
-            $session_order_item->quantity,
-            $order_id,
-            $product_id
-        );
-
-        if(!($stmt->execute()))
-        {
-            throw new \Exception("Could not execute statement: " . $stmt->error);
-            $stmt->close();
-            return false;
-        }
-
-        $stmt->close();
-        return true;
+        return $this->_super_repository
+        ->update_entity(
+            $object_be_updated = $session_order_item,
+            $table = 'session_order_item',
+            $where_clause = 'session_pk_fk',
+            $identifier=$fk);
     }
 
     private function _delete_session_table(int $order_id): bool
@@ -453,6 +270,8 @@ class Session_Repository implements ISession_Repository
             $entity['session_order_item_pk'],
             $entity['session_pk_fk'],
             $entity['product_pk_fk'],
+            new \DateTime($entity['datetime_created']),
+            new \DateTime($entity['datetime_last_modified']),
             $entity['name'],
             $entity['price'],
             $entity['quantity']
@@ -464,6 +283,8 @@ class Session_Repository implements ISession_Repository
         return new Session(
             $entity['session_pk'],
             $entity['order_id'],
+            new \DateTime($entity['datetime_created']),
+            new \DateTime($entity['datetime_last_modified']),
             $entity['order_status_payment_accepted'],
             $entity['order_status_payment_currency'],
             $entity['order_status_payment_amount'],

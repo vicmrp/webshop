@@ -4,62 +4,49 @@ namespace vezit\repositories\user_repository;
 
 require __DIR__ . '/../../global-requirements.php';
 
-use vezit\entities\user\User;
+use vezit\entities\User;
+use vezit\entities\Users;
 use vezit\classes\error\Error;
-use vezit\classes\mysqli\Mysqli;
+use vezit\repositories\super_repository\Super_Repository;
 
 
-class User_Repository implements IUser_Repository
+class User_Repository
 {
 
-    public function __construct(private $_mysqli = new Mysqli)
-    {}
+    public function __construct(
+        private Super_Repository $_super_repository = new Super_Repository
+        ) {}
 
-    public function get_user_by_id(int $id): User
-    {
-        $sql = "SELECT * FROM `user` WHERE user.pk_user=?";
-        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
-        $stmt->bind_param("i", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $stmt->close();
-        $entity = $result->fetch_assoc();
-
-        $user = new User();
-        $user->pk_user = $entity['pk_user'];
-        $user->email = $entity['email'];
-        $user->hashed_password = $entity['hashed_password'];
-
-        return $user;
+    public function get_all(): Users {
+        return $this->_get_all_from__user_table();
     }
 
-    public function get_user_by_email(string $email): User
-    {
-        $sql = "SELECT * FROM `user` WHERE user.email=?";
-        $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
 
-        if ($result->num_rows === 0) {
-            $error_message = "get_user_by_email '$email' does not exist in database: ";
-            new Error(__FILE__, $error_message, $fatal_error = true);
+    private function _get_all_from__user_table(): Users {
+
+        $users = new Users;
+        (array)$array_of_users = [];
+
+        $entities = $this->_super_repository->get_all("user");
+
+        foreach ($entities as $entity) {
+            $array_of_users += [$entity['user_pk'] => $this->_construct_user_dto($entity)];
         }
 
-        $entity = $result->fetch_assoc();
+        $users->set($array_of_users);
 
-        $user = new User();
-        $user->pk_user = $entity['pk_user'];
-        $user->email = $entity['email'];
-        $user->hashed_password = $entity['hashed_password'];
-
-
-        return $user;
+        return $users;
     }
 
-    public function get_user_by_role(string $email): object
-    {
-        return (object)"";
+
+    private function _construct_user_dto(array $entity) : User {
+        return new User (
+            $entity['user_pk'],
+            new \DateTime($entity['datetime_created']),
+            new \DateTime($entity['datetime_last_modified']),
+            $entity['email'],
+            $entity['hashed_password']
+        );
     }
 }
 

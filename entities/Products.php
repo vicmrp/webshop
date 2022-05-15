@@ -6,7 +6,7 @@ class Products {
 
     private array $products = [];
 
-    public function set_products($products) : void {
+    public function set($products) : void {
 
         array_walk($products, function($product) {
             if (!($product instanceof Product)) {
@@ -18,7 +18,7 @@ class Products {
         $this->products = $products;
     }
 
-    public function get_products() : array {
+    public function get() : array {
         return $this->products;
     }
 }
