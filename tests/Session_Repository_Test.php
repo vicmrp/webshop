@@ -17,6 +17,8 @@ require __DIR__ . '/../global-requirements.php';
 // Update
 // Pa Sessions
 
+// TODO Lav en test som garenterer at properties er magen til dens column name.
+
 class Session_Repository_Test extends TestCase
 {
     protected function setUp() : void

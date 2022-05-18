@@ -9,45 +9,67 @@ require __DIR__ . '/../../global-requirements.php';
 
 class Session_Service
 {
+    private static $_instance = null;
+    private Session_Repository $_session_Repository;
+    private Get_Session_Response $_get_session_response;
 
-    public function __construct()
+    private function __construct(Session_Repository $_session_Repository)
     {
+        $this->_session_Repository = $_session_Repository;
+    }
+
+    public static function get_instance(Session_Repository $_session_Repository = new Session_Repository())
+    {
+      if (self::$_instance == null)
+      {
+        self::$_instance = new Session_Service($_session_Repository);
+      }
+
+      return self::$_instance;
     }
 
     public function unset_session() : Unset_Session_Response {
 
         $unset_session_response = new Unset_Session_Response;
         $unset_session_response->session_has_been_unset = false;
+        $unset_session_response->note = "It was already unset";
 
-        if (isset($_SESSION["session_response"]) === true)
+        $session_response_isset = isset($_SESSION["session_response"]);
+
+        if ($session_response_isset)
         {
             unset($_SESSION["session_response"]);
             $unset_session_response->session_has_been_unset = true;
+            $unset_session_response->note = "It was active and now it has been destroyed.";
 
             return $unset_session_response;
         }
 
+
         return $unset_session_response;
+    }
+
+    private function serialize_session() : void {
+        $_SESSION["session_response"] = serialize($this->_get_session_response);
     }
 
 
     public function get_session(): Get_Session_Response
     {
 
-
-        // henter session hvis den eksistere ellers skabes der en ny.
-        if (isset($_SESSION["get_session_response"]) === true)
+        if (!(isset($_SESSION["session_response"])))
         {
-            $get_session_response = unserialize($_SESSION["get_session_response"]);
-            return $get_session_response;
+            // Det her er første gang hjemmesiden kender til dig.
+            $this->_get_session_response = new Get_Session_Response;
+            $this->_get_session_response->session = new Session;
+            $this->serialize_session();
+            return $this->_get_session_response;
         }
 
-        $get_session_response = new Get_Session_Response;
-        $get_session_response->session = new Session;
+        // henter session hvis den eksistere ellers skabes der en ny.
+        $this->_get_session_response = unserialize($_SESSION["session_response"]);
+        return $this->_get_session_response;
 
-        $_SESSION["get_session_response"] = serialize($get_session_response);
-
-        return $get_session_response;
     }
 
     public function set_session(Get_Session_Response $get_session_response) : void
@@ -98,45 +120,6 @@ class Session_Service
     // }
 
 
-    // public function insert_session_to_database() : bool
-    // {
 
-    //     $session_response = $this->get_session();
-
-    //     $session_repository = new Session_Repository;
-    //     $session_entity = new Session_Entity(
-    //         $session_response->session->session_pk = null,
-    //         $session_response->session->session_id,
-    //         $session_response->session->customer->fullname,
-    //         $session_response->session->customer->details_satisfied_for_payment,
-    //         $session_response->session->customer->address->street,
-    //         $session_response->session->customer->address->postal_code,
-    //         $session_response->session->customer->address->city,
-    //         $session_response->session->customer->address->country,
-    //         $session_response->session->customer->address->phone,
-    //         $session_response->session->customer->address->email,
-    //         $session_response->session->customer->company->cvr_number,
-    //         $session_response->session->customer->company->name,
-    //         $session_response->session->order->order_id,
-    //         $session_response->session->order->item,
-    //         $session_response->session->order->status->payment->accepted,
-    //         $session_response->session->order->status->payment->currency,
-    //         $session_response->session->order->status->payment->amount,
-    //         $session_response->session->order->status->payment->quickpay_id,
-    //         $session_response->session->order->status->payment->details_satisfied,
-    //         $session_response->session->order->status->email->confirmation_sent,
-    //         $session_response->session->order->status->email->invoice_sent_to_customer,
-    //         $session_response->session->shipment->tracking_number,
-    //         $session_response->session->shipment->order_collected,
-    //         $session_response->session->shipment->details_satisfied,
-    //         $session_response->session->shipment->address->street_name,
-    //         $session_response->session->shipment->address->street_number,
-    //         $session_response->session->shipment->address->postal_code,
-    //         $session_response->session->shipment->address->city
-    //     );
-
-
-    //     return $session_repository->insert($session_entity);
-    // }
 
 }

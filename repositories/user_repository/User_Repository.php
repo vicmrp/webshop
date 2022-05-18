@@ -30,7 +30,7 @@ class User_Repository
         $entities = $this->_super_repository->get_all("user");
 
         foreach ($entities as $entity) {
-            $array_of_users += [$entity['user_pk'] => $this->_construct_user_dto($entity)];
+            $array_of_users += [$entity['user_pk'] => $this->_construct_user_entity($entity)];
         }
 
         $users->set($array_of_users);
@@ -39,7 +39,7 @@ class User_Repository
     }
 
 
-    private function _construct_user_dto(array $entity) : User {
+    private function _construct_user_entity(array $entity) : User {
         return new User (
             $entity['user_pk'],
             new \DateTime($entity['datetime_created']),

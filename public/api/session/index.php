@@ -1,0 +1,8 @@
+<?php
+require __DIR__ . '/../../../global-requirements.php';
+header('Content-Type: application/json; charset=utf-8');
+
+use vezit\classes\controller\session_controller\Session_Controller;
+
+$session_controller = new Session_Controller($_SERVER['REQUEST_METHOD']);
+echo json_encode($session_controller->get_json_response()->object_to_serialize, JSON_PRETTY_PRINT);

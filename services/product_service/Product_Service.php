@@ -1,44 +1,60 @@
-<?php
+<?php namespace vezit\services\product_service;
+require __DIR__ . '/../../global-requirements.php';
+use vezit\repositories\product_repository\Product_Repository;
+use vezit\dto\endpoints\get_product\response\Get_Product_Response;
+use vezit\dto\endpoints\get_products\response\Get_Products_Response;
+use vezit\dto\internal_dtos\product\Product;
+use vezit\dto\internal_dtos\products\Products;
 
-namespace vezit\services\product_service;
+require __DIR__ . '/../../global-requirements.php';
 
-require __DIR__.'/../../global-requirements.php';
+class Product_Service
+{
+    private static $_instance = null;
+    private Product_Repository $_product_repository;
 
-use vezit\dto\product\response as Product_Response;
-use vezit\repositories\product_repository as Product_Repository;
-
-class Product_Service {
-
-  public function get_all() : Product_Response\List_Of_Products_Response
-  {
-    $product_repository = new Product_Repository\Product_Repository();
-    $products = $product_repository->get_all();
-
-    $list_of_products_response = new Product_Response\List_Of_Products_Response();
-    foreach($products->list_of_products as $e) {
-      $product_response = new Product_Response\Product_Response();
-      $product_response->id       = $e->id;
-      $product_response->name     = $e->name;
-      $product_response->price    = $e->price;
-      $product_response->quantity = $e->quantity;
-      array_push($list_of_products_response->list_of_products, $product_response);
+    private function __construct(Product_Repository $product_repository)
+    {
+        $this->_product_repository = $product_repository;
     }
-    return $list_of_products_response;
-  }
 
-  public function get_product_by_id(int $id) : Product_Response\Product_Response {
+    public static function get_instance(Product_Repository $product_repository = new Product_Repository())
+    {
 
-    $product_repository = new Product_Repository\Product_Repository();
+      if (self::$_instance == null)
+      {
+        self::$_instance = new Product_Service($product_repository);
+      }
 
-    $repository_reponse = $product_repository->find($id);
 
-    $product_response = new Product_Response\Product_Response();
-    $product_response->id = $repository_reponse->id;
-    $product_response->name = $repository_reponse->name;
-    $product_response->price = $repository_reponse->price;
-    $product_response->quantity = $repository_reponse->quantity;
 
-    return $product_response;
+      return self::$_instance;
+    }
 
-  }
+
+    public function get_all() : Get_Products_Response {
+
+        $products_model = $this->_product_repository->get_all()->get();
+        $array_of_products = [];
+        foreach($products_model as $pk => $entity) {
+            $product = new Product(
+                $entity->product_pk,
+                $entity->datetime_created,
+                $entity->datetime_last_modified,
+                $entity->name,
+                $entity->price,
+                $entity->quantity
+            );
+            $array_of_products += [$entity->product_pk => $product];
+        }
+
+        $get_products_response = new Get_Products_Response();
+        $products = new Products;
+        $products->set($array_of_products);
+        $get_products_response->set($products);
+        return $get_products_response;
+    }
+
+
+
 }

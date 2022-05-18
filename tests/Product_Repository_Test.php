@@ -66,7 +66,6 @@ class Product_Repository_Test extends TestCase
 
         // Act
         $pk = $first_product_object_in_collection->product_pk;
-        $first_product_object_in_collection->name = g_generate_random_string();
         $first_product_object_in_collection->price = rand(10000, 100000);
         $first_product_object_in_collection->quantity = rand(100, 1000);
 
@@ -76,7 +75,6 @@ class Product_Repository_Test extends TestCase
 
 
         $this->assertTrue($has_been_updated);
-        $this->assertEquals($first_product_object_in_collection->name, $updated_product->name);
         $this->assertEquals($first_product_object_in_collection->price, $updated_product->price);
         $this->assertEquals($first_product_object_in_collection->quantity, $updated_product->quantity);
     }

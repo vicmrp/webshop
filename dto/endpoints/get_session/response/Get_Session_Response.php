@@ -3,5 +3,5 @@ use vezit\dto\internal_dtos\session\Session;
 
 class Get_Session_Response
 {
-    public Session $session;
+    public function __construct(public Session $session = new Session()) {}
 }

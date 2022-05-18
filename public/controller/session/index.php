@@ -1,7 +1,12 @@
 <?php
 
-require __DIR__ . '/../../../global-requirements.php';
+require __DIR__ . '/../../../../global-requirements.php';
 header('Content-Type: application/json; charset=utf-8');
+
+// TODO lav endpoint script Object Orienteret
+// Under vezit\classes\api\controller\.--> session
+//TODO lav en forbindelse ned til service laget og skab den nødvendige funktionalitet
+
 use vezit\classes\api\endpoint\Endpoint;
 use vezit\classes\api\quickpay\Quickpay;
 use vezit\classes\error\Error;

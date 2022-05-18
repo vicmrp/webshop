@@ -1,5 +1,7 @@
 <?php
 
+//TODO lav en utility class saa library.php bliver Objekt Orienteret.
+
 // Alle globale functioner som ikke er en del af en klasse
 // skal ligge i denne fil,
 

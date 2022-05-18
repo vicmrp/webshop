@@ -53,7 +53,7 @@ class Product_Repository
         $entities = $this->_super_repository->get_all("product");
 
         foreach ($entities as $entity) {
-            $array_of_products += [$entity['product_pk'] => $this->_construct_product_dto($entity)];
+            $array_of_products += [$entity['product_pk'] => $this->_construct_product_entity($entity)];
         }
 
         $products->set($array_of_products);
@@ -70,11 +70,11 @@ class Product_Repository
             if (null != $entities[0])
             $entity = $entities[0];
 
-        return $this->_construct_product_dto($entity);
+        return $this->_construct_product_entity($entity);
     }
 
 
-    private function _construct_product_dto(array $entity): Product
+    private function _construct_product_entity(array $entity): Product
     {
         return new Product(
             $entity['product_pk'],

@@ -110,7 +110,7 @@ class Session_Repository
         $entities = $this->_super_repository->get_all("session");
 
         foreach ($entities as $entity) {
-            $array += [$entity['session_pk'] => $this->_construct_session_dto($entity)];
+            $array += [$entity['session_pk'] => $this->_construct_session_entity($entity)];
         }
 
         $sessions->set($array);
@@ -128,7 +128,7 @@ class Session_Repository
         if (null != $entities[0])
             $entity = $entities[0];
 
-        return $this->_construct_session_dto($entity);
+        return $this->_construct_session_entity($entity);
     }
 
     private function _get_all_from__session_order_item_table(int $fk): Session_Order_Items
@@ -278,7 +278,7 @@ class Session_Repository
         );
     }
 
-    private function _construct_session_dto(array $entity): Session
+    private function _construct_session_entity(array $entity): Session
     {
         return new Session(
             $entity['session_pk'],
