@@ -2,7 +2,7 @@
 require __DIR__.'/../../../global-requirements.php';
 
 use vezit\services\session_service\Session_Service;
-use vezit\dto\endpoints\json_response\Json_Response;
+use vezit\dto\internal_dtos\json_response\Json_Response;
 
 class Session_Controller
 {

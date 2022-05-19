@@ -2,7 +2,7 @@
 require __DIR__.'/../../../global-requirements.php';
 
 use vezit\services\product_service\Product_Service;
-use vezit\dto\internal_dtos\json_response\Json_Response;
+use vezit\dto\endpoints\json_response\Json_Response;
 
 class Product_Controller
 {
@@ -16,13 +16,15 @@ class Product_Controller
     }
 
 
-    public function get_json_response() : Json_Response {
+    public function get_json_response() : string {
         switch ($this->_request_method) {
             case 'GET': // Get all products
-                return new Json_Response();
-              break;
+                $products = $this->_product_service->get_all();
+                $json = json_encode($products, JSON_PRETTY_PRINT);
+                return $json;
+            break;
             default:
-                return new Json_Response();
+                return "";
             break;
         }
     }

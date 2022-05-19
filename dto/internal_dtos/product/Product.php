@@ -2,7 +2,7 @@
 
 require __DIR__ . '/../../../global-requirements.php';
 
-class Product
+class Product implements \JsonSerializable
 {
     public function __construct(
         public ?int         $product_pk                 = null,
@@ -13,4 +13,11 @@ class Product
         public ?int         $quantity                   = null
     )
     {}
+
+    public function jsonSerialize()
+    {
+        $vars = get_object_vars($this);
+
+        return $vars;
+    }
 }

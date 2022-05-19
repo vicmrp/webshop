@@ -4,7 +4,7 @@ use vezit\dto\internal_dtos\product\Product;
 require __DIR__ . '/../../../global-requirements.php';
 
 
-class Products {
+class Products implements \JsonSerializable {
 
     private array $products = [];
 
@@ -22,5 +22,12 @@ class Products {
 
     public function get() : array {
         return $this->products;
+    }
+
+
+    public function jsonSerialize()
+    {
+        $vars = get_object_vars($this);
+        return $vars;
     }
 }
