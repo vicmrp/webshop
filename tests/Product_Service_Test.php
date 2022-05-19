@@ -2,7 +2,7 @@
 use \PHPUnit\Framework\TestCase;
 use vezit\repositories\product_repository\Product_Repository;
 use vezit\repositories\super_repository\Super_Repository;
-use vezit\dto\endpoints\get_products\response\Get_Products_Response;
+use vezit\dto\get_products\response\Get_Products_Response;
 use vezit\classes\mysqli\Mysqli;
 use vezit\services\product_service\Product_Service;
 

@@ -1,7 +1,7 @@
 <?php
 use vezit\dto\class\session\order\item\Item;
 use vezit\dto\session\response\Session_Response;
-use vezit\dto\endpoints\get_session\response\Get_Session_Response;
+use vezit\dto\get_session\response\Get_Session_Response;
 use vezit\services\session_service\Session_Service;
 use \PHPUnit\Framework\TestCase;
 require __DIR__ . '/../global-requirements.php';
