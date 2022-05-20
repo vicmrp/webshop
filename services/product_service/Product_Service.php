@@ -18,10 +18,13 @@ class Product_Service
     public static function get_instance(Product_Repository $product_repository = new Product_Repository())
     {
 
+
       if (self::$_instance == null)
       {
         self::$_instance = new Product_Service($product_repository);
       }
+
+      //TODO Make constructer public so you can use mocking.
 
 
 
@@ -46,6 +49,8 @@ class Product_Service
         return $array_of_products;
     }
 
-
+    public function deleteInstance() {
+        self::$_instance = null;
+    }
 
 }

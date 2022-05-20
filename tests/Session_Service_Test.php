@@ -1,7 +1,6 @@
 <?php
 use vezit\dto\class\session\order\item\Item;
-use vezit\dto\session\response\Session_Response;
-use vezit\dto\get_session\response\Get_Session_Response;
+use vezit\dto\Session_Response;
 use vezit\services\session_service\Session_Service;
 use \PHPUnit\Framework\TestCase;
 require __DIR__ . '/../global-requirements.php';
@@ -29,7 +28,7 @@ class Session_Service_Test extends TestCase {
         $session_response = $this->session_service->get_session();
 
         // Assert
-        $this->assertInstanceOf(Get_Session_Response::class, $session_response);
+        $this->assertInstanceOf(Session_Response::class, $session_response);
     }
 
 
