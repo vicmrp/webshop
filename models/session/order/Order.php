@@ -8,16 +8,7 @@ class Order implements JsonSerializable
 {
     private $items = array();
 
-    private function _ensure_all_items_are_valid_before_applying(array $items) : bool
-    {
-        array_walk($items, function ($item) {
-            if (!($item instanceof Item)) {
-                throw new \Exception('Element in Order_Items must be an instance of Order_Item not ' . gettype($item));
-                return false;
-            }
-        });
-        return true;
-    }
+
 
 
 
@@ -34,20 +25,29 @@ class Order implements JsonSerializable
         }
     }
 
-
-    public function set_order_items(array $items)
-    {
+    public function set_order_items(array $items) {
         if($this->_ensure_all_items_are_valid_before_applying($items))
         {
             $this->items = $items;
         }
     }
 
-    public function get_order_items()
-    {
+    public function get_order_items() {
         return $this->order_items;
     }
 
+
+
+
+    private function _ensure_all_items_are_valid_before_applying(array $items) : bool {
+        array_walk($items, function ($item) {
+            if (!($item instanceof Item)) {
+                throw new \Exception('Element in Order_Items must be an instance of Order_Item not ' . gettype($item));
+                return false;
+            }
+        });
+        return true;
+    }
 
     public function jsonSerialize()
     {

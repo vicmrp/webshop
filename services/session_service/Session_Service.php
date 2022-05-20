@@ -2,8 +2,10 @@
 use vezit\models\session\Session;
 use vezit\dto\Session_Response;
 use vezit\dto\Session_Delete_Response;
+use vezit\dto\Session_Update_Customer_Request;
 use vezit\repositories\session_repository\Session_Repository;
 use vezit\entities\session\Session_Entity;
+use vezit\models\session\order\item\Item;
 
 require __DIR__ . '/../../global-requirements.php';
 
@@ -22,6 +24,7 @@ class Session_Service
     private function __construct(Session_Repository $_session_Repository)
     {
         $this->_session_Repository = $_session_Repository;
+        $this->get_session();
     }
 
 
@@ -89,6 +92,7 @@ class Session_Service
     public function get_session(): Session_Response
     {
 
+
         if (!(isset($_SESSION["session_response"])))
         {
             // Det her er første gang hjemmesiden kender til dig.
@@ -137,6 +141,73 @@ class Session_Service
 
     }
 
+
+    public function update_customer($customer) : Session_Response {
+        $this->_session_response->session->customer->fullname                           = $customer->fullname;
+        $this->_session_response->session->customer->address->street                    = $customer->address->street;
+        $this->_session_response->session->customer->address->postal_code               = $customer->address->postal_code;
+        $this->_session_response->session->customer->address->city                      = $customer->address->city;
+        $this->_session_response->session->customer->contact->phone                     = $customer->contact->phone;
+        $this->_session_response->session->customer->contact->email                     = $customer->contact->email;
+        $this->_session_response->session->customer->company->cvr_number                = $customer->company->cvr_number;
+        $this->_session_response->session->customer->company->company_name              = $customer->company->company_name;
+
+
+        $this->_session_response->session->customer->details_satisfied_for_payment = $this->_customer_details_is_satisfied();
+
+
+        $this->serialize_session();
+        return $this->get_session();
+    }
+
+
+
+    public function update_order($order) : Session_Response {
+        // $this->_session_response->session->order->id = $order->id;
+
+        $items = [];
+        // TODO skal kun tilføje hvis de er pa lager ellers returner maks antal.
+        foreach($order->items as $pk => $item) {
+            $item = new Item(
+                $session_order_item_pk = 1,
+                $product_pk_fk = 1,
+                $name = "Steen karriære",
+                $price = 12345,
+                $quantity = 1
+            );
+            $items += [$item];
+        }
+
+
+
+
+        $this->_session_response->session->order->set_order_items($items);
+
+        // TODO fix alle dem her sa de er automatiske
+        // $this->_session_response->session->order->status->payment->accepted
+        // $this->_session_response->session->order->status->payment->amount
+        // $this->_session_response->session->order->status->payment->currency
+        // $this->_session_response->session->order->status->payment->details_satisfied_for_payment
+        // $this->_session_response->session->order->status->email->confirmation_sent
+        // $this->_session_response->session->order->status->email->invoice_sent_to_customer
+
+
+        $this->serialize_session();
+        return $this->get_session();
+    }
+
+
+    private function _customer_details_is_satisfied() : bool {
+
+        if (null === $this->_session_response->session->customer->fullname            ) return false;
+        if (null === $this->_session_response->session->customer->address->street     ) return false;
+        if (null === $this->_session_response->session->customer->address->postal_code) return false;
+        if (null === $this->_session_response->session->customer->address->city       ) return false;
+        if (null === $this->_session_response->session->customer->contact->phone      ) return false;
+        if (null === $this->_session_response->session->customer->contact->email      ) return false;
+
+        return true;
+    }
 
 
     // TODO: set_customer

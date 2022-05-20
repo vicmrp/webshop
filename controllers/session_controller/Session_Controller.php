@@ -1,6 +1,7 @@
 <?php namespace vezit\controllers\session_controller;
 require __DIR__.'/../../global-requirements.php';
 
+use vezit\dto\Session_Update_Customer_Request;
 use vezit\services\session_service\Session_Service;
 use vezit\models\json_response\Json_Response;
 
@@ -8,6 +9,8 @@ class Session_Controller
 {
     public function __construct(
         private ?string $_request_method = null,
+        private ?array  $_url_parameters = null,
+        private ?string $_body = null,
         private ?Session_Service $_session_service = null
     )
     {
@@ -24,8 +27,23 @@ class Session_Controller
                 return $json;
               break;
             case 'PUT': // Update the service
-                // What to update? What to do?
-                return "";
+
+
+                if ($this->_url_parameters['update'] == 'customer') {
+                    $customer = json_decode($this->_body)->customer;
+                    $session = $this->_session_service->update_customer($customer);
+                    $json = json_encode($session, JSON_PRETTY_PRINT);
+                    return $json;
+                }
+
+                if ($this->_url_parameters['update'] == 'order') {
+                    $order = json_decode($this->_body)->order;
+                    $session = $this->_session_service->update_order($order);
+                    $json = json_encode($session, JSON_PRETTY_PRINT);
+                    return $json;
+                }
+
+
               break;
             case 'POST': // Commit e.g go to payment, or choose postal_service_lokation
                 return "";
