@@ -6,13 +6,15 @@ use vezit\dto\Session_Update_Customer_Request;
 use vezit\repositories\session_repository\Session_Repository;
 use vezit\entities\session\Session_Entity;
 use vezit\models\session\order\item\Item;
+use vezit\repositories\product_repository\Product_Repository;
 
 require __DIR__ . '/../../global-requirements.php';
 
 class Session_Service
 {
     private static $_instance = null;
-    private Session_Repository $_session_Repository;
+    private Session_Repository $_session_repository;
+    private Product_Repository $_product_repository;
     private Session_Response $_session_response;
 
 
@@ -21,9 +23,10 @@ class Session_Service
 
 
 
-    private function __construct(Session_Repository $_session_Repository)
+    private function __construct(Session_Repository $session_Repository, Product_Repository $product_repository)
     {
-        $this->_session_Repository = $_session_Repository;
+        $this->_session_Repository = $session_Repository;
+        $this->_product_repository = $product_repository;
         $this->get_session();
     }
 
@@ -36,11 +39,11 @@ class Session_Service
 
 
 
-    public static function get_instance(Session_Repository $_session_Repository = new Session_Repository())
+    public static function get_instance(Session_Repository $session_Repository = new Session_Repository(), Product_Repository $product_repository = new Product_Repository())
     {
       if (self::$_instance == null)
       {
-        self::$_instance = new Session_Service($_session_Repository);
+        self::$_instance = new Session_Service($session_Repository, $product_repository);
       }
 
       return self::$_instance;
@@ -89,8 +92,7 @@ class Session_Service
 
 
 
-    public function get_session(): Session_Response
-    {
+    public function get_session(): Session_Response {
 
 
         if (!(isset($_SESSION["session_response"])))
@@ -98,8 +100,17 @@ class Session_Service
             // Det her er første gang hjemmesiden kender til dig.
             $this->_session_response = new Session_Response;
             $this->_session_response->session = new Session;
+
+            // Default values
+            $this->_session_response->session->order->status->payment->accepted = false;
+            $this->_session_response->session->order->status->payment->currency = "DKK";
+            $this->_session_response->session->order->status->payment->details_satisfied_for_payment = false;
+            $this->_session_response->session->order->status->email->confirmation_sent = false;
+            $this->_session_response->session->order->status->email->invoice_sent_to_customer = false;
+
+
             $this->serialize_session();
-            return $this->_session_response;
+            return $this->get_session();
         }
 
         // henter session hvis den eksistere ellers skabes der en ny.
@@ -113,10 +124,7 @@ class Session_Service
 
 
 
-
-
-    public function set_session(Session_Response $session_response) : void
-    {
+    public function set_session(Session_Response $session_response) : void {
         $_SESSION["session_response"] = serialize($session_response);
     }
 
@@ -126,20 +134,6 @@ class Session_Service
 
 
 
-    // TODO: add_order_item
-        // Sub TODO:
-    public function add_order_item(int $product_id, int $quantity)
-    {
-        // Get produkt
-
-
-        // Check produkt quantity
-
-        // Add to session
-
-
-
-    }
 
 
     public function update_customer($customer) : Session_Response {
@@ -154,11 +148,15 @@ class Session_Service
 
 
         $this->_session_response->session->customer->details_satisfied_for_payment = $this->_customer_details_is_satisfied();
-
-
         $this->serialize_session();
         return $this->get_session();
     }
+
+
+
+
+
+
 
 
 
@@ -166,35 +164,37 @@ class Session_Service
         // $this->_session_response->session->order->id = $order->id;
 
         $items = [];
+        $amount = 0;
         // TODO skal kun tilføje hvis de er pa lager ellers returner maks antal.
         foreach($order->items as $pk => $item) {
+            $product = $this->_product_repository->get_by_pk($pk);
             $item = new Item(
-                $session_order_item_pk = 1,
-                $product_pk_fk = 1,
-                $name = "Steen karriære",
-                $price = 12345,
-                $quantity = 1
+                $product_pk_fk = $product->product_pk,
+                $name = $product->name,
+                $price = $product->price,
+                $quantity = $item->quantity
             );
-            $items += [$item];
+
+            $amount += $product->price * $item->quantity;
+            $items  += [$pk => $item];
         }
 
 
-
-
+        //TODO make sure you cannot buy more books than is in stock. This is an asyncronous problem
         $this->_session_response->session->order->set_order_items($items);
+        $this->_session_response->session->order->status->payment->amount = $amount;
 
-        // TODO fix alle dem her sa de er automatiske
-        // $this->_session_response->session->order->status->payment->accepted
-        // $this->_session_response->session->order->status->payment->amount
-        // $this->_session_response->session->order->status->payment->currency
-        // $this->_session_response->session->order->status->payment->details_satisfied_for_payment
-        // $this->_session_response->session->order->status->email->confirmation_sent
-        // $this->_session_response->session->order->status->email->invoice_sent_to_customer
-
-
+        $this->_session_response->session->order->status->payment->details_satisfied_for_payment = $this->_order_details_is_satisfied();
         $this->serialize_session();
         return $this->get_session();
     }
+
+
+
+
+
+
+
 
 
     private function _customer_details_is_satisfied() : bool {
@@ -206,6 +206,21 @@ class Session_Service
         if (null === $this->_session_response->session->customer->contact->phone      ) return false;
         if (null === $this->_session_response->session->customer->contact->email      ) return false;
 
+        return true;
+    }
+
+    private function _order_details_is_satisfied() : bool {
+        if (null === $this->_session_response->session->order->status->payment->amount) return false;
+        if (0 >= $this->_session_response->session->order->status->payment->amount) return false;
+
+        return true;
+    }
+
+    private function _shipment_details_is_satisfied() : bool {
+        if (null === $this->_session_response->session->shipment->address->street_name)     return false;
+        if (null === $this->_session_response->session->shipment->address->street_number)   return false;
+        if (null === $this->_session_response->session->shipment->address->postal_code)     return false;
+        if (null === $this->_session_response->session->shipment->address->city)            return false;
         return true;
     }
 

@@ -1,57 +1,113 @@
 <?php
 
 namespace vezit\services\login_service;
-require __DIR__ . '/../../global-requirements.php';
 
+require_once __DIR__ . '/../../global-requirements.php';
 
-use vezit\dto\login\request\Login_Request;
-use vezit\dto\login\response\Login_Response;
-use vezit\dto\login\response\Is_User_Logged_In_Response;
+use vezit\dto\Login_Request;
+use vezit\dto\Login_Response;
 use vezit\repositories\user_repository\User_Repository;
-use vezit\classes\mysqli\Mysqli;
 
 class Login_Service
 {
 
-    public function __construct(private User_Repository $_user_repository = new User_Repository)
+    public function __construct(
+        private User_Repository $_user_repository = new User_Repository(),
+        private ?Login_Response $_login_response = null
+        )
     {
+        // Makes it possible to inject this variable, in unit testing.
+        if (null === $this->_login_response) {
+            if (isset($_SESSION['login_response']))
+                $this->_login_response = unserialize($_SESSION['login_response']);
+            else
+                $this->_login_response = new Login_Response(null,false,false,'Default message from default instantiantion');
+        }
     }
 
 
-    public function validate_user_credentials(Login_Request $login_request): Login_Response
-    {
 
-        $user_entity = $this->_user_repository->get_user_by_email($login_request->username);
-        $access_granted = (bool)password_verify($login_request->password, $user_entity->hash);
+    public function validate_user_credentials(Login_Request $login_request): Login_Response {
 
-        $_SESSION['session_var_active'] = $access_granted ? true : false;
+        // If user is already logged in
+        if ($this->_login_response->access_granted){
+            $this->_login_response->message = "You were already logged in";
+            return $this->_login_response;
+        }
 
-        $login_response = new Login_Response();
-        $login_response->username =  $login_request->username;
-        $login_response->access_granted = $access_granted ? true : false;
-        $login_response->session_var_active = $_SESSION['session_var_active'];
+
+        $access_granted = false;
+        $users = $this->_user_repository->get_all();
+
+        $user = null;
+        foreach ($users->get() as $pk => $u) {
+            if ($login_request->email === $u->email) {
+                $user = $u;
+            }
+        }
+
+
+
+        if (null !== $user) {
+            (bool)$access_granted = password_verify($login_request->password, $user->hashed_password);
+
+        } else {
+            return new Login_Response(
+                null,
+                null,
+                null,
+                "Email ($login_request->email) does not exist"
+            );
+        }
+
+
+        $login_response = new Login_Response(
+            $user->email,
+            $access_granted,
+            isset($_SESSION['login_response']),
+            "You have successfully logged in"
+        );
+
+        if (!(isset($_SESSION['login_response'])))
+            $_SESSION["login_response"] = serialize($login_response);
+
 
         return $login_response;
     }
 
-    public function check_if_user_is_logged_in(): Is_User_Logged_In_Response
+
+    public function check_if_user_is_logged_in(): Login_Response
     {
 
-        $is_user_logged_in_response = new Is_User_Logged_In_Response();
 
-        $is_user_logged_in_response->user_is_logged_in = isset($_SESSION['session_var_active']) ? true : false;
+        // If user is already logged in
+        if ($this->_login_response->access_granted){
+            $this->_login_response->message = "You are logged in";
+            return $this->_login_response;
+        }
 
-        return $is_user_logged_in_response;
+        return new Login_Response(
+            null,
+            false,
+            isset($_SESSION['login_response']),
+            "There is no active session - you are not logged in."
+        );
+
     }
 
-    public function logout(): Is_User_Logged_In_Response
+
+    public function logout(): Login_Response
     {
-        $logout_response = new Is_User_Logged_In_Response();
-        if (isset($_SESSION['session_var_active']))
-            unset($_SESSION['session_var_active']);
+        $this->_login_response = null;
 
-        $logout_response->user_is_logged_in = false;
+        if (isset($_SESSION['login_response']))
+            unset($_SESSION["login_response"]);
 
-        return $logout_response;
+        return new Login_Response(
+            null,
+            false,
+            isset($_SESSION['login_response']),
+            'You are now logged out'
+        );
     }
 }
