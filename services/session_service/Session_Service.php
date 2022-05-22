@@ -1,4 +1,7 @@
 <?php namespace vezit\services\session_service;
+
+use vezit\api\dawa_api\Dawa_API;
+use vezit\api\postnord_api\Postnord_API;
 use vezit\models\session\Session;
 use vezit\dto\Session_Response;
 use vezit\dto\Session_Delete_Response;
@@ -7,15 +10,18 @@ use vezit\repositories\session_repository\Session_Repository;
 use vezit\entities\session\Session_Entity;
 use vezit\models\session\order\item\Item;
 use vezit\repositories\product_repository\Product_Repository;
+use vezit\services\postnord_service\Postnord_Service;
 
 require __DIR__ . '/../../global-requirements.php';
 
 class Session_Service
 {
     private static $_instance = null;
-    private Session_Repository $_session_repository;
-    private Product_Repository $_product_repository;
-    private Session_Response $_session_response;
+    private Session_Repository  $_session_repository;
+    private Product_Repository  $_product_repository;
+    private Postnord_service    $_postnord_service;
+    private Session_Response    $_session_response;
+    private Dawa_API            $_dawa_api;
 
 
 
@@ -23,10 +29,11 @@ class Session_Service
 
 
 
-    private function __construct(Session_Repository $session_Repository, Product_Repository $product_repository)
+    private function __construct(Session_Repository $session_Repository, Product_Repository $product_repository, Dawa_API $dawa_api)
     {
-        $this->_session_Repository = $session_Repository;
-        $this->_product_repository = $product_repository;
+        $this->_session_Repository  = $session_Repository;
+        $this->_product_repository  = $product_repository;
+        $this->_dawa_api            = $dawa_api;
         $this->get_session();
     }
 
@@ -39,12 +46,14 @@ class Session_Service
 
 
 
-    public static function get_instance(Session_Repository $session_Repository = new Session_Repository(), Product_Repository $product_repository = new Product_Repository())
+    public static function get_instance(Session_Repository $session_repository  = new Session_Repository,
+                                        Product_Repository $product_repository  = new Product_Repository,
+                                        Dawa_API $dawa_api                      = new Dawa_API)
     {
-      if (self::$_instance == null)
-      {
-        self::$_instance = new Session_Service($session_Repository, $product_repository);
-      }
+    if (self::$_instance == null) {
+
+        self::$_instance = new Session_Service($session_repository, $product_repository, $dawa_api);
+    }
 
       return self::$_instance;
     }
@@ -188,6 +197,24 @@ class Session_Service
         $this->serialize_session();
         return $this->get_session();
     }
+
+
+
+    // public function update_shipment(?int $service_point_id = null) : Session_Response {
+    //     // if($this->_customer_details_is_satisfied()) {
+    //     //     // hvis service_point_id er null then set customer address as delevery address
+    //     //     if (null == $service_point_id) {
+    //     //         $street = $_session_response->session->customer->address->street;
+    //     //         $postal_code = $_session_response->session->customer->address->postal_code;
+    //     //         $sanitized_address = $_dawa_api->call_get_sanitized_address($street, $postal_code);
+
+
+
+    //     //     } else {
+    //     //         // $service_point_id =
+    //     //     }
+    //     // }
+    // }
 
 
 

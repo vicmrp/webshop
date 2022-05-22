@@ -10,7 +10,7 @@ class Postnord_API
     // --- Hent service points --- //
     // Documentation
     // https://guides.developer.postnord.com/
-    public function call_get_servicepoints(Sanitized_Address $sanitized_address, int $max_return_of_service_points = 10) : array {
+    public function call_get_servicepoints(Sanitized_Address $sanitized_address, int $max_return_of_service_points = 10) : object {
 
         // paramentere
         $country_code             = 'DK';
@@ -45,24 +45,32 @@ class Postnord_API
 
         $postnord_response = json_decode($postnord_json_response);
 
+        return $postnord_response;
+    }
 
-        $array_of_service_points = [];
 
 
+    public function call_find_service_point_by_id(int $service_point_id) : object {
 
-        $service_points = $postnord_response->servicePointInformationResponse->servicePoints;
+        $curl = curl_init();
+        global $g_postnord_apikey;
 
-        for ($i=0; $i < count($service_points); $i++) {
-            $postnord_service_point_response = new Postnord_Service_Point_Response();
-            $postnord_service_point_response->index = $i;
-            $postnord_service_point_response->street_name    = $postnord_response->servicePointInformationResponse->servicePoints[$i]->visitingAddress->streetName;
-            $postnord_service_point_response->street_number  = $postnord_response->servicePointInformationResponse->servicePoints[$i]->visitingAddress->streetNumber;
-            $postnord_service_point_response->postal_code    = $postnord_response->servicePointInformationResponse->servicePoints[$i]->visitingAddress->postalCode;
-            $postnord_service_point_response->city           = $postnord_response->servicePointInformationResponse->servicePoints[$i]->visitingAddress->city;
-            array_push($array_of_service_points, $postnord_service_point_response);
-        }
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api2.postnord.com/rest/businesslocation/v5/servicepoints/ids?apikey=$g_postnord_apikey&returnType=json&countryCode=DK&ids=$service_point_id&responseFilter=public",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        ));
 
-        return $array_of_service_points;
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        return json_decode($response);
 
     }
 }

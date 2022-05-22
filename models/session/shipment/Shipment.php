@@ -9,6 +9,7 @@ class Shipment
         public ?string  $tracking_number                = null,
         public ?bool    $order_collected                = null,
         public ?bool    $details_satisfied_for_payment  = null,
+        public ?string  $service_point_id               = null,
         public Address  $address                        = new Address
     ) {}
 }

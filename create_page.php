@@ -6,7 +6,7 @@
 // php -f create_page.php hero
 $pagename = $argv[1];
 
-$forbidden_names = ['vscode', 'controller', 'api', 'global', 'img', 'test', 'test2'];
+$forbidden_names = ['.vscode', 'callbacks', 'api', 'global', 'img', 'test'];
 
 array_walk($forbidden_names, function ($item) {
     global $pagename;

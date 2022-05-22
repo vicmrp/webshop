@@ -40,7 +40,7 @@ class Postnord_Controller_Test extends TestCase
 
 
 
-        $this->assertGreaterThan(0, count($service_points));
+        $this->assertIsArray($service_points);
 
     }
 }

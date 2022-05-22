@@ -19,11 +19,20 @@ class Postnord_Service_Test  extends TestCase
     /** @test */
     public function get_service_points__returns_array() {
         $service_points = $this->postnord_service->get_service_points("vinkelvej", "2800");
-        foreach ($service_points as $service_point) {
-            if (!($service_point Instanceof Postnord_Service_Point_Response)) {
-                $this->fail("Not instance of Postnord_Service_Point_Response");
-            }
-        }
+        // $this->assertInstanceOf(stdClass::class, $service_points);
         $this->assertTrue(true);
+    }
+
+
+    /** @test */
+    public function get_by_id__return_correct_item() {
+        $id = 106617; // "Nærboks Lyngby Lokal Station - Kræver Postnord App"
+
+        $service_point =  $this->postnord_service->get_by_id($id);
+        $name = $service_point->name;
+
+        $this->assertEquals("Nærboks Lyngby Lokal Station - Kræver Postnord App", $name);
+
+
     }
 }

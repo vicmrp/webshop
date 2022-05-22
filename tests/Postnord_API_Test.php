@@ -20,7 +20,19 @@ class Postnord_API_Test  extends TestCase
 
         $service_points = $this->postnord_api->call_get_servicepoints($sanitized_address, 2);
 
-        $this->assertIsArray($service_points);
-        $this->assertInstanceOf(Postnord_Service_Point_Response::class, $service_points[array_key_first($service_points)]);
+        $this->assertInstanceOf(stdClass::class, $service_points);
+    }
+
+
+    /** @test */
+    public function call_find_service_point_by_id() {
+        $id = 106617; // "Nærboks Lyngby Lokal Station - Kræver Postnord App"
+
+        $service_point = $this->postnord_api->call_find_service_point_by_id($id);
+        $name = $service_point->servicePointInformationResponse->servicePoints[0]->name;
+
+        $this->assertEquals("Nærboks Lyngby Lokal Station - Kræver Postnord App", $name);
+
+
     }
 }

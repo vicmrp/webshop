@@ -36,13 +36,19 @@ class Session_Controller
                     return $json;
                 }
 
-                if ($this->_url_parameters['update'] == 'order') {
+                else if ($this->_url_parameters['update'] == 'order') {
                     $order = json_decode($this->_body)->order;
                     $session = $this->_session_service->update_order($order);
                     $json = json_encode($session, JSON_PRETTY_PRINT);
                     return $json;
                 }
 
+                else if ($this->_url_parameters['update'] == 'shipment') {
+                    $shipment = json_decode($this->_body)->shipment;
+                    $session = $this->_session_service->update_shipment($shipment);
+                    $json = json_encode($session, JSON_PRETTY_PRINT);
+                    return $json;
+                }
 
               break;
             case 'POST': // Commit e.g go to payment, or choose postal_service_lokation
