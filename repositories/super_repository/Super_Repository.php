@@ -64,7 +64,7 @@ class Super_Repository
 
                 // if value is the same as one of them in the fields to ignore array then pass and continue
                 if (!in_array((string)$key, $fields_to_ignore))
-                    if($value instanceof DateTime)
+                    if($value instanceof DateTime) //TODO replace DateTime type with original response type from database e.g. string.
                         array_push($array_of_property_values, $value->format('Y-m-d H:i:s'));
                     else
                         array_push($array_of_property_values, $value);

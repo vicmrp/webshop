@@ -15,18 +15,13 @@ class Product_Service
         $this->_product_repository = $product_repository;
     }
 
-    public static function get_instance(Product_Repository $product_repository = new Product_Repository())
+    public static function get_instance(Product_Repository $product_repository = new Product_Repository)
     {
-
 
       if (self::$_instance == null)
       {
         self::$_instance = new Product_Service($product_repository);
       }
-
-      //TODO Make constructer public so you can use mocking.
-
-
 
       return self::$_instance;
     }
@@ -43,13 +38,13 @@ class Product_Service
                 $entity->price,
                 $entity->quantity
             );
-            $array_of_products += [$entity->product_pk => $product];
+            $array_of_products += [$product];
         }
 
         return $array_of_products;
     }
 
-    public function deleteInstance() {
+    public static function delete_instance() {
         self::$_instance = null;
     }
 

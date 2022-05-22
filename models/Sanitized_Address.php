@@ -1,4 +1,4 @@
-<?php namespace vezit\dto;
+<?php namespace vezit\models;
 
 class Sanitized_Address
 {

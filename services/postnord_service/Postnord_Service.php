@@ -2,70 +2,63 @@
 
 namespace vezit\services\postnord_service;
 
-
-
-use vezit\classes\api\dawa\Dawa;
+use vezit\api\dawa_api\Dawa_API;
+use vezit\api\postnord_api\Postnord_API;
 use vezit\classes\api\postnord\Postnord;
-use vezit\dto\postnord\request\Request;
-use vezit\dto\postnord\response\Response;
 use vezit\services\session_service\Session_Service;
 
 require __DIR__.'/../../global-requirements.php';
 
 class Postnord_Service
 {
-  private $session;
+    private static $_instance = null;
+    private Postnord_API $_postnord_api;
+    private Dawa_API $_dawa_api;
 
-  public function __construct() {
-    $this->session = new Session\Session();
-  }
-
-  public function get_service_points() : Response\Postnord_Service_Points_Response
-  {
-
-
-    $sanitized_address = Dawa::call_get_sanitized_address(
-        $street_name_and_house_number = "",
-        $postal_code = ""
-    );
-
-
-    $postnord_service_points_request = new Request\Postnord_Service_Points_Request();
-    $postnord_service_points_request->sanitized_address_response = $sanitized_address_response;
-    $postnord_service_points_response = Postnord\Postnord::call_get_servicepoints($postnord_service_points_request);
-    $_SESSION['postnord_service_points_response'] = json_encode($postnord_service_points_response ,JSON_PRETTY_PRINT);
-
-    return $postnord_service_points_response;
-  }
-
-  public function set_shipment_address($index) : Session_Response\Session_Response
-  {
-    if(isset($_SESSION['postnord_service_points_response']) === false) {
-      $error_message = "Session variable: postnord_service_points_response does not exist";
-      new Error\Error(__FILE__, $error_message, $fatal_error=true);
+    private function __construct(Postnord_API $postnord_API, Dawa_API $dawa_api) {
+        $this->_postnord_api = $postnord_API;
+        $this->_dawa_api = $dawa_api;
     }
 
-    $postnord_service_points_response = new Response\Postnord_Service_Points_Response();
-    $postnord_service_points_response->service_points = json_decode($_SESSION['postnord_service_points_response'])->service_points;
+    public static function get_instance(Postnord_API $postnord_api = new Postnord_API, Dawa_API $dawa_api = new Dawa_API)
+    {
 
+        if (self::$_instance == null) {
+            self::$_instance = new Postnord_Service($postnord_api, $dawa_api);
+        }
 
-
-
-    foreach($postnord_service_points_response->service_points as $shipment_address)  {
-      if ($shipment_address->index === $index) {
-        $this->session->shipment->address->set_street_name($shipment_address->street_name);
-        $this->session->shipment->address->set_street_number($shipment_address->street_number);
-        $this->session->shipment->address->set_postal_code($shipment_address->postal_code);
-        $this->session->shipment->address->set_city($shipment_address->city);
-        $this->session->set_storing_session_response();
-
-        $session_service = new Session_Service\Session_Service();
-        return  $session_service->get_session();
-      }
+        return self::$_instance;
     }
 
-    $error_message = "index is out of range. index: $index";
-    new Error\Error(__FILE__, $error_message, $fatal_error=true);
+    public static function delete_instance() {
+        self::$_instance = null;
+    }
 
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function get_service_points(string $streetname, string $postal_code) : array
+    {
+
+        $sanitized_address = $this->_dawa_api->call_get_sanitized_address(
+            $streetname,
+            $postal_code
+        );
+
+        $array_of_service_points = $this->_postnord_api->call_get_servicepoints($sanitized_address);
+
+
+        return $array_of_service_points;
+    }
+
 }

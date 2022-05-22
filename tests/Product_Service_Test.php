@@ -38,7 +38,7 @@ class Product_Service_Test extends TestCase
 
 
         // Setup
-        $this->product_service->deleteInstance();
+        Product_Service::delete_instance();
 
         $pk = 1;
         $mock_entity_products = new Products();
@@ -59,6 +59,6 @@ class Product_Service_Test extends TestCase
 
 
         $products = $product_service->get_all();
-        $this->assertEquals("Harry Potter", $products[$pk]->name);
+        $this->assertEquals("Harry Potter", $products[0]->name);
     }
 }
