@@ -1,7 +1,7 @@
 <?php
 use \PHPUnit\Framework\TestCase;
-use vezit\controllers\Postnord_Controller;
-use vezit\services\postnord_service\Postnord_Service;
+use vezit\controllers\postnord_controller\Postnord_Controller;
+
 
 require __DIR__ . '/../global-requirements.php';
 
@@ -29,16 +29,18 @@ class Postnord_Controller_Test extends TestCase
             'GET',
             [
                 "streetname"    => "%C3%B8resundshoj%203a", // øresundshoj 3a
-                "zip-code"      => "2800"
+                "zip-code"      => "2920"
             ],
             null,
             null
         );
 
         $json = $postnord_controller->get_json_response();
+        $service_points = json_decode($json);
 
-        $x=0;
 
+
+        $this->assertGreaterThan(0, count($service_points));
 
     }
 }

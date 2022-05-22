@@ -1,4 +1,4 @@
-<?php namespace vezit\controllers;
+<?php namespace vezit\controllers\postnord_controller;
 
 require __DIR__.'/../../global-requirements.php';
 

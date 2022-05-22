@@ -4,7 +4,10 @@ header('Content-Type: application/json; charset=utf-8');
 
 use vezit\controllers\postnord_controller\Postnord_Controller;
 
-$controller = new Postnord_Controller($_SERVER['REQUEST_METHOD']);
+$controller = new Postnord_Controller(
+    $_SERVER['REQUEST_METHOD'],
+    $_GET
+);
 (string)$result_in_json = $controller->get_json_response();
 
 echo $result_in_json;
