@@ -70,7 +70,9 @@ class Postnord_API
 
         curl_close($curl);
 
-        return json_decode($response);
+        $service_points = json_decode($response, false);
+
+        return $service_points;
 
     }
 }

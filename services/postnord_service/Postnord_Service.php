@@ -77,19 +77,16 @@ class Postnord_Service
 
 
 
-    public function get_by_id($service_point_id) : object {
-
-        $array_of_postnord_service_point_response = [];
-
+    public function get_by_id($service_point_id) : Postnord_Service_Point_Response {
 
         $sp = $this->_postnord_api->call_find_service_point_by_id($service_point_id);
         return new Postnord_Service_Point_Response(
-            $sp->servicePointId,
-            $sp->name,
-            $sp->visitingAddress->streetName,
-            $sp->visitingAddress->streetNumber,
-            $sp->visitingAddress->postalCode,
-            $sp->visitingAddress->city
+            $sp->servicePointInformationResponse->servicePoints[0]->servicePointId,
+            $sp->servicePointInformationResponse->servicePoints[0]->name,
+            $sp->servicePointInformationResponse->servicePoints[0]->visitingAddress->streetName,
+            $sp->servicePointInformationResponse->servicePoints[0]->visitingAddress->streetNumber,
+            $sp->servicePointInformationResponse->servicePoints[0]->visitingAddress->postalCode,
+            $sp->servicePointInformationResponse->servicePoints[0]->visitingAddress->city
         );
 
     }

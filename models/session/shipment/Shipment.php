@@ -10,6 +10,8 @@ class Shipment
         public ?bool    $order_collected                = null,
         public ?bool    $details_satisfied_for_payment  = null,
         public ?string  $service_point_id               = null,
+        public ?string  $name                           = null,
+        public ?bool    $visiting_address               = null,
         public Address  $address                        = new Address
     ) {}
 }

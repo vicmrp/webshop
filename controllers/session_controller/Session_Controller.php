@@ -43,9 +43,8 @@ class Session_Controller
                     return $json;
                 }
 
-                else if ($this->_url_parameters['update'] == 'shipment') {
-                    $shipment = json_decode($this->_body)->shipment;
-                    $session = $this->_session_service->update_shipment($shipment);
+                else if (($this->_url_parameters['update'] == 'shipment') && (null !== $this->_url_parameters['service-point-id'])) {
+                    $session = $this->_session_service->update_shipment($this->_url_parameters['service-point-id']);
                     $json = json_encode($session, JSON_PRETTY_PRINT);
                     return $json;
                 }

@@ -11,6 +11,7 @@ use vezit\entities\session\Session_Entity;
 use vezit\models\session\order\item\Item;
 use vezit\repositories\product_repository\Product_Repository;
 use vezit\services\postnord_service\Postnord_Service;
+use vezit\models\session\shipment\Shipment;
 
 require __DIR__ . '/../../global-requirements.php';
 
@@ -29,11 +30,12 @@ class Session_Service
 
 
 
-    private function __construct(Session_Repository $session_Repository, Product_Repository $product_repository, Dawa_API $dawa_api)
+    private function __construct(Session_Repository $session_Repository, Product_Repository $product_repository, Dawa_API $dawa_api, Postnord_Service $postnord_service)
     {
         $this->_session_Repository  = $session_Repository;
         $this->_product_repository  = $product_repository;
         $this->_dawa_api            = $dawa_api;
+        $this->_postnord_service    = $postnord_service;
         $this->get_session();
     }
 
@@ -46,14 +48,14 @@ class Session_Service
 
 
 
-    public static function get_instance(Session_Repository $session_repository  = new Session_Repository,
-                                        Product_Repository $product_repository  = new Product_Repository,
-                                        Dawa_API $dawa_api                      = new Dawa_API)
+    public static function get_instance(Session_Repository $session_repository   = new Session_Repository,
+                                        Product_Repository $product_repository   = new Product_Repository,
+                                        Dawa_API $dawa_api                       = new Dawa_API,
+                                        ?Postnord_Service $postnord_service      = null)
     {
-    if (self::$_instance == null) {
 
-        self::$_instance = new Session_Service($session_repository, $product_repository, $dawa_api);
-    }
+    if (null === $postnord_service) $postnord_service = Postnord_Service::get_instance();
+    if (null === self::$_instance) self::$_instance = new Session_Service($session_repository, $product_repository, $dawa_api, $postnord_service);
 
       return self::$_instance;
     }
@@ -200,21 +202,25 @@ class Session_Service
 
 
 
-    // public function update_shipment(?int $service_point_id = null) : Session_Response {
-    //     // if($this->_customer_details_is_satisfied()) {
-    //     //     // hvis service_point_id er null then set customer address as delevery address
-    //     //     if (null == $service_point_id) {
-    //     //         $street = $_session_response->session->customer->address->street;
-    //     //         $postal_code = $_session_response->session->customer->address->postal_code;
-    //     //         $sanitized_address = $_dawa_api->call_get_sanitized_address($street, $postal_code);
+    public function update_shipment(int $service_point_id) : Session_Response {
 
+        if($this->_customer_details_is_satisfied()) {
+            $postnord_service_point_response = $this->_postnord_service->get_by_id($service_point_id);
+            $shipment = new Shipment();
+            $shipment->service_point_id         = $postnord_service_point_response->service_point_id;
+            $shipment->name                     = $postnord_service_point_response->name;
+            $shipment->address->street_name     = $postnord_service_point_response->street_name;
+            $shipment->address->street_number   = $postnord_service_point_response->street_number;
+            $shipment->address->postal_code     = $postnord_service_point_response->postal_code;
+            $shipment->address->city            = $postnord_service_point_response->city;
+            $shipment->visiting_address         = $postnord_service_point_response->visiting_address;
 
+            $this->_session_response->session->shipment = $shipment;
 
-    //     //     } else {
-    //     //         // $service_point_id =
-    //     //     }
-    //     // }
-    // }
+            return $this->_session_response;
+        }
+        return $this->_session_response;
+    }
 
 
 
