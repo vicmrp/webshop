@@ -38,7 +38,7 @@ class Product_Service
                 $entity->price,
                 $entity->quantity
             );
-            $array_of_products += [$product];
+            array_push($array_of_products,$product);
         }
 
         return $array_of_products;

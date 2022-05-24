@@ -1,14 +1,14 @@
-<?php namespace vezit\entities;
-require __DIR__ . '/../global-requirements.php';
+<?php namespace vezit\dto;
 
 
-class Session_Order_Items {
+class Session_Order_Update_Requests
+{
     private array $items = [];
 
     public function set(array $items) : void {
 
         array_walk($items, function($item) {
-            if (!($item instanceof Session_Order_Item)) {
+            if (!($item instanceof Session_Order_Update_Request)) {
                 throw new \Exception('must be correct instance');
                 return;
             }

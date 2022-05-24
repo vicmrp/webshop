@@ -26,14 +26,11 @@ class Order implements JsonSerializable
     }
 
     public function set_order_items(array $items) {
-        if($this->_ensure_all_items_are_valid_before_applying($items))
-        {
-            $this->items = $items;
-        }
+        if($this->_ensure_all_items_are_valid_before_applying($items)) $this->items = $items;
     }
 
     public function get_order_items() {
-        return $this->order_items;
+        return $this->items;
     }
 
 

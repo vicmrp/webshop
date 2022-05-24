@@ -1,10 +1,12 @@
 <?php namespace vezit\services\session_service;
 
+use Session_Order_Update_Request;
 use vezit\api\dawa_api\Dawa_API;
 use vezit\api\postnord_api\Postnord_API;
 use vezit\models\session\Session;
 use vezit\dto\Session_Response;
 use vezit\dto\Session_Delete_Response;
+use vezit\dto\Session_Order_Update_Requests;
 use vezit\dto\Session_Update_Customer_Request;
 use vezit\repositories\session_repository\Session_Repository;
 use vezit\entities\session\Session_Entity;
@@ -121,7 +123,7 @@ class Session_Service
 
 
             $this->serialize_session();
-            return $this->get_session();
+            return $this->_session_response;
         }
 
         // henter session hvis den eksistere ellers skabes der en ny.
@@ -129,20 +131,6 @@ class Session_Service
         return $this->_session_response;
 
     }
-
-
-
-
-
-
-    public function set_session(Session_Response $session_response) : void {
-        $_SESSION["session_response"] = serialize($session_response);
-    }
-
-
-
-
-
 
 
 
@@ -171,27 +159,29 @@ class Session_Service
 
 
 
-    public function update_order($order) : Session_Response {
-        // $this->_session_response->session->order->id = $order->id;
+    public function update_order(Session_Order_Update_Requests $session_order_update_requests) : Session_Response {
+
 
         $items = [];
         $amount = 0;
-        // TODO skal kun tilføje hvis de er pa lager ellers returner maks antal.
-        foreach($order->items as $pk => $item) {
-            $product = $this->_product_repository->get_by_pk($pk);
+        foreach ($session_order_update_requests->get() as $item) {
+            $product = $this->_product_repository->get_by_pk($item->product_pk);
+
+            if ($product->quantity < $item->quantity)
+                throw new \Exception("You are trying too add more products than is in stock", 1);
+
             $item = new Item(
                 $product_pk_fk = $product->product_pk,
                 $name = $product->name,
                 $price = $product->price,
                 $quantity = $item->quantity
             );
-
             $amount += $product->price * $item->quantity;
-            $items  += [$pk => $item];
+            array_push($items, $item);
         }
 
 
-        //TODO make sure you cannot buy more books than is in stock. This is an asyncronous problem
+
         $this->_session_response->session->order->set_order_items($items);
         $this->_session_response->session->order->status->payment->amount = $amount;
 
@@ -216,8 +206,8 @@ class Session_Service
             $shipment->visiting_address         = $postnord_service_point_response->visiting_address;
 
             $this->_session_response->session->shipment = $shipment;
-
-            return $this->_session_response;
+            $this->serialize_session();
+            return $this->get_session();
         }
         return $this->_session_response;
     }

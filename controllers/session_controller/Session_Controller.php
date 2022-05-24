@@ -1,9 +1,12 @@
 <?php namespace vezit\controllers\session_controller;
 require __DIR__.'/../../global-requirements.php';
 
+use PhpParser\Node\Expr\New_;
 use vezit\dto\Session_Update_Customer_Request;
 use vezit\services\session_service\Session_Service;
 use vezit\models\json_response\Json_Response;
+use vezit\dto\Session_Order_Update_Request;
+use vezit\dto\Session_Order_Update_Requests;
 
 class Session_Controller
 {
@@ -37,10 +40,24 @@ class Session_Controller
                 }
 
                 else if ($this->_url_parameters['update'] == 'order') {
-                    $order = json_decode($this->_body)->order;
-                    $session = $this->_session_service->update_order($order);
-                    $json = json_encode($session, JSON_PRETTY_PRINT);
-                    return $json;
+                    $array_incoming_data = json_decode($this->_body);
+                    $array_result = [];
+                    foreach ($array_incoming_data as $object) {
+                        array_push($array_result, g_generate_dto_from_json($object, Session_Order_Update_Request::class));
+                    }
+
+                    $session_order_update_requests = new Session_Order_Update_Requests;
+
+                    $session_order_update_requests->set($array_result);
+
+                    $session_response = $this->_session_service->update_order($session_order_update_requests);
+
+                    return json_encode($session_response);
+
+
+                    // // $session = $this->_session_service->update_order($order);
+                    // $json = json_encode($session, JSON_PRETTY_PRINT);
+                    // return $json;
                 }
 
                 else if (($this->_url_parameters['update'] == 'shipment') && (null !== $this->_url_parameters['service-point-id'])) {

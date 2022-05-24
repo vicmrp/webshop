@@ -24,8 +24,6 @@ function g_generate_random_string($length = 10)
 
 
 
-
-
 // -------------- _to_top_folder($top_folder) : string '../../' -------------- //
 // Denne funtion kan automatisk definere finde ud af hvor
 // mange undermapper den en fil ligger.
@@ -108,3 +106,26 @@ function g_find_object_by_id($id, $array_of_objects)
 
     return false;
 }
+
+
+
+
+
+
+
+
+
+
+function g_generate_dto_from_json(object $data, $dto) {
+
+    $dto = new $dto();
+    $std_object = $data;
+    foreach ($std_object as $std_object_property => $std_object_value) {
+        foreach ($dto as $dto_object_property => $dto_object_value) {
+            if ($std_object_property == $dto_object_property)
+                $dto->$dto_object_property = $std_object_value;
+        }
+    }
+    return $dto;
+}
+

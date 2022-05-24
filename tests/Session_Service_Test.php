@@ -3,6 +3,9 @@ use vezit\dto\class\session\order\item\Item;
 use vezit\dto\Session_Response;
 use vezit\services\session_service\Session_Service;
 use \PHPUnit\Framework\TestCase;
+use vezit\dto\Session_Order_Update_Request;
+use vezit\dto\Session_Order_Update_Requests;
+
 require __DIR__ . '/../global-requirements.php';
 
 class Session_Service_Test extends TestCase {
@@ -46,6 +49,39 @@ class Session_Service_Test extends TestCase {
     //     $this->assertInstanceOf(Order_Item::class, $session_response->session->order->get_order_items()[0]);
     // }
 
+    /** @test */
+    public function update_order__get_response()
+    {
+
+        $json = '
+        [
+            {
+                "product_pk": 3,
+                "quantity": 14
+            },
+                {
+                "product_pk": 4,
+                "quantity": 14
+                }
+        ]';
+
+
+        $array_result = [];
+        $array_incoming_data = json_decode($json);
+        foreach ($array_incoming_data as $object) {
+            array_push($array_result, g_generate_dto_from_json($object, Session_Order_Update_Request::class));
+        }
+
+        $session_order_update_requests = new Session_Order_Update_Requests;
+
+        $session_order_update_requests->set($array_result);
+
+        $session_response = $this->session_service->update_order($session_order_update_requests);
+
+        $this->assertEquals(14, $session_response->session->order->get_order_items()[0]->quantity);
+
+
+    }
 
 
 }

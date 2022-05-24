@@ -1,7 +1,8 @@
 <?php
 use \PHPUnit\Framework\TestCase;
 use vezit\controllers\session_controller\Session_Controller;
-
+use vezit\dto\Session_Order_Update_Request;
+use vezit\dto\Session_Order_Update_Requests;
 
 require __DIR__ . '/../global-requirements.php';
 
@@ -70,6 +71,39 @@ class Session_Controller_Test extends TestCase
     //     $this->assertTrue(true);
 
     // }
+
+
+
+    /** @test */
+    public function get_json_response__update_order_items() {
+
+        $body = '
+        [
+            {
+                "product_pk": 3,
+                "quantity": 14
+            },
+                {
+                "product_pk": 4,
+                "quantity": 14
+                }
+        ]';
+
+
+        $session_controller = new Session_Controller(
+            'PUT',
+            ['update' => 'order'],
+            $body
+        );
+
+
+
+        $json_response = $session_controller->get_json_response();
+
+        $object = json_decode($json_response);
+
+        $this->assertEquals(14, $object->session->order->items[0]->quantity);
+    }
 
 
 }

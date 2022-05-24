@@ -43,4 +43,6 @@ class Postnord_Controller_Test extends TestCase
         $this->assertIsArray($service_points);
 
     }
+
+
 }
