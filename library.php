@@ -116,7 +116,7 @@ function g_find_object_by_id($id, $array_of_objects)
 
 
 
-function g_generate_dto_from_json(object $data, $dto) {
+function g_generate_flat_dto_from_web_request(object $data, $dto) {
 
     $dto = new $dto();
     $std_object = $data;

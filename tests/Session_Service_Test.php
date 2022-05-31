@@ -69,7 +69,7 @@ class Session_Service_Test extends TestCase {
         $array_result = [];
         $array_incoming_data = json_decode($json);
         foreach ($array_incoming_data as $object) {
-            array_push($array_result, g_generate_dto_from_json($object, Session_Order_Update_Request::class));
+            array_push($array_result, g_generate_flat_dto_from_web_request($object, Session_Order_Update_Request::class));
         }
 
         $session_order_update_requests = new Session_Order_Update_Requests;
