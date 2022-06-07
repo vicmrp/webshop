@@ -3,9 +3,9 @@
         {
             "path": ".."
         }
-        // ,{
-        //     "path": "C:\\xampp\\php"
-        // }
+        ,{
+            "path": "..\\public"
+        }
     ],
     "settings": {
         "workbench.colorTheme": "Default Dark+",
@@ -36,6 +36,5 @@
         "editor.hover.enabled": true,
         "editor.hover.delay": 300,
         "intelephense.diagnostics.undefinedMethods": false
-        // "intelephense.diagnostics.undefinedProperties": false
     }
 }

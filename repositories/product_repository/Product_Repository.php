@@ -67,9 +67,11 @@ class Product_Repository
         $entities = $this->_super_repository
             ->get_all_by_where_clause($table='product', $where_clause='product_pk', $identifier=$pk);
 
-            if (null != $entities[0])
-            $entity = $entities[0];
+            if (1 > count($entities))
+                throw new \Exception("zero entities returned. Expected one", 1);
 
+
+        $entity = $entities[0];
         return $this->_construct_product_entity($entity);
     }
 

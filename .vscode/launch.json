@@ -8,7 +8,14 @@
             "name": "Home",
             "request": "launch",
             "type": "pwa-msedge",
-            "url": "https://localhost/home/",
+            "url": "http://localhost/home/?disableCache=true",
+            "webRoot": "${workspaceFolder}/public"
+        },
+        {
+            "name": "Basket",
+            "request": "launch",
+            "type": "pwa-msedge",
+            "url": "http://localhost/basket/?disableCache=true",
             "webRoot": "${workspaceFolder}/public"
         },
         {

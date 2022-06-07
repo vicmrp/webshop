@@ -162,19 +162,25 @@ class Session_Service
     public function update_order(Session_Order_Update_Requests $session_order_update_requests) : Session_Response {
 
 
+
+
         $items = [];
         $amount = 0;
-        foreach ($session_order_update_requests->get() as $item) {
-            $product = $this->_product_repository->get_by_pk($item->product_pk);
+        foreach ($session_order_update_requests->get() as $session_order_update_request) {
 
-            if ($product->quantity < $item->quantity)
+            $product = $this->_product_repository->get_by_pk($session_order_update_request->product_pk);
+
+            if ($product->quantity < $session_order_update_request->quantity)
                 throw new \Exception("You are trying too add more products than is in stock", 1);
+
+            if (1 > $session_order_update_request->quantity)
+                continue;
 
             $item = new Item(
                 $product_pk_fk = $product->product_pk,
                 $name = $product->name,
                 $price = $product->price,
-                $quantity = $item->quantity
+                $quantity = $session_order_update_request->quantity
             );
             $amount += $product->price * $item->quantity;
             array_push($items, $item);
@@ -182,7 +188,7 @@ class Session_Service
 
 
 
-        $this->_session_response->session->order->set_order_items($items);
+        $this->_session_response->session->order->set_items($items);
         $this->_session_response->session->order->status->payment->amount = $amount;
 
         $this->_session_response->session->order->status->payment->details_satisfied_for_payment = $this->_order_details_is_satisfied();

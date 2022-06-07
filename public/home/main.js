@@ -1,21 +1,15 @@
-import {global} from '../global/js/global.js'
+import {defaultJavaScript} from '../global/js/default-javascript.js'; defaultJavaScript.main()
 
-// global.sessionService.destroySession().then(r => {
-//   console.log(r);
-// })
+const novelBuyBtn = document.getElementById('novel-buy-btn');
+const careerBuyBtn = document.getElementById('career-buy-btn');
 
-(function main(params) {
-  console.log("HEllo mfrom main");
-  global.header.header()
-})()
 
-// const main = {
-//   elementClasses: {
-//     buyButton: document.getElementById("home-column-2-book-buybox-inner-container-buy-btn")
-//   }
-// }
+novelBuyBtn.addEventListener('click', () => {
+    console.log('clicked novel buy btn');
+    defaultJavaScript.elements.header.basketBtnText.innerHTML = '1';
+});
 
-// (document.getElementsByClassName("home-column-2-book-buybox-inner-container-buy-btn"))
-// .addEventListener("click", () => {
-//   console.log("Fisk");
-// })
+
+careerBuyBtn.addEventListener('click', () => {
+    console.log('clicked career buy btn');
+});
