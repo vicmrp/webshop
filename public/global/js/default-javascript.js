@@ -1,6 +1,3 @@
-import Header from './classes/header.js'
-import SessionService from './services/session-service.js'
-
 export const defaultJavaScript = {
 
     main: function () {
@@ -22,6 +19,11 @@ export const defaultJavaScript = {
             console.log("Clicked basket");
             location.href = `${location.protocol}//${location.hostname}/basket`
         });
+    },
+
+    apiData: {
+        session: null,
+        products: null
     },
 
     elements: {

@@ -1,3 +1,13 @@
+img {
+    width: 75px;
+    height: auto;
+}
+
+h1 {
+    white-space: nowrap;
+
+}
+
 main {
 	margin: 0;
 	padding: 0;
