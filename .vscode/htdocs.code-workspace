@@ -35,6 +35,7 @@
         },
         "editor.hover.enabled": true,
         "editor.hover.delay": 300,
-        "intelephense.diagnostics.undefinedMethods": false
+        "intelephense.diagnostics.undefinedMethods": false,
+        "liveServer.settings.multiRootWorkspaceName": "webshop-xampp-privat.vezit.net"
     }
 }

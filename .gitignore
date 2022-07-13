@@ -6,3 +6,4 @@ temp_database/session/*.json
 public/old/*
 
 .phpunit.result.cache
+node_modules

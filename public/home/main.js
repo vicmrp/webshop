@@ -1,53 +1,52 @@
-import { defaultJavaScript } from '../global/js/default-javascript.js'; defaultJavaScript.main()
+import { defaultJavaScript } from '../global/js/default-javascript.js';
+import SessionService from '../global/js/services/session-service.js';
+
+defaultJavaScript.runDefaultPageScript()
 
 const novelBuyBtn = document.getElementById('novel-buy-btn');
 const careerBuyBtn = document.getElementById('career-buy-btn');
 
 
 
+novelBuyBtn.addEventListener('click', async () => {
 
-
-
-
-
-
-
-
-
-novelBuyBtn.addEventListener('click', () => {
     console.log('clicked novel buy btn');
-    defaultJavaScript.elements.header.basketBtnText.innerHTML = 'Indkøbskurv(1)';
+
+    const PRODUCT_PK_OF_NOVEL = 3
+
+    const updateOrder = JSON.parse(sessionStorage.getItem('update_order')).map(orderItem => {
+        if (orderItem.product_pk === PRODUCT_PK_OF_NOVEL) {
+            orderItem.quantity += 1
+        }
+
+        return orderItem
+    })
+
+    sessionStorage.setItem('update_order', JSON.stringify(updateOrder))
+
+    await SessionService.updateOrder(updateOrder)
+
+    defaultJavaScript.updatePage()
+
 });
 
 
-careerBuyBtn.addEventListener('click', () => {
+careerBuyBtn.addEventListener('click', async () => {
     console.log('clicked career buy btn');
-    defaultJavaScript.elements.header.basketBtnText.innerHTML = 'Indkøbskurv(1)';
+
+    const PRODUCT_PK_OF_CAREER = 4
+
+    const updateOrder = JSON.parse(sessionStorage.getItem('update_order')).map(orderItem => {
+        if (orderItem.product_pk === PRODUCT_PK_OF_CAREER) {
+            orderItem.quantity += 1
+        }
+
+        return orderItem}
+    )
+
+    sessionStorage.setItem('update_order', JSON.stringify(updateOrder))
+
+    await SessionService.updateOrder(updateOrder)
+
+    defaultJavaScript.updatePage()
 });
-
-
-async function getProducts() {
-
-    const url = `${location.protocol}//${location.hostname}/api/product/`
-    const body = null
-    const options = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: body
-    }
-
-
-    const serverResponse = await callServerByFetchReturnObject(url, options)
-    return serverResponse
-}
-
-
-async function callServerByFetchReturnObject(url, options = null) {
-    const fetchResponse = await fetch(url, options)
-    const response = await fetchResponse.text();
-    return JSON.parse(response);
-  }
-
-console.log(getProducts());

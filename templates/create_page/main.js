@@ -1,3 +1,3 @@
-import {defaultJavaScript} from '../global/js/default-javascript.js'
+import {defaultJavaScript} from '../global/js/default-javascript.js'; defaultJavaScript.runDefaultPageScript()
 
-defaultJavaScript.main()
+

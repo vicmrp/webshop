@@ -1,5 +1,5 @@
 /* Et skal kun bruge en - altså et id må kun bruges til et element */
-/* som udgangspunkt bruger man class'er til at style med og id til at scriptet med. */ 
+/* som udgangspunkt bruger man class'er til at style med og id til at scriptet med. */
 
 
 
@@ -15,7 +15,7 @@
     height: 100%;
     display: block;
     margin: 0 auto;
-} 
+}
 
 .header-logo-container {
     height: 100%;
@@ -58,7 +58,7 @@
 
 .header-navigation a:last-child{
     padding-right: 0px;;
-} 
+}
 
 .header-navigation a li{
     display: table-cell;

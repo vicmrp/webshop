@@ -8,14 +8,14 @@
             "name": "Home",
             "request": "launch",
             "type": "pwa-msedge",
-            "url": "http://localhost/home/?disableCache=true",
+            "url": "http://webshop-xampp-privat.vezit.net/home/?disableCache=true",
             "webRoot": "${workspaceFolder}/public"
         },
         {
             "name": "Basket",
             "request": "launch",
             "type": "pwa-msedge",
-            "url": "http://localhost/basket/?disableCache=true",
+            "url": "http://webshop-xampp-privat.vezit.net/basket/?disableCache=true",
             "webRoot": "${workspaceFolder}/public"
         },
         {
