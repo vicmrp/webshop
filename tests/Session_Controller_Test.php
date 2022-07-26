@@ -10,6 +10,7 @@ class Session_Controller_Test extends TestCase
 {
     protected function setUp() : void
     {
+        $this->session_controller = Session_Controller::get_instance('GET');
     }
 
     protected function tearDown(): void
@@ -19,11 +20,8 @@ class Session_Controller_Test extends TestCase
     /** @test */
     public function get_json_response__get_session() {
 
-        $session_controller = new Session_Controller(
-            'GET'
-        );
 
-        $json = $session_controller->get_json_response();
+        $json = $this->session_controller->get_json_response();
         $session = json_decode($json);
 
         $this->assertTrue(isset($session));
@@ -36,14 +34,14 @@ class Session_Controller_Test extends TestCase
 
         $body = file_get_contents(__DIR__ . '/json/Session_Controller_Test_Update_Body.json');
 
-        $session_controller = new Session_Controller(
+        Session_Controller::destroy_instance();
+        $this->session_controller = Session_Controller::get_instance(
             'PUT',
             ['update' => 'customer'],
-            $body,
-            null
+            $body
         );
 
-        $json = $session_controller->get_json_response();
+        $json = $this->session_controller->get_json_response();
         $updated_session = json_decode($json);
         $fullname = $updated_session->session->customer->fullname;
 
@@ -90,7 +88,8 @@ class Session_Controller_Test extends TestCase
         ]';
 
 
-        $session_controller = new Session_Controller(
+        Session_Controller::destroy_instance();
+        $this->session_controller = Session_Controller::get_instance(
             'PUT',
             ['update' => 'order'],
             $body
@@ -98,7 +97,7 @@ class Session_Controller_Test extends TestCase
 
 
 
-        $json_response = $session_controller->get_json_response();
+        $json_response = $this->session_controller->get_json_response();
 
         $object = json_decode($json_response);
 

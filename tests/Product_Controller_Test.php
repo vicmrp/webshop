@@ -15,9 +15,17 @@ class Product_Controller_Test extends TestCase
 {
     protected function setUp() : void
     {
-        $this->product_controller = new Product_Controller(
+        $this->product_controller = Product_Controller::get_instance(
             'GET',
-            Product_Service::get_instance((new Product_Repository(new Super_Repository(new Mysqli('localhost', 'test', 'Passw0rd', 'test_user_v6_vezit_webshop')))))
+            null,
+            null,
+            Product_Service::get_instance(
+                Product_Repository::get_instance(
+                    Super_Repository::get_instance(
+                        Mysqli::get_instance('localhost', 'test', 'Passw0rd', 'test_user_v6_vezit_webshop')
+                    )
+                )
+            )
         );
     }
 
@@ -30,9 +38,6 @@ class Product_Controller_Test extends TestCase
     /** @test */
     public function get_json_response__return_array_of_products() {
 
-
-
-        Product_Service::delete_instance();
 
         // Setup
         $pk_3 = 3;
@@ -55,16 +60,14 @@ class Product_Controller_Test extends TestCase
         $mock_product_service = $this->createMock(Product_Service::class);
         $mock_product_service->method('get_all')->willReturn($mock_dto_array);
 
-        $product_controller = new Product_Controller('GET', $mock_product_service);
+        Product_Controller::destroy_instance();
+        $this->product_controller = Product_Controller::get_instance('GET', null, null, $mock_product_service);
 
-
-        $json_of_products = $product_controller->get_json_response();
+        $json_of_products = $this->product_controller->get_json_response();
 
         $products = json_decode($json_of_products, false);
 
         $this->assertEquals("Harry Potter", $products[0]->name);
         $this->assertEquals("The Lord of the Rings", $products[1]->name);
     }
-
-
 }

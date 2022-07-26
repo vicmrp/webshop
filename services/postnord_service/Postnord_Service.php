@@ -12,23 +12,20 @@ require __DIR__.'/../../global-requirements.php';
 
 class Postnord_Service
 {
+    private static $_times_instantiated = 0;
     private static $_instance = null;
-    private Postnord_API $_postnord_api;
-    private Dawa_API $_dawa_api;
 
-    private function __construct(Postnord_API $postnord_API, Dawa_API $dawa_api) {
-        $this->_postnord_api = $postnord_API;
-        $this->_dawa_api = $dawa_api;
-    }
 
-    public static function get_instance(Postnord_API $postnord_api = new Postnord_API, Dawa_API $dawa_api = new Dawa_API)
+
+
+    public static function get_instance(Postnord_API $postnord_api = null, Dawa_API $dawa_api = null)
     {
+        return null === self::$_instance ? new Postnord_Service(
 
-        if (self::$_instance == null) {
-            self::$_instance = new Postnord_Service($postnord_api, $dawa_api);
-        }
+            null === $postnord_api  ? Postnord_API::get_instance()  : $postnord_api,
+            null === $dawa_api      ? Dawa_API::get_instance()      : $dawa_api
 
-        return self::$_instance;
+        ) : self::$_instance;
     }
 
     public static function delete_instance() {
@@ -36,7 +33,12 @@ class Postnord_Service
     }
 
 
-
+    private function __construct(
+        private Postnord_API $_postnord_api,
+        private Dawa_API $_dawa_api
+        ) {
+            self::$_times_instantiated++;
+        }
 
 
 

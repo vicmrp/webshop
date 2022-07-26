@@ -15,7 +15,15 @@ class Product_Service_Test extends TestCase
 {
     protected function setUp() : void
     {
-        $this->product_service = Product_Service::get_instance(new Product_Repository(new Super_Repository(new Mysqli('localhost', 'test', 'Passw0rd', 'test_user_v6_vezit_webshop'))));
+        $this->product_service = Product_Service::get_instance(
+            Product_Repository::get_instance(
+                Super_Repository::get_instance(
+                    Mysqli::get_instance(
+                        'localhost', 'test', 'Passw0rd', 'test_user_v6_vezit_webshop'
+                    )
+                )
+            )
+        );
     }
 
     protected function tearDown(): void

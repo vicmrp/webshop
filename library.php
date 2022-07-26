@@ -7,7 +7,7 @@
 
 // globale funtioner skal have underscore foran
 
-function g_generate_random_string($length = 10)
+function g_generate_random_string(int $length = 10, bool $lowercase = true)
 {
     // $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $characters = '23456789abcdefghkmnpqrstuvwxyzABCDEFGHJKMNOPQRSTUVWXYZ'; // uden ijlo01IL
@@ -16,7 +16,9 @@ function g_generate_random_string($length = 10)
     for ($i = 0; $i < $length; $i++) {
         $randomString .= $characters[rand(0, $charactersLength - 1)];
     }
-    return $randomString;
+
+    if ($lowercase) return strtolower($randomString);
+    else            return $randomString;
 }
 
 

@@ -7,6 +7,18 @@ use vezit\models\Sanitized_Address;
 
 class Postnord_API
 {
+    private static $_times_instantiated = 0;
+    private static $_instance = null;
+
+    public static function get_instance()
+    {
+        return null === self::$_instance ? new Postnord_API : self::$_instance;
+    }
+
+    private function __construct()
+    {self::$_times_instantiated++;}
+
+
     // --- Hent service points --- //
     // Documentation
     // https://guides.developer.postnord.com/
@@ -41,7 +53,6 @@ class Postnord_API
         $postnord_json_response = curl_exec($curl);
 
         curl_close($curl);
-
 
         $postnord_response = json_decode($postnord_json_response);
 

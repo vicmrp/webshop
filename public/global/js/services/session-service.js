@@ -38,4 +38,17 @@ export default class SessionService {
         return call.session
     }
 
+
+
+    static async updateShipment(shipmentID) {
+        const url = `${location.protocol}//${location.hostname}/api/session/?update=shipment&` + new URLSearchParams({'service-point-id': shipmentID}).toString()
+        const options = {
+            method: 'PUT'
+        }
+
+        const call = await APIService.callServerByFetchReturnObject(url, options)
+
+        return call.session
+    }
+
 }

@@ -7,23 +7,26 @@ require __DIR__ . '/../../global-requirements.php';
 
 class Product_Service
 {
+    private static $_times_instantiated = 0;
     private static $_instance = null;
-    private Product_Repository $_product_repository;
 
-    private function __construct(Product_Repository $product_repository)
+
+    public static function get_instance(Product_Repository $product_repository = null)
     {
-        $this->_product_repository = $product_repository;
+
+        return (self::$_instance === null) ? new Product_Service(
+
+            (null === $product_repository) ? Product_Repository::get_instance() : $product_repository
+
+        ) : self::$_instance;
+
     }
 
-    public static function get_instance(Product_Repository $product_repository = new Product_Repository)
+
+
+    private function __construct(private Product_Repository $_product_repository)
     {
-
-      if (self::$_instance == null)
-      {
-        self::$_instance = new Product_Service($product_repository);
-      }
-
-      return self::$_instance;
+        self::$_times_instantiated++;
     }
 
 

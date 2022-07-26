@@ -19,8 +19,7 @@ class Postnord_Service_Test  extends TestCase
     /** @test */
     public function get_service_points__returns_array() {
         $service_points = $this->postnord_service->get_service_points("vinkelvej", "2800");
-        // $this->assertInstanceOf(stdClass::class, $service_points);
-        $this->assertTrue(true);
+        $this->assertEquals('5517', $service_points[0]->service_point_id);
     }
 
 

@@ -12,10 +12,25 @@ use vezit\repositories\super_repository\Super_Repository;
 
 class User_Repository
 {
+    private static $_times_instantiated = 0;
+    private static $_instance = null;
 
-    public function __construct(
-        private Super_Repository $_super_repository = new Super_Repository
-        ) {}
+
+    public static function get_instance(Super_Repository $super_repository = null)
+    {
+        return (null === self::$_instance) ? new User_Repository(
+
+            (null === $super_repository) ? Super_Repository::get_instance() : $super_repository
+
+        ) : self::$_instance;
+    }
+
+    private function __construct(
+        private Super_Repository $_super_repository
+        ) {
+            self::$_times_instantiated++;
+        }
+
 
     public function get_all(): Users {
         return $this->_get_all_from__user_table();

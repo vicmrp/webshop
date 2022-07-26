@@ -15,10 +15,28 @@ require __DIR__ . '/../../global-requirements.php';
 class Session_Repository
 {
 
-    public function __construct(private Super_Repository $_super_repository = new Super_Repository())
-    {}
+    private static $_times_instantiated = 0;
+    private static $_instance = null;
 
-    public function get_all() : Sessions
+
+
+
+    public static function get_instance(Super_Repository $super_repository = null)
+    {
+        return (null === self::$_instance) ? new Session_Repository(
+
+            (null === $super_repository) ? Super_Repository::get_instance() : $super_repository
+
+        ) : self::$_instance;
+    }
+
+
+    private function __construct(private Super_Repository $_super_repository)
+    {
+        self::$_times_instantiated++;
+    }
+
+    public function get_all(): Sessions
     {
 
         $sessions = $this->_get_all_from__session_table();
@@ -35,7 +53,8 @@ class Session_Repository
     }
 
 
-    public function get_by_pk(int $pk) : Session {
+    public function get_by_pk(int $pk): Session
+    {
 
         $session =  $this->get_one_entity_from__session_table($pk);
 
@@ -44,11 +63,10 @@ class Session_Repository
         $session->set_session_order_items($session_order_items);
 
         return $session;
-
     }
 
 
-    public function insert(Session $session) : bool
+    public function insert(Session $session): bool
     {
 
         if (!($this->_insert_into__session_table($session))) {
@@ -56,13 +74,15 @@ class Session_Repository
         }
 
         $sessions = $this->get_all()->get();
-        usort($sessions, function($a, $b) { return $a->session_pk - $b->session_pk; });
+        usort($sessions, function ($a, $b) {
+            return $a->session_pk - $b->session_pk;
+        });
         $fresh_session = $sessions[array_key_last($sessions)];
 
         $session_pk_fk = $fresh_session->session_pk;
         $session_order_items = $session->get_session_order_items();
 
-        foreach($session_order_items as $session_order_item) {
+        foreach ($session_order_items as $session_order_item) {
             $session_order_item->session_pk_fk = $session_pk_fk;
             if (!($this->_insert_into__session_order_item_table($session_order_item))) {
                 return false;
@@ -71,7 +91,7 @@ class Session_Repository
         return true;
     }
 
-    public function update(int $pk, Session $session) : bool
+    public function update(int $pk, Session $session): bool
     {
 
         if (!($this->_update__session_table($pk, $session))) {
@@ -79,7 +99,7 @@ class Session_Repository
         }
 
         $session_order_items = $session->get_session_order_items();
-        foreach($session_order_items as $session_order_item) {
+        foreach ($session_order_items as $session_order_item) {
             $fk = $session_order_item->session_pk_fk;
             if (!($this->_update__session_order_item_table($fk, $session_order_item))) {
                 return false;
@@ -88,7 +108,7 @@ class Session_Repository
         return true;
     }
 
-    public function delete(int $order_id) : bool
+    public function delete(int $order_id): bool
     {
 
         if (!($this->_delete_from__session_table($order_id))) {
@@ -118,12 +138,12 @@ class Session_Repository
         return $sessions;
     }
 
-    private function get_one_entity_from__session_table(int $pk) : Session
+    private function get_one_entity_from__session_table(int $pk): Session
     {
 
         // get seesion entity
         $entities = $this->_super_repository
-            ->get_all_by_where_clause($table='session', $where_clause='session_pk', $identifier=$pk);
+            ->get_all_by_where_clause($table = 'session', $where_clause = 'session_pk', $identifier = $pk);
 
         if (null != $entities[0])
             $entity = $entities[0];
@@ -137,7 +157,7 @@ class Session_Repository
         $array = [];
 
 
-        $entities = $this->_super_repository->get_all_by_where_clause($table="session_order_item", $where_clause="session_pk_fk", $identifier=$fk);
+        $entities = $this->_super_repository->get_all_by_where_clause($table = "session_order_item", $where_clause = "session_pk_fk", $identifier = $fk);
 
 
         foreach ($entities as $entity) {
@@ -146,7 +166,6 @@ class Session_Repository
 
         $session_order_items->set($array);
         return  $session_order_items;
-
     }
 
 
@@ -157,15 +176,13 @@ class Session_Repository
         $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
         $stmt->bind_param("i", $order_id);
 
-        if(!($stmt->execute()))
-        {
+        if (!($stmt->execute())) {
             throw new \Exception("Could not execute statement: " . $stmt->error);
         }
 
         $result = $stmt->get_result();
 
-        if($result->num_rows == 0)
-        {
+        if ($result->num_rows == 0) {
             throw new \Exception("Could not find session with order_id: " . $order_id);
         }
 
@@ -196,22 +213,24 @@ class Session_Repository
     {
         $fields_to_ignore = ['session_pk', 'order_id', 'datetime_created', 'datetime_last_modified'];
         return $this->_super_repository
-        ->update_entity(
-            $object_be_updated = $session,
-            $table = 'session',
-            $where_clause = 'session_pk',
-            $identifier=$pk,
-            $fields_to_ignore);
+            ->update_entity(
+                $object_be_updated = $session,
+                $table = 'session',
+                $where_clause = 'session_pk',
+                $identifier = $pk,
+                $fields_to_ignore
+            );
     }
 
-    private function _update__session_order_item_table(int $fk, Session_Order_Item $session_order_item) : bool
+    private function _update__session_order_item_table(int $fk, Session_Order_Item $session_order_item): bool
     {
         return $this->_super_repository
-        ->update_entity(
-            $object_be_updated = $session_order_item,
-            $table = 'session_order_item',
-            $where_clause = 'session_pk_fk',
-            $identifier=$fk);
+            ->update_entity(
+                $object_be_updated = $session_order_item,
+                $table = 'session_order_item',
+                $where_clause = 'session_pk_fk',
+                $identifier = $fk
+            );
     }
 
     private function _delete_session_table(int $order_id): bool
@@ -219,8 +238,7 @@ class Session_Repository
         $sql = "DELETE FROM `session` WHERE `order_id` = ?";
         $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
         $stmt->bind_param("i", $order_id);
-        if(!($stmt->execute()))
-        {
+        if (!($stmt->execute())) {
             throw new \Exception("Could not execute statement: " . $stmt->error);
             $stmt->close();
             return false;
@@ -236,8 +254,7 @@ class Session_Repository
         $sql = "DELETE FROM `session_order_item` WHERE `order_id` = ?";
         $stmt = $this->_mysqli->get_db_conn()->prepare($sql);
         $stmt->bind_param("i", $order_id);
-        if(!($stmt->execute()))
-        {
+        if (!($stmt->execute())) {
             throw new \Exception("Could not execute statement: " . $stmt->error);
             $stmt->close();
             return false;
@@ -248,7 +265,7 @@ class Session_Repository
     }
 
 
-    private function _session_order_item(array $entity) : Session_Order_Item
+    private function _session_order_item(array $entity): Session_Order_Item
     {
 
         return new Session_Order_Item(
@@ -265,7 +282,8 @@ class Session_Repository
 
 
 
-    private function _construct_session_order_item_dto(array $entity) : Session_Order_Item {
+    private function _construct_session_order_item_dto(array $entity): Session_Order_Item
+    {
         return new Session_Order_Item(
             $entity['session_order_item_pk'],
             $entity['session_pk_fk'],
@@ -311,6 +329,4 @@ class Session_Repository
 
         );
     }
-
-
 }

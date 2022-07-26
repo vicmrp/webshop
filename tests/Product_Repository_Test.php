@@ -1,19 +1,30 @@
 <?php
+
 use \PHPUnit\Framework\TestCase;
 use vezit\entities\Product;
 use vezit\entities\Products;
 use vezit\repositories\product_repository\Product_Repository;
 use vezit\classes\mysqli\Mysqli;
 use vezit\repositories\super_repository\Super_Repository;
+
 require __DIR__ . '/../global-requirements.php';
 
 
 
 class Product_Repository_Test extends TestCase
 {
-    protected function setUp() : void
+    protected function setUp(): void
     {
-        $this->product_repository = new Product_Repository(new Super_Repository(new Mysqli('localhost', 'test', 'Passw0rd', 'test_user_v6_vezit_webshop')));
+        $this->product_repository = Product_Repository::get_instance(
+            Super_Repository::get_instance(
+                Mysqli::get_instance(
+                    'localhost',
+                    'test',
+                    'Passw0rd',
+                    'test_user_v6_vezit_webshop'
+                )
+            )
+        );
     }
 
     /** @test */
@@ -31,7 +42,6 @@ class Product_Repository_Test extends TestCase
 
 
         $this->assertInstanceOf(Products::class, $products);
-
     }
 
 
@@ -56,7 +66,8 @@ class Product_Repository_Test extends TestCase
 
 
     /** @test */
-    public function update__should_confirm_that_product_is_update() {
+    public function update__should_confirm_that_product_is_update()
+    {
         // Setup
         $products = $this->product_repository->get_all();
 

@@ -6,6 +6,19 @@ require __DIR__.'/../../global-requirements.php';
 
 class Dawa_API {
 
+    private static $_times_instantiated = 0;
+    private static $_instance = null;
+
+
+    public static function get_instance() {
+        return null === self::$_instance ? new Dawa_API : self::$_instance;
+    }
+
+
+    private function __construct()
+    {self::$_times_instantiated++;}
+
+
     // Renser en addresse og retunere et json objekt med en ren addresse
     //
     // INPUT

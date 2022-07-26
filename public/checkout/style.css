@@ -1,0 +1,8 @@
+.btn-payment {
+    background-color: orange;
+}
+
+.btn-payment:hover {
+    background-color: #66ff00;
+    cursor: pointer;
+}

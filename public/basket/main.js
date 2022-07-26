@@ -25,15 +25,13 @@ const checkout = document.getElementById('checkout');
 
 let careerCountValue = 0;
 let careerPriceValue = 0;
-// let totalPrice = 0;
 
 const totalPriceDisplay = document.getElementById('total-price');
-
-
 
 const getSession = () => {
     SessionService.getSession().then(session => {
         console.log(session);
+
 
         session.order.items.forEach(item => {
             if (item.product_pk_fk === 3) {
@@ -48,7 +46,6 @@ const getSession = () => {
         displayOnEvent()
     });
 }
-
 
 removeAllItems.addEventListener('click', () => {
     // novelItem.style.display = 'none';
@@ -102,23 +99,11 @@ novelMinusBtn.addEventListener('click', async () => {
     getSession();
 });
 
-
-
-
-
-
 novelRemoveBtn.addEventListener('click', () => {
     // novelItem.style.display = 'none';
     // novelCountValue = 0;
     // displayOnEvent();
 });
-
-
-
-
-
-
-
 
 careerPlusBtn.addEventListener('click', async () => {
     const PRODUCT_PK_OF_CAREER = 4
@@ -140,13 +125,6 @@ careerPlusBtn.addEventListener('click', async () => {
     defaultJavaScript.updatePage()
     getSession();
 });
-
-
-
-
-
-
-
 
 careerMinusBtn.addEventListener('click', async () => {
     const PRODUCT_PK_OF_CAREER = 4
@@ -175,15 +153,16 @@ careerRemoveBtn.addEventListener('click', () => {
     displayOnEvent();
 });
 
-
-
 checkout.addEventListener('click', async () => {
     const session = await SessionService.getSession()
-    if (0 >= session.order.items.length) alert("Du har inte lagt till något i din kundvagn.")
+    if (0 >= session.order.items.length) {
+        alert("Du har inte lagt till något i din kundvagn.")
+        return
+    }
+
     location.href = `${location.protocol}//${location.hostname}/customer`
 
 })
-
 
 function displayOnEvent(session) {
     novelCount.innerHTML = novelCountValue;
@@ -196,7 +175,6 @@ function displayOnEvent(session) {
 function displayPrice(integerPrice) {
     return `${integerPrice.toString().substring(0, integerPrice.toString().length - 2)},${integerPrice.toString().slice(-2)} kr.`;
 }
-
 
 (function main() {
     defaultJavaScript.runDefaultPageScript()

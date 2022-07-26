@@ -23,7 +23,13 @@ class Session_Repository_Test extends TestCase
 {
     protected function setUp() : void
     {
-        $this->session_repository = new Session_Repository(new Super_Repository(new Mysqli('localhost', 'test', 'Passw0rd', 'test_user_v6_vezit_webshop')));
+        $this->session_repository = Session_Repository::get_instance(
+            Super_Repository::get_instance(
+                Mysqli::get_instance(
+                    'localhost', 'test', 'Passw0rd', 'test_user_v6_vezit_webshop'
+                )
+            )
+        );
     }
 
     // ------- Read -------

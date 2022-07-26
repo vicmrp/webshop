@@ -7,15 +7,40 @@ use vezit\services\postnord_service\Postnord_Service;
 
 class Postnord_Controller
 {
-    public function __construct(
-        private ?string $_request_method = null,
-        private ?array  $_url_parameters = null,
-        private ?string $_body = null,
-        private ?Postnord_Service $_postnord_service = null
+
+    private static $_times_instantiated = 0;
+    private static $_instance = null;
+
+
+    public static function get_instance(
+        string $request_method,
+        ?array  $url_parameters = null,
+        ?string $body = null,
+        Postnord_Service $postnord_service = null
     )
     {
-        if (null == $_postnord_service)
-            $this->_postnord_service = Postnord_Service::get_instance();
+        return (null === self::$_instance) ? new Postnord_Controller(
+            $request_method,
+            $url_parameters,
+            $body,
+            null === $postnord_service ? Postnord_Service::get_instance() : $postnord_service
+        ) : self::$_instance;
+    }
+
+    public static function destroy_instance() {
+        self::$_instance = null;
+    }
+
+
+    private function __construct(
+        private string $_request_method,
+        private ?array  $_url_parameters,
+        private ?string $_body,
+        private Postnord_Service $_postnord_service
+    )
+    {
+        self::$_instance = $this;
+        self::$_times_instantiated++;
     }
 
 

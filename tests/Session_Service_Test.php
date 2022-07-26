@@ -17,7 +17,6 @@ class Session_Service_Test extends TestCase {
 
     protected function tearDown() : void
     {
-        $this->session_service = null;
     }
 
 
@@ -78,11 +77,8 @@ class Session_Service_Test extends TestCase {
 
         $session_response = $this->session_service->update_order($session_order_update_requests);
 
-        $this->assertEquals(14, $session_response->session->order->get_order_items()[0]->quantity);
-
+        $this->assertEquals(14, $session_response->session->order->get_items()[0]->quantity);
 
     }
 
-
 }
-

@@ -13,7 +13,13 @@ class User_Repository_Test extends TestCase
 {
     protected function setUp() : void
     {
-        $this->user_repository = new User_Repository(new Super_Repository(new Mysqli('localhost', 'test', 'Passw0rd', 'test_user_v6_vezit_webshop')));
+        $this->user_repository = User_Repository::get_instance(
+            Super_Repository::get_instance(
+                Mysqli::get_instance(
+                    'localhost', 'test', 'Passw0rd', 'test_user_v6_vezit_webshop'
+                )
+            )
+        );
     }
 
     protected function tearDown(): void
@@ -25,7 +31,6 @@ class User_Repository_Test extends TestCase
     public function get_all__shall_return_array_of_user_entities()
     {
         $users = $this->user_repository->get_all();
-
 
         // Assert
         foreach ($users->get() as $user) {
@@ -82,7 +87,7 @@ class User_Repository_Test extends TestCase
         $mock_super_repository->method('get_all')
             ->willReturn($associative_array);
 
-        $user_repository = new User_Repository($mock_super_repository);
+        $user_repository = User_Repository::get_instance($mock_super_repository);
 
 
         $users = $user_repository->get_all();

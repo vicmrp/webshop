@@ -1,4 +1,6 @@
-<?php namespace vezit\services\session_service;
+<?php
+
+namespace vezit\services\session_service;
 
 use Session_Order_Update_Request;
 use vezit\api\dawa_api\Dawa_API;
@@ -8,36 +10,58 @@ use vezit\dto\Session_Response;
 use vezit\dto\Session_Delete_Response;
 use vezit\dto\Session_Order_Update_Requests;
 use vezit\dto\Session_Update_Customer_Request;
+use vezit\entities\Product;
 use vezit\repositories\session_repository\Session_Repository;
 use vezit\entities\session\Session_Entity;
 use vezit\models\session\order\item\Item;
 use vezit\repositories\product_repository\Product_Repository;
 use vezit\services\postnord_service\Postnord_Service;
 use vezit\models\session\shipment\Shipment;
+use vezit\services\quickpay_service\Quickpay_Service;
 
 require __DIR__ . '/../../global-requirements.php';
 
 class Session_Service
 {
+    private static $_times_instantiated = 0;
     private static $_instance = null;
-    private Session_Repository  $_session_repository;
-    private Product_Repository  $_product_repository;
-    private Postnord_service    $_postnord_service;
-    private Session_Response    $_session_response;
-    private Dawa_API            $_dawa_api;
 
 
 
 
 
-
-
-    private function __construct(Session_Repository $session_Repository, Product_Repository $product_repository, Dawa_API $dawa_api, Postnord_Service $postnord_service)
+    public static function get_instance(
+        Session_Repository  $session_repository    = null,
+        Product_Repository  $product_repository    = null,
+        Dawa_API            $dawa_api              = null,
+        Postnord_Service    $postnord_service      = null,
+        Quickpay_Service    $quickpay_service      = null
+    ) : Session_Service
     {
-        $this->_session_Repository  = $session_Repository;
-        $this->_product_repository  = $product_repository;
-        $this->_dawa_api            = $dawa_api;
-        $this->_postnord_service    = $postnord_service;
+        return (null === self::$_instance) ? new Session_Service(
+
+            (null === $session_repository)  ? Session_Repository::get_instance()     : $session_repository,
+            (null === $product_repository)  ? Product_Repository::get_instance()     : $product_repository,
+            (null === $dawa_api)            ? Dawa_API::get_instance()               : $dawa_api,
+            (null === $postnord_service)    ? Postnord_Service::get_instance()       : $postnord_service,
+            (null === $quickpay_service)    ? Quickpay_Service::get_instance()       : $quickpay_service
+
+        ) : self::$_instance;
+    }
+
+    public static function destroy_instance() : void {
+        self::$_instance = null;
+    }
+
+    private function __construct(
+        private Session_Repository  $_session_Repository,
+        private Product_Repository  $_product_repository,
+        private Dawa_API            $_dawa_api,
+        private Postnord_Service    $_postnord_service,
+        private Quickpay_Service    $_quickpay_Service
+    ) {
+        self::$_instance = $this;
+        self::$_times_instantiated++;
         $this->get_session();
     }
 
@@ -50,26 +74,17 @@ class Session_Service
 
 
 
-    public static function get_instance(Session_Repository $session_repository   = new Session_Repository,
-                                        Product_Repository $product_repository   = new Product_Repository,
-                                        Dawa_API $dawa_api                       = new Dawa_API,
-                                        ?Postnord_Service $postnord_service      = null)
+
+
+
+
+
+
+
+
+
+    public function unset_session(): Session_Delete_Response
     {
-
-    if (null === $postnord_service) $postnord_service = Postnord_Service::get_instance();
-    if (null === self::$_instance) self::$_instance = new Session_Service($session_repository, $product_repository, $dawa_api, $postnord_service);
-
-      return self::$_instance;
-    }
-
-
-
-
-
-
-
-
-    public function unset_session() : Session_Delete_Response {
 
         $session_delete_response = new Session_Delete_Response;
         $session_delete_response->session_has_been_unset = false;
@@ -77,8 +92,7 @@ class Session_Service
 
         $session_response_isset = isset($_SESSION["session_response"]);
 
-        if ($session_response_isset)
-        {
+        if ($session_response_isset) {
             unset($_SESSION["session_response"]);
             $session_delete_response->session_has_been_unset = true;
             $session_delete_response->note = "It was active and now it has been destroyed.";
@@ -96,7 +110,8 @@ class Session_Service
 
 
 
-    private function serialize_session() : void {
+    private function serialize_session(): void
+    {
         $_SESSION["session_response"] = serialize($this->_session_response);
     }
 
@@ -105,11 +120,11 @@ class Session_Service
 
 
 
-    public function get_session(): Session_Response {
+    public function get_session(): Session_Response
+    {
 
 
-        if (!(isset($_SESSION["session_response"])))
-        {
+        if (!(isset($_SESSION["session_response"]))) {
             // Det her er første gang hjemmesiden kender til dig.
             $this->_session_response = new Session_Response;
             $this->_session_response->session = new Session;
@@ -129,13 +144,13 @@ class Session_Service
         // henter session hvis den eksistere ellers skabes der en ny.
         $this->_session_response = unserialize($_SESSION["session_response"]);
         return $this->_session_response;
-
     }
 
 
 
 
-    public function update_customer($customer) : Session_Response {
+    public function update_customer($customer): Session_Response
+    {
         $this->_session_response->session->customer->fullname                           = $customer->fullname;
         $this->_session_response->session->customer->address->street                    = $customer->address->street;
         $this->_session_response->session->customer->address->postal_code               = $customer->address->postal_code;
@@ -159,7 +174,8 @@ class Session_Service
 
 
 
-    public function update_order(Session_Order_Update_Requests $session_order_update_requests) : Session_Response {
+    public function update_order(Session_Order_Update_Requests $session_order_update_requests): Session_Response
+    {
 
 
 
@@ -198,11 +214,14 @@ class Session_Service
 
 
 
-    public function update_shipment(int $service_point_id) : Session_Response {
+    public function update_shipment(int $service_point_id): Session_Response
+    {
 
-        if($this->_customer_details_is_satisfied()) {
+        if ($this->_customer_details_is_satisfied()) {
             $postnord_service_point_response = $this->_postnord_service->get_by_id($service_point_id);
+
             $shipment = new Shipment();
+            $shipment->details_satisfied_for_payment = true; # :D
             $shipment->service_point_id         = $postnord_service_point_response->service_point_id;
             $shipment->name                     = $postnord_service_point_response->name;
             $shipment->address->street_name     = $postnord_service_point_response->street_name;
@@ -226,26 +245,29 @@ class Session_Service
 
 
 
-    private function _customer_details_is_satisfied() : bool {
+    private function _customer_details_is_satisfied(): bool
+    {
 
-        if (null === $this->_session_response->session->customer->fullname            ) return false;
-        if (null === $this->_session_response->session->customer->address->street     ) return false;
+        if (null === $this->_session_response->session->customer->fullname) return false;
+        if (null === $this->_session_response->session->customer->address->street) return false;
         if (null === $this->_session_response->session->customer->address->postal_code) return false;
-        if (null === $this->_session_response->session->customer->address->city       ) return false;
-        if (null === $this->_session_response->session->customer->contact->phone      ) return false;
-        if (null === $this->_session_response->session->customer->contact->email      ) return false;
+        if (null === $this->_session_response->session->customer->address->city) return false;
+        if (null === $this->_session_response->session->customer->contact->phone) return false;
+        if (null === $this->_session_response->session->customer->contact->email) return false;
 
         return true;
     }
 
-    private function _order_details_is_satisfied() : bool {
+    private function _order_details_is_satisfied(): bool
+    {
         if (null === $this->_session_response->session->order->status->payment->amount) return false;
         if (0 >= $this->_session_response->session->order->status->payment->amount) return false;
 
         return true;
     }
 
-    private function _shipment_details_is_satisfied() : bool {
+    private function _shipment_details_is_satisfied(): bool
+    {
         if (null === $this->_session_response->session->shipment->address->street_name)     return false;
         if (null === $this->_session_response->session->shipment->address->street_number)   return false;
         if (null === $this->_session_response->session->shipment->address->postal_code)     return false;

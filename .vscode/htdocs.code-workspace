@@ -13,6 +13,8 @@
         "editor.detectIndentation": false,
         "editor.insertSpaces": true,
         "files.trimTrailingWhitespace": true,
+        "intelephense.diagnostics.undefinedMethods": false,
+        "liveServer.settings.multiRootWorkspaceName": "webshop-xampp-privat.vezit.net",
         "[html]": {
             "editor.insertSpaces": true,
             "editor.tabSize": 2
@@ -32,10 +34,6 @@
         "[php]": {
             "editor.insertSpaces": true,
             "editor.tabSize": 4
-        },
-        "editor.hover.enabled": true,
-        "editor.hover.delay": 300,
-        "intelephense.diagnostics.undefinedMethods": false,
-        "liveServer.settings.multiRootWorkspaceName": "webshop-xampp-privat.vezit.net"
+        }
     }
 }

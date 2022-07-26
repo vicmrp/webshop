@@ -22,10 +22,12 @@ class Postnord_Controller_Test extends TestCase
 
     }
 
+
+
     /** @test */
     public function get_json_response__get_service_points() {
 
-        $postnord_controller = new Postnord_Controller(
+        $this->postnord_controller = Postnord_Controller::get_instance(
             'GET',
             [
                 "streetname"    => "%C3%B8resundshoj%203a", // øresundshoj 3a
@@ -35,14 +37,10 @@ class Postnord_Controller_Test extends TestCase
             null
         );
 
-        $json = $postnord_controller->get_json_response();
+        $json = $this->postnord_controller->get_json_response();
         $service_points = json_decode($json);
-
-
 
         $this->assertIsArray($service_points);
 
     }
-
-
 }

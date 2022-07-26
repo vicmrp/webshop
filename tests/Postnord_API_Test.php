@@ -9,16 +9,16 @@ require __DIR__ . '/../global-requirements.php';
 class Postnord_API_Test  extends TestCase
 {
     protected function setUp() : void {
-        $this->dawa_api = new Dawa_API;
-        $this->postnord_api = new Postnord_API;
+        // $this->dawa_api = new Dawa_API;
+        // $this->postnord_api = new Postnord_API;
     }
 
 
     /** @test */
     public function call_get_servicepoints() {
-        $sanitized_address = $this->dawa_api->call_get_sanitized_address('Vinkelvej 12d 3tv', '2800');
+        $sanitized_address = Dawa_API::get_instance()->call_get_sanitized_address('Vinkelvej 12d 3tv', '2800');
 
-        $service_points = $this->postnord_api->call_get_servicepoints($sanitized_address, 2);
+        $service_points = Postnord_API::get_instance()->call_get_servicepoints($sanitized_address, 2);
 
         $this->assertInstanceOf(stdClass::class, $service_points);
     }
@@ -28,7 +28,7 @@ class Postnord_API_Test  extends TestCase
     public function call_find_service_point_by_id() {
         $id = 106617; // "Nærboks Lyngby Lokal Station - Kræver Postnord App"
 
-        $service_point = $this->postnord_api->call_find_service_point_by_id($id);
+        $service_point = Postnord_API::get_instance()->call_find_service_point_by_id($id);
         $name = $service_point->servicePointInformationResponse->servicePoints[0]->name;
 
         $this->assertEquals("Nærboks Lyngby Lokal Station - Kræver Postnord App", $name);
