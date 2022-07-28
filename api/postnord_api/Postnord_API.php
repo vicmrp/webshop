@@ -3,7 +3,7 @@
 require __DIR__.'/../../global-requirements.php';
 
 use vezit\dto\Postnord_Service_Point_Response;
-use vezit\models\Sanitized_Address;
+use vezit\models\sanitized_address\Sanitized_Address;
 
 class Postnord_API
 {

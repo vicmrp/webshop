@@ -13,4 +13,9 @@ class Payment
         public  ?bool   $details_satisfied_for_payment      = null
     ) {}
 
+
+    public function __set($name, $value)
+    {
+        throw new \Exception('Cant set!' . $name . ', ' . $value);
+    }
 }

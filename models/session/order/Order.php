@@ -6,7 +6,7 @@ require __DIR__ . '/../../../global-requirements.php'; // __DIR__.g_from_top_fol
 
 class Order implements JsonSerializable
 {
-    private $items = array();
+    // private $items = array();
 
 
 
@@ -14,9 +14,9 @@ class Order implements JsonSerializable
 
 
     public function __construct(
-        public ?int $id = null,
-        array $items = [],
-        public Status $status = new Status,
+        public  ?int $id = null,
+        private array $items = [],
+        public  Status $status = new Status,
     )
     {
         if($this->_ensure_all_items_are_valid_before_applying($items))
@@ -52,5 +52,10 @@ class Order implements JsonSerializable
     {
         $vars = get_object_vars($this);
         return $vars;
+    }
+
+    public function __set($name, $value)
+    {
+        throw new \Exception('Cant set!' . $name . ', ' . $value);
     }
 }

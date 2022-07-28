@@ -9,4 +9,10 @@ class Address {
       public ?string $city          = null
   ) {}
 
+
+  public function __set($name, $value)
+  {
+      throw new \Exception('Cant set!' . $name . ', ' . $value);
+  }
+
 }

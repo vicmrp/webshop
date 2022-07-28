@@ -1,4 +1,6 @@
-<?php namespace vezit\dto;
+<?php
+
+namespace vezit\dto;
 
 class Product_Response
 {
@@ -7,7 +9,12 @@ class Product_Response
         public ?string      $name                       = null,
         public ?int         $price                      = null,
         public ?int         $quantity                   = null
-    )
-    {}
+    ) {
+    }
 
+
+    public function __set($name, $value)
+    {
+        throw new \Exception('Cant set!' . $name . ', ' . $value);
+    }
 }

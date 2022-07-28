@@ -1,14 +1,19 @@
 <?php
 
-namespace vezit\dto;
+namespace vezit\dto\update_customer_request;
 
-class Session_Delete_Response
+
+
+
+class Contact
 {
+
     public function __construct(
-        public ?bool $session_has_been_unset = null,
-        public ?string $note = null
+        public ?string $phone = null,
+        public ?string $email = null
     ) {
     }
+
 
     public function __set($name, $value)
     {

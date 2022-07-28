@@ -11,4 +11,9 @@ class Status
         public Email $email = new Email
     ) {
     }
+
+    public function __set($name, $value)
+    {
+        throw new \Exception('Cant set!' . $name . ', ' . $value);
+    }
 }

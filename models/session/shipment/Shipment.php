@@ -14,4 +14,9 @@ class Shipment
         public ?bool    $visiting_address               = null,
         public Address  $address                        = new Address
     ) {}
+
+    public function __set($name, $value)
+    {
+        throw new \Exception('Cant set!' . $name . ', ' . $value);
+    }
 }

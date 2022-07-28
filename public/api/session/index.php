@@ -8,7 +8,7 @@ $url_parameters = $_GET;
 $method = $_SERVER['REQUEST_METHOD'];
 $body = file_get_contents('php://input');
 
-$controller = new Session_Controller($method, $url_parameters, $body);
+$controller = Session_Controller::get_instance($method, $url_parameters, $body);
 
 
 

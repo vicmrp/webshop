@@ -12,12 +12,61 @@ class Session_Service_Test extends TestCase {
 
     protected function setUp() : void
     {
+
+
+
         $this->session_service = Session_Service::get_instance();
+
+
+
     }
 
     protected function tearDown() : void
     {
     }
+
+
+
+    /** @test */
+    public function update_customer__shall_update_customer() {
+        $body = '{
+            "customer": {
+                "fullname": "Victor Reipur",
+                "address": {
+                    "street": "Vinkelvej",
+                    "postal_code": "2800",
+                    "city": "Lyngby"
+                },
+                "contact": {
+                    "phone": "26129604",
+                    "email": "victor.reipur@gmail.com"
+                },
+                "company": {
+                    "cvr_number": null,
+                    "company_name": null
+                }
+            }
+        }';
+
+        $result = $this->session_service->update_customer(json_decode($body));
+
+        $this->assertEquals("Victor Reipur", $result->customer->fullname);
+
+        // Check om du kan fa create_payment til at virke i en unit test.
+        // payment_details skal vaere tilfredsstillet.
+        // nar quickpay skal lave et payment link sa kraever det at
+
+    }
+
+
+    // /** @test
+    //  *  @depends update_customer__shall_update_customer
+    //  */
+    // public function update_order__shall_update_customer() {
+
+    // }
+
+
 
 
     /** @test */
@@ -33,20 +82,6 @@ class Session_Service_Test extends TestCase {
         $this->assertInstanceOf(Session_Response::class, $session_response);
     }
 
-
-
-    // /** @test */
-    // public function get_session__you_should_be_able_to_change_the_order_items()
-    // {
-    //     $session_response = $this->session_service->get_session();
-
-    //     $order_item = new Item("product_name", 1, 100, 1);
-    //     $order_items = [$order_item];
-
-    //     $session_response->session->order->set_order_items($order_items);
-
-    //     $this->assertInstanceOf(Order_Item::class, $session_response->session->order->get_order_items()[0]);
-    // }
 
     /** @test */
     public function update_order__get_response()

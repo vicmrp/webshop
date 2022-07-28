@@ -22,6 +22,6 @@ class Session_Order_Update_Requests
     }
 
     public function __set($name, $value) {
-        throw new \Exception("Cannot add new property \$$name to instance of " . __CLASS__);
+        throw new \Exception('Cant set!' . $name . ', ' . $value);
     }
 }

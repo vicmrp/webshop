@@ -1,15 +1,10 @@
-<?php
+<?php namespace vezit\models\payment_link_response;
 
-namespace vezit\dto;
-
-
-class Session_Order_Update_Request
+class Payment_Link_Response
 {
     public function __construct(
-        public ?int $product_pk = null,
-        public ?int $quantity = null
-    ) {
-    }
+        public ?string $url = null
+    ) {}
 
 
     public function __set($name, $value)

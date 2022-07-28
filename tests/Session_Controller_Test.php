@@ -6,39 +6,130 @@ use vezit\dto\Session_Order_Update_Requests;
 
 require __DIR__ . '/../global-requirements.php';
 
+/**
+ * There should be one operation for each test.
+ * There can as many assertions as you want.
+ */
+
 class Session_Controller_Test extends TestCase
 {
     protected function setUp() : void
     {
-        $this->session_controller = Session_Controller::get_instance('GET');
+
+
+        $this->body = '{
+            "customer": {
+                "fullname": "Victor Reipur",
+                "address": {
+                    "street": "Vinkelvej",
+                    "postal_code": "2800",
+                    "city": "Lyngby"
+                },
+                "contact": {
+                    "phone": "26129604",
+                    "email": "victor.reipur@gmail.com"
+                },
+                "company": {
+                    "cvr_number": null,
+                    "company_name": null
+                }
+            }
+        }';
+
+        $this->session_controller = Session_Controller::get_instance(
+            $request_method = 'GET'
+            ,$url_parameters = [
+                'query' => urlencode('')
+                ]
+
+        );
     }
 
     protected function tearDown(): void
     {
+
     }
 
+
+    // --------- GET --------- //
     /** @test */
-    public function get_json_response__get_session() {
+    public function get_json_response__proof_that_you_get_a_session() {
 
+        Session_Controller::destroy_instance();
+        $this->session_controller = Session_Controller::get_instance(
+            $request_method = 'GET'
+            ,$url_parameters = [
+                'query'  => urlencode('get-session')
+            ]
+        );
 
-        $json = $this->session_controller->get_json_response();
-        $session = json_decode($json);
+        $json       = $this->session_controller->get_json_response();
+        $session    = json_decode($json);
 
         $this->assertTrue(isset($session));
 
     }
 
 
+    /** @test
+     * This test should respond when a failure because customer details has not been satisfied
+     */
+    public function get_json_response__get_payment_link() {
+
+        // Setup
+        Session_Controller::destroy_instance();
+        $this->session_controller = Session_Controller::get_instance(
+            $request_method = 'GET'
+            ,$url_parameters = [
+                'query'  => urlencode('get-session')
+            ]
+        );
+
+
+
+        // Expects failure, because customer details has not been satisfied
+
+
+        // Add customer details
+
+        // Expects failure, because shipment details has not been satisfied
+
+        // Add shipment details
+
+        // Expects failure, because payment details has not been satisfied
+
+        // Add payment details
+
+        // It should be possible to get a payment link now
+
+
+        $this->assertTrue(true);
+    }
+    // --------- GET --------- //
+
+
+
+
+
+
+
+
+
+
+
+
+    // --------- PUT --------- //
     /** @test */
     public function get_json_response__update_customer() {
 
-        $body = file_get_contents(__DIR__ . '/json/Session_Controller_Test_Update_Body.json');
 
         Session_Controller::destroy_instance();
         $this->session_controller = Session_Controller::get_instance(
-            'PUT',
-            ['update' => 'customer'],
-            $body
+            $request_method = 'PUT'
+            ,$url_parameters = [
+                'query'  => urlencode('update-customer')
+                ]
+            ,$body = $this->body
         );
 
         $json = $this->session_controller->get_json_response();
@@ -50,28 +141,6 @@ class Session_Controller_Test extends TestCase
     }
 
 
-    // /** @test */
-    // public function get_json_response__update_shipment() {
-    //     $body = file_get_contents(__DIR__ . '/json/Session_Controller_Test_Update_Shipment_Body.json');
-
-
-
-    //     $session_controller = new Session_Controller(
-    //         'PUT',
-    //         ['update' => 'shipment'],
-    //         $body,
-    //         null
-    //     );
-
-    //     $json = $session_controller->get_json_response();
-
-
-    //     $this->assertTrue(true);
-
-    // }
-
-
-
     /** @test */
     public function get_json_response__update_order_items() {
 
@@ -81,18 +150,18 @@ class Session_Controller_Test extends TestCase
                 "product_pk": 3,
                 "quantity": 14
             },
-                {
-                "product_pk": 4,
-                "quantity": 14
-                }
+            {
+            "product_pk": 4,
+            "quantity": 14
+            }
         ]';
 
 
         Session_Controller::destroy_instance();
         $this->session_controller = Session_Controller::get_instance(
-            'PUT',
-            ['update' => 'order'],
-            $body
+            $request_method     = 'PUT'
+            ,$url_parameters    = ['query' => 'update-order-items']
+            ,$body              = $body
         );
 
 
@@ -103,6 +172,34 @@ class Session_Controller_Test extends TestCase
 
         $this->assertEquals(14, $object->session->order->items[0]->quantity);
     }
+
+
+
+
+    public function get_json_response__update_shipment() {
+
+    }
+    // --------- PUT --------- //
+
+
+
+    // --------- DELETE --------- //
+    /** @test */
+    public function get_json_response__proof_that_you_can_destroy_a_session() {
+        Session_Controller::destroy_instance();
+        $this->session_controller = Session_Controller::get_instance(
+            $request_method = 'GET'
+            ,$url_parameters = [
+                'query'  => urlencode('delete-session')
+            ]
+        );
+
+        $session_delete_response = json_decode($this->session_controller->get_json_response(), JSON_PRETTY_PRINT);
+
+
+        $this->assertEquals(true, $session_delete_response->session_has_been_unset);
+    }
+    // --------- DELETE --------- //
 
 
 }

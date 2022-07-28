@@ -1,6 +1,6 @@
 <?php namespace vezit\api\dawa_api;
 
-use vezit\models\Sanitized_Address;
+use vezit\models\sanitized_address\Sanitized_Address;
 
 require __DIR__.'/../../global-requirements.php';
 

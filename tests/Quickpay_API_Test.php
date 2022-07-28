@@ -43,6 +43,7 @@ class Quickpay_API_Test  extends TestCase
      */
     public function call_get_payment_link__shall_return_payment_link($id)
     {
+        // $id = '1234567890';
         $url = $this->quickpay_api->call_get_payment_link($id, $amount = 100000);
         $this->assertStringStartsWith("https://payment.quickpay.net/payments/", $url);
     }

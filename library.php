@@ -117,17 +117,40 @@ function g_find_object_by_id($id, $array_of_objects)
 
 
 
+// TODO skal slettes, skal ikke bruges.
+// function g_generate_flat_dto_from_web_request(object $data, $dto) {
 
-function g_generate_flat_dto_from_web_request(object $data, $dto) {
+//     $dto = new $dto();
+//     $std_object = $data;
+//     foreach ($std_object as $std_object_property => $std_object_value) {
+//         foreach ($dto as $dto_object_property => $dto_object_value) {
+//             if ($std_object_property == $dto_object_property)
+//                 $dto->$dto_object_property = $std_object_value;
+//         }
+//     }
+//     return $dto;
+// }
 
-    $dto = new $dto();
-    $std_object = $data;
+
+
+function g_generate_multidimensional_dto_from_web_request(object $std_object, $dto) {
+
+    $dto = new $dto;
     foreach ($std_object as $std_object_property => $std_object_value) {
         foreach ($dto as $dto_object_property => $dto_object_value) {
-            if ($std_object_property == $dto_object_property)
-                $dto->$dto_object_property = $std_object_value;
+
+            if ($std_object_value instanceof stdClass) {
+                $dto->$std_object_property = g_generate_multidimensional_dto_from_web_request($std_object_value, $dto->$std_object_property::class);
+                break;
+            }
+
+            if ($std_object_property === $dto_object_property) {
+                $dto->$std_object_property = $std_object_value;
+                break;
+            }
         }
     }
     return $dto;
 }
+
 

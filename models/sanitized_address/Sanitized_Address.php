@@ -1,4 +1,4 @@
-<?php namespace vezit\models;
+<?php namespace vezit\models\sanitized_address;
 
 class Sanitized_Address
 {
@@ -8,4 +8,10 @@ class Sanitized_Address
         public ?string $street_name   = null,
         public ?string $street_number = null
     ) {}
+
+
+    public function __set($name, $value)
+    {
+        throw new \Exception('Cant set!' . $name . ', ' . $value);
+    }
 }

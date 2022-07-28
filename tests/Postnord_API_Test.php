@@ -4,6 +4,7 @@ use vezit\api\postnord_api\Postnord_API;
 use vezit\api\dawa_api\Dawa_API;
 use vezit\dto\Postnord_Service_Point_Response;
 
+
 require __DIR__ . '/../global-requirements.php';
 
 class Postnord_API_Test  extends TestCase

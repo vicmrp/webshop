@@ -21,18 +21,21 @@ class Quickpay_Service
     {
         // Laver en instance hvis den ikke findes.
         // Laver en ny instance hvis get_instance bliver kaldet med parametre.
-        return (null === self::$_instance || null !== $quickpay_api) ? new Quickpay_Service(
+        return (null === self::$_instance) ? new Quickpay_Service(
 
             (null === $quickpay_api) ? Quickpay_API::get_instance() : $quickpay_api
 
             ) : self::$_instance;
     }
 
+    public static function destroy_instance() : void {
+        self::$_instance = null;
+    }
 
-
-    public function __construct(
+    private function __construct(
         private Quickpay_API $_quickpay_api
     ) {
+        self::$_instance = $this;
         self::$_times_instantiated++;
     }
 

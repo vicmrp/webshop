@@ -21,7 +21,8 @@ class Session_Order_Items {
         return $this->items;
     }
 
-    public function __set($name, $value) {
-        throw new \Exception("Cannot add new property \$$name to instance of " . __CLASS__);
+    public function __set($name, $value)
+    {
+        throw new \Exception('Cant set!' . $name . ', ' . $value);
     }
 }

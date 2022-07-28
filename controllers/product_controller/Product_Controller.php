@@ -12,7 +12,7 @@ class Product_Controller
 
     public static function get_instance(
         string  $request_method,
-        ?array  $url_parameters = null,
+        array   $url_parameters = null,
         ?string $body = null,
         Product_Service $product_service = null
     )
@@ -44,14 +44,16 @@ class Product_Controller
 
     public function get_json_response() : string {
         switch ($this->_request_method) {
-            case 'GET': // Get all products
-                $products = $this->_product_service->get_all();
-                $json = json_encode($products, JSON_PRETTY_PRINT);
-                return $json;
-            break;
+            // --------- GET --------- //
+            case 'GET' && 'get_all_products' === $this->_url_parameters['query']: // Get all products
+                return json_encode(
+                    $this->_product_service->get_all()
+                    ,JSON_PRETTY_PRINT
+                );
+            // --------- GET --------- //
+
             default:
                 return "";
-            break;
         }
     }
 }

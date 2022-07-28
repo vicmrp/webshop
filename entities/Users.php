@@ -21,4 +21,9 @@ class Users {
     public function get() : array {
         return $this->users;
     }
+
+    public function __set($name, $value)
+    {
+        throw new \Exception('Cant set!' . $name . ', ' . $value);
+    }
 }

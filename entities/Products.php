@@ -21,4 +21,9 @@ class Products {
     public function get() : array {
         return $this->products;
     }
+
+    public function __set($name, $value)
+    {
+        throw new \Exception('Cant set!' . $name . ', ' . $value);
+    }
 }

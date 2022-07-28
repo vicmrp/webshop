@@ -1,4 +1,6 @@
-<?php namespace vezit\dto;
+<?php
+
+namespace vezit\dto;
 
 class Postnord_Service_Point_Response
 {
@@ -10,6 +12,11 @@ class Postnord_Service_Point_Response
         public ?string $postal_code         = null,
         public ?string $city                = null,
         public bool $visiting_address       = true
-    ) {}
+    ) {
+    }
 
+    public function __set($name, $value)
+    {
+        throw new \Exception('Cant set!' . $name . ', ' . $value);
+    }
 }

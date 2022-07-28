@@ -9,7 +9,16 @@ class Postnord_Controller_Test extends TestCase
 {
     protected function setUp() : void
     {
-
+        $this->postnord_controller = Postnord_Controller::get_instance(
+            'GET',
+            $url_parameters = [
+                "query"          => urlencode('get-service-points')
+                ,"streetname"    => urlencode('øresundshoj 3a')
+                ,"zip-code"      => urlencode('2920')
+            ],
+            null,
+            null
+        );
 
 
 
@@ -19,7 +28,7 @@ class Postnord_Controller_Test extends TestCase
 
     protected function tearDown(): void
     {
-
+        Postnord_Controller::destroy_instance();
     }
 
 
@@ -27,17 +36,8 @@ class Postnord_Controller_Test extends TestCase
     /** @test */
     public function get_json_response__get_service_points() {
 
-        $this->postnord_controller = Postnord_Controller::get_instance(
-            'GET',
-            [
-                "streetname"    => "%C3%B8resundshoj%203a", // øresundshoj 3a
-                "zip-code"      => "2920"
-            ],
-            null,
-            null
-        );
-
         $json = $this->postnord_controller->get_json_response();
+
         $service_points = json_decode($json);
 
         $this->assertIsArray($service_points);

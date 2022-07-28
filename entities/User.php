@@ -10,4 +10,10 @@ class User {
         public    ?string         $email                    = null,
         public    ?string         $hashed_password          = null
     ) {}
+
+
+    public function __set($name, $value)
+    {
+        throw new \Exception('Cant set!' . $name . ', ' . $value);
+    }
 }
