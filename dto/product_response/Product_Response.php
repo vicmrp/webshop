@@ -1,6 +1,6 @@
 <?php
 
-namespace vezit\dto;
+namespace vezit\dto\product_response;
 
 class Product_Response
 {

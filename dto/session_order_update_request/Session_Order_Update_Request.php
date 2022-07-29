@@ -1,14 +1,16 @@
 <?php
 
-namespace vezit\dto;
+namespace vezit\dto\session_order_update_request;
 
-class Session_Delete_Response
+
+class Session_Order_Update_Request
 {
     public function __construct(
-        public ?bool $session_has_been_unset = null,
-        public ?string $note = null
+        public ?int $product_pk = null,
+        public ?int $quantity = null
     ) {
     }
+
 
     public function __set($name, $value)
     {

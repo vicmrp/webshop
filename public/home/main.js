@@ -1,5 +1,6 @@
 import { defaultJavaScript } from '../global/js/default-javascript.js';
 import SessionService from '../global/js/services/session-service.js';
+import ProductService from '../global/js/services/product-service.js';
 
 defaultJavaScript.runDefaultPageScript()
 
@@ -9,10 +10,18 @@ const careerBuyBtn = document.getElementById('career-buy-btn');
 
 
 novelBuyBtn.addEventListener('click', async () => {
-
-    console.log('clicked novel buy btn');
-
+    console.log('clicked novel buy btn - add item to basket');
     const PRODUCT_PK_OF_NOVEL = 3
+
+    // Get all products
+    const products = await ProductService.getAllProducts();
+    const novel = products.find(product => product.product_pk === PRODUCT_PK_OF_NOVEL)
+    console.log(novel)
+
+    // Find product with PRODUCT_PK_OF_NOVEL
+    const product = products.products.find(product => product.pk === PRODUCT_PK_OF_NOVEL)
+
+
 
     const updateOrder = JSON.parse(sessionStorage.getItem('update_order')).map(orderItem => {
         if (orderItem.product_pk === PRODUCT_PK_OF_NOVEL) {

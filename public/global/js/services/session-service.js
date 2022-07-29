@@ -3,7 +3,7 @@ import APIService from "./api-service.js";
 export default class SessionService {
 
     static async getSession() {
-        const url = `${location.protocol}//${location.hostname}/api/session/`
+        const url = `${location.protocol}//${location.hostname}/api/session/?query=get-session`
         const options = {
             method: 'GET'
         }
@@ -14,7 +14,7 @@ export default class SessionService {
 
 
     static async updateOrder(arrayOfProducts) {
-        const url = `${location.protocol}//${location.hostname}/api/session/?update=order`
+        const url = `${location.protocol}//${location.hostname}/api/session/?query=update-order-items`
         const options = {
             method: 'PUT',
             body: JSON.stringify(arrayOfProducts)
@@ -27,7 +27,7 @@ export default class SessionService {
     }
 
     static async updateCustomer(customer) {
-        const url = `${location.protocol}//${location.hostname}/api/session/?update=customer`
+        const url = `${location.protocol}//${location.hostname}/api/session/?query=update-customer`
         const options = {
             method: 'PUT',
             body: JSON.stringify(customer)
@@ -41,7 +41,7 @@ export default class SessionService {
 
 
     static async updateShipment(shipmentID) {
-        const url = `${location.protocol}//${location.hostname}/api/session/?update=shipment&` + new URLSearchParams({'service-point-id': shipmentID}).toString()
+        const url = `${location.protocol}//${location.hostname}/api/session/?query=update-shipment&` + new URLSearchParams({'service-point-id': shipmentID}).toString()
         const options = {
             method: 'PUT'
         }

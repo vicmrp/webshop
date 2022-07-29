@@ -1,6 +1,6 @@
 <?php
 
-namespace vezit\dto;
+namespace vezit\dto\postnord_service_point_response;
 
 class Postnord_Service_Point_Response
 {

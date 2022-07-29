@@ -32,9 +32,9 @@ class Product_Service
 
     public function get_all() : array {
 
-        $products_model = $this->_product_repository->get_all()->get();
+        $products_entity = $this->_product_repository->get_all()->get();
         $array_of_products = [];
-        foreach($products_model as $pk => $entity) {
+        foreach($products_entity as $pk => $entity) {
             $product = new Product_Response(
                 $entity->product_pk,
                 $entity->name,

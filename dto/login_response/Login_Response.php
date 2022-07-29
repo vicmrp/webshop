@@ -1,6 +1,6 @@
 <?php
 
-namespace vezit\dto;
+namespace vezit\dto\login_response;
 
 class Login_Response
 {

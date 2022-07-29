@@ -1,6 +1,6 @@
 <?php
 
-namespace vezit\dto;
+namespace vezit\dto\session_response;
 
 use vezit\models\session\Session;
 

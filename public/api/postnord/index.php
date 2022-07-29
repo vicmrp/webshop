@@ -4,10 +4,9 @@ header('Content-Type: application/json; charset=utf-8');
 
 use vezit\controllers\postnord_controller\Postnord_Controller;
 
-$controller = Postnord_Controller::get_instance(
-    $_SERVER['REQUEST_METHOD'],
-    $_GET
-);
-(string)$result_in_json = $controller->get_json_response();
+echo Postnord_Controller::get_instance(
+    $request_method = $_SERVER['REQUEST_METHOD'],
+    $url_parameters = $_GET,
+    $body = file_get_contents('php://input'))->get_json_response();
 
-echo $result_in_json;
+

@@ -45,7 +45,7 @@ class Product_Controller
     public function get_json_response() : string {
         switch ($this->_request_method) {
             // --------- GET --------- //
-            case 'GET' && 'get_all_products' === $this->_url_parameters['query']: // Get all products
+            case 'GET' && 'get-all-products' === $this->_url_parameters['query']: // Get all products
                 return json_encode(
                     $this->_product_service->get_all()
                     ,JSON_PRETTY_PRINT
