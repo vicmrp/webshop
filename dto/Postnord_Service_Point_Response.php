@@ -10,8 +10,7 @@ class Postnord_Service_Point_Response
         public ?string $street_name         = null,
         public ?string $street_number       = null,
         public ?string $postal_code         = null,
-        public ?string $city                = null,
-        public bool $visiting_address       = true
+        public ?string $city                = null
     ) {
     }
 

@@ -8,6 +8,7 @@ class Session_Response
 {
     public function __construct(public Session $session = new Session())
     {
+
     }
 
     public function __set($name, $value)

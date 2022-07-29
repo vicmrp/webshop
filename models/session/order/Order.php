@@ -14,8 +14,8 @@ class Order implements JsonSerializable
 
 
     public function __construct(
-        public  ?int $id = null,
-        private array $items = [],
+        public  ?string $id = null,
+        private ?array $items = null,
         public  Status $status = new Status,
     )
     {

@@ -19,9 +19,17 @@ use vezit\services\postnord_service\Postnord_Service;
 use vezit\services\session_variables_service\Session_Variables_Service;
 use vezit\models\session\shipment\Shipment;
 use vezit\services\quickpay_service\Quickpay_Service;
-use vezit\models\payment_link_response\Payment_Link_Response;
+use vezit\dto\payment_link_response\Payment_Link_Response;
+use vezit\dto\Postnord_Service_Point_Response;
 use vezit\dto\update_customer_request\Update_Customer_Request;
-use vezit\models\session\shipment\address\Address;
+use vezit\models\session\customer\Customer;
+use vezit\models\session\customer\address\Address;
+use vezit\models\session\shipment\address\Address as Shipment_Address;
+use vezit\models\session\customer\company\Company;
+use vezit\models\session\customer\contact\Contact;
+use vezit\models\session\order\Order;
+use vezit\models\session\order\status\payment\Payment;
+use vezit\api\quickpay_api\Quickpay_API;
 
 require __DIR__ . '/../../global-requirements.php';
 
@@ -63,7 +71,7 @@ class Session_Service
         ,private Product_Repository         $_product_repository
         ,private Dawa_API                   $_dawa_api
         ,private Postnord_Service           $_postnord_service
-        ,private Quickpay_Service           $_quickpay_Service
+        ,private Quickpay_Service           $_quickpay_service
         ,private Session_Variables_Service  $_session_variables_service
     ) {
         self::$_instance = $this;
@@ -88,26 +96,50 @@ class Session_Service
 
     public function get_payment_link() : Payment_Link_Response
     {
-        return new Payment_Link_Response();
+        // Return a payment link if...
+        $session_response = $this->_session_variables_service->get_session_response();
+
+        $payment_link_response = $this->_quickpay_service->get_payment_link($session_response);
+
+        $this->_session_variables_service->update_session_response($session_response);
+
+        return $payment_link_response;
+
     }
 
 
 
 
-    public function update_customer(Update_Customer_Request $update_customer_request): Session_Response
-    {
+    public function update_customer(Update_Customer_Request $update_customer_request): Session_Response {
+
+
+
+
         $session_response = $this->_session_variables_service->get_session_response();
 
-        $session_response->session->customer->fullname              = $update_customer_request->fullname;
-        $session_response->session->customer->address->street       = $update_customer_request->address->street;
-        $session_response->session->customer->address->postal_code  = $update_customer_request->address->postal_code;
-        $session_response->session->customer->address->city         = $update_customer_request->address->city;
-        $session_response->session->customer->contact->phone        = $update_customer_request->contact->phone;
-        $session_response->session->customer->contact->email        = $update_customer_request->contact->email;
-        $session_response->session->customer->company->cvr_number   = $update_customer_request->company->cvr_number;
-        $session_response->session->customer->company->company_name = $update_customer_request->company->company_name;
+        $session_response->session->customer = new Customer(
+            $fullname                           = $update_customer_request->fullname,
+            $details_satisfied_for_shipment     = $this->_customer_details_is_satisfied($update_customer_request),
 
-        $this->_customer_details_is_satisfied($session_response);
+            // In order to fill in customer details, there needs to be something in the basket
+            $has_at_least_one_item_in_basket    = $this->_has_at_least_one_item_in_basket($session_response->session->order),
+
+            $address = new Address(
+                $street        = $update_customer_request->address->street,
+                $postal_code   = $update_customer_request->address->postal_code,
+                $city          = $update_customer_request->address->city
+            ),
+            $contact = new Contact(
+                $phone = $update_customer_request->contact->phone,
+                $email = $update_customer_request->contact->email
+            ),
+            $company = new Company(
+                $cvr_number    = $update_customer_request->company->cvr_number,
+                $company_name  = $update_customer_request->company->company_name
+            )
+        );
+
+
 
         $this->_session_variables_service->update_session_response($session_response);
         return $this->_session_variables_service->get_session_response();
@@ -117,7 +149,13 @@ class Session_Service
 
 
 
-
+    private function _has_at_least_one_item_in_basket(Order $order) : bool {
+        // if array is empty
+        if (count($order->get_items()) === 0) {
+            return false;
+        }
+        return true;
+    }
 
 
 
@@ -137,7 +175,7 @@ class Session_Service
             if ($product->quantity < $session_order_update_request->quantity)
                 throw new \Exception("You are trying too add more products than is in stock", 1);
 
-            if (1 > $session_order_update_request->quantity)
+            if (0 >= $session_order_update_request->quantity)
                 continue;
 
             $item = new Item(
@@ -153,6 +191,7 @@ class Session_Service
         $session_response->session->order->set_items($items);
         $session_response->session->order->status->payment->amount = $amount;
         $this->_order_details_is_satisfied($session_response);
+        $session_response->session->customer->has_at_least_one_item_in_basket = $this->_has_at_least_one_item_in_basket($session_response->session->order);
 
         $this->_session_variables_service->update_session_response($session_response);
         return $this->_session_variables_service->get_session_response();
@@ -178,21 +217,22 @@ class Session_Service
         $session_response = $this->_session_variables_service->get_session_response();
 
 
-
+        # You need to fill in customer details before you can get postal service details
         if (!$session_response->session->customer->details_satisfied_for_shipment) {
             return $session_response;
         }
 
 
+
         $postnord_service_point_response = $this->_postnord_service->get_by_id($service_point_id);
+
         $session_response->session->shipment = new Shipment(
-            $tracking_number                = 0,
+            $tracking_number                = null,
             $order_collected                = false,
-            $details_satisfied_for_payment  = true, # :D
+            $details_satisfied_for_payment  = $this->_shipment_details_is_satisfied($postnord_service_point_response), # :D
             $service_point_id               = $postnord_service_point_response->service_point_id,
             $name                           = $postnord_service_point_response->name,
-            $visiting_address               = $postnord_service_point_response->visiting_address,
-            $address                        = new Address(
+            $address                        = new Shipment_Address(
                 $street_name      = $postnord_service_point_response->street_name,
                 $street_number    = $postnord_service_point_response->street_number,
                 $postal_code      = $postnord_service_point_response->postal_code,
@@ -242,44 +282,17 @@ class Session_Service
 
 
 
-    private function _customer_details_is_satisfied(Session_Response &$session_response): void
+    private function _customer_details_is_satisfied(Update_Customer_Request $update_customer_request): bool
     {
 
-        if (null === $session_response->session->customer->fullname) {
-            $session_response->session->customer->customer_details_is_satisfied = false;
-            return;
-        }
+        if (null === $update_customer_request->fullname) return false;
+        if (null === $update_customer_request->address->street) return false;
+        if (null === $update_customer_request->address->postal_code) return false;
+        if (null === $update_customer_request->address->city) return false;
+        if (null === $update_customer_request->contact->phone) return false;
+        if (null === $update_customer_request->contact->email) return false;
 
-
-        if (null === $session_response->session->customer->address->street) {
-            $session_response->session->customer->customer_details_is_satisfied = false;
-            return;
-        }
-
-
-        if (null === $session_response->session->customer->address->postal_code) {
-            $session_response->session->customer->customer_details_is_satisfied = false;
-        }
-
-
-        if (null === $session_response->session->customer->address->city) {
-            $session_response->session->customer->customer_details_is_satisfied = false;
-            return;
-        }
-
-
-        if (null === $session_response->session->customer->contact->phone) {
-            $session_response->session->customer->customer_details_is_satisfied = false;
-            return;
-        }
-
-
-        if (null === $session_response->session->customer->contact->email) {
-            $session_response->session->customer->customer_details_is_satisfied = false;
-            return;
-        }
-
-        $session_response->session->customer->customer_details_is_satisfied = true;
+        return true;
 
     }
 
@@ -337,31 +350,17 @@ class Session_Service
 
 
 
-    private function _shipment_details_is_satisfied(Session_Response &$session_response): void
+    private function _shipment_details_is_satisfied(Postnord_Service_Point_Response $postnord_service_point_response): bool
     {
 
-        if (null === $session_response->session->shipment->address->street_name) {
-            $session_response->session->shipment->details_satisfied_for_payment = false;
-            return;
-        }
+        if (null === $postnord_service_point_response->service_point_id)            return false;
+        if (null === $postnord_service_point_response->name)                        return false;
+        if (null === $postnord_service_point_response->street_name)                 return false;
+        if (null === $postnord_service_point_response->street_number)               return false;
+        if (null === $postnord_service_point_response->postal_code)                 return false;
+        if (null === $postnord_service_point_response->city)                        return false;
 
-        if (null === $session_response->session->shipment->address->street_number) {
-            $session_response->session->shipment->details_satisfied_for_payment = false;
-            return;
-        }
-
-        if (null === $session_response->session->shipment->address->postal_code) {
-            $session_response->session->shipment->details_satisfied_for_payment = false;
-            return;
-        }
-
-        if (null === $session_response->session->shipment->address->city) {
-            $session_response->session->shipment->details_satisfied_for_payment = false;
-            return;
-        }
-
-        $session_response->session->shipment->details_satisfied_for_payment = true;
-        return;
+        return true;
     }
 
 

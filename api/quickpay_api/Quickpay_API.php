@@ -87,7 +87,7 @@ class Quickpay_API
 
 
 
-    public function call_get_payment_link(int $id, int $amount): string
+    public function call_get_payment_link(int $id, int $amount): object
     {
         global $g_quickpay_apikey;
         $curl = curl_init();
@@ -112,7 +112,7 @@ class Quickpay_API
 
         curl_close($curl);
 
-        return json_decode($response)->url;
+        return json_decode($response);
     }
 
 

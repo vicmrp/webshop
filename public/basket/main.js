@@ -32,7 +32,6 @@ const getSession = () => {
     SessionService.getSession().then(session => {
         console.log(session);
 
-
         session.order.items.forEach(item => {
             if (item.product_pk_fk === 3) {
                 novelCountValue = item.quantity;

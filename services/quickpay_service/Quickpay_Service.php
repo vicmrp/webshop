@@ -3,7 +3,8 @@
 namespace vezit\services\quickpay_service;
 
 use vezit\api\quickpay_api\Quickpay_API;
-
+use vezit\dto\payment_link_response\Payment_Link_Response;
+use vezit\dto\Session_Response;
 
 require __DIR__ . '/../../global-requirements.php';
 
@@ -41,9 +42,14 @@ class Quickpay_Service
 
 
     //Try to make it work so that you can retrive a payment link.
-    public function create_a_new_payment(string $order_id): object
+    private function _create_a_new_payment(&$session_response): void
     {
-        return $this->_quickpay_api->call_create_a_new_payment($order_id);
+
+        $payment = $this->_quickpay_api->call_create_a_new_payment($session_response->session->order->id);
+
+        $session_response->session->order->status->payment->quickpay_id = $payment->id;
+
+
     }
 
 
@@ -52,16 +58,48 @@ class Quickpay_Service
 
 
     // return payment link if requirements are meet. Otherwise return reason for why it is not meet.
-    public function get_payment_link()
+    public function get_payment_link(Session_Response &$session_response) : Payment_Link_Response
     {
-        // Is all payment details satistfied?
-
-        // Check in the session variable
-
-        //
 
 
-        // $payment_link = $this->_quickpay_api->call_get_payment_link();
+
+        if (!$session_response->session->customer->details_satisfied_for_shipment
+        ||  !$session_response->session->shipment->details_satisfied_for_payment
+        ||  !$session_response->session->order->status->payment->details_satisfied_for_payment) {
+            return new Payment_Link_Response(
+                $url =  null,
+                $note = 'details are not satisfied for payment'
+            );
+        }
+
+        // Return if payment has already been created
+        if (null !== $session_response->session->order->status->payment->quickpay_id) {
+            return new Payment_Link_Response(
+                $url  = $this->_quickpay_api->call_get_payment_link(
+                    $id      = $session_response->session->order->status->payment->quickpay_id,
+                    $amount  = $session_response->session->order->status->payment->amount
+                )->url
+                ,$note = 'payment already exist therefore you get a payment link based on that payment'
+            );
+        }
+
+
+        // Create a new payment
+        $this->_create_a_new_payment($session_response);
+
+
+
+
+        return new Payment_Link_Response(
+            $url  = $this->_quickpay_api->call_get_payment_link(
+                $id      = $session_response->session->order->status->payment->quickpay_id,
+                $amount  = $session_response->session->order->status->payment->amount
+            )->url
+            ,$note = 'New payment has been created'
+        );
+
+
+
 
     }
 }

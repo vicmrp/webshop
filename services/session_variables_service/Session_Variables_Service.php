@@ -52,7 +52,7 @@ class Session_Variables_Service
             new Session(
                 new Customer,
                 new Order(
-                    $id = null,
+                    $id = g_generate_random_string(20),
                     $items = [],
                     $status = new Status(
                         new Payment(

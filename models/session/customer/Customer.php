@@ -8,11 +8,12 @@ class Customer
 {
 
     public function __construct(
-        public ?string $fullname                    = null,
-        public ?bool $details_satisfied_for_shipment = null,
-        public Address $address                     = new Address,
-        public Contact $contact                     = new Contact,
-        public Company $company                     = new Company
+        public ?string $fullname                      = null,
+        public ?bool $details_satisfied_for_shipment  = null,
+        public ?bool $has_at_least_one_item_in_basket = null,
+        public Address $address                       = new Address,
+        public Contact $contact                       = new Contact,
+        public Company $company                       = new Company
     )
     { }
 

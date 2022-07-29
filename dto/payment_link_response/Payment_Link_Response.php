@@ -1,9 +1,10 @@
-<?php namespace vezit\models\payment_link_response;
+<?php namespace vezit\dto\payment_link_response;
 
 class Payment_Link_Response
 {
     public function __construct(
-        public ?string $url = null
+        public ?string $url =  null,
+        public ?string $note = null
     ) {}
 
 
