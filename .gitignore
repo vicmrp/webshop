@@ -1,4 +1,5 @@
 secret/*
+!secret/.gitkeep
 
 vendor/*
 
