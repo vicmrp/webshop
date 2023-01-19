@@ -1,7 +1,6 @@
 secret/*
 !secret/.gitkeep
 
-vendor/*
 
 temp_database/session/*.json
 public/old/*
