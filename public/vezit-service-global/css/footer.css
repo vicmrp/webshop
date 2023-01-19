@@ -1,0 +1,16 @@
+/* This file should contain all styling for the footer                  */
+/* Excecpt for the footer element itself, that is.                      */
+/* The footer element should be styled in the global-style.css file.    */
+/* The footer element is a part of the global layout,                   */
+/* and should therefore be styled in the global-style.css file.         */
+
+
+.footer__text {
+    text-align: center;
+    color: black;
+  }
+
+  .footer__link {
+    text-decoration: underline;
+    color: black;
+  }

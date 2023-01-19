@@ -1,0 +1,19 @@
+{
+  "customer": {
+      "fullname": "Victor Reipur",
+      "details_satisfied_for_payment": false,
+      "address": {
+          "street": "Vinkelvej",
+          "postal_code": "2800",
+          "city": "Lyngby"
+      },
+      "contact": {
+          "phone": "26129604",
+          "email": "victor.reipur@gmail.com"
+      },
+      "company": {
+          "cvr_number": null,
+          "company_name": null
+      }
+  }
+}

@@ -1,3 +1,11 @@
 secret/*
-public/composer/vendor/*
-public/temp/*.json
+
+vendor/*
+
+temp_database/session/*.json
+public/old/*
+
+.phpunit.result.cache
+node_modules
+
+*.bak

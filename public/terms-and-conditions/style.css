@@ -1,0 +1,46 @@
+p {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  strong {
+    font-weight: bold;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  .company {
+    font-weight: bold;
+    color: blue;
+  }
+
+  .vejnavn {
+    font-style: italic;
+  }
+
+  .postnummer {
+    color: red;
+  }
+
+  .cvr {
+    color: green;
+  }
+
+  .telefon {
+    color: purple;
+  }
+
+  .email {
+    color: orange;
+  }
+
+  .betalingsformer {
+    font-style: italic;
+  }
+
+  .leveringsbetingelser {
+    font-weight: bold;
+    color: blue;
+  }
