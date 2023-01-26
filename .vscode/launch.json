@@ -1,0 +1,38 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "version": "stable",
+            "name": "Home",
+            "request": "launch",
+            "type": "msedge",
+            "url": "http://sandbox.vezit.net/home/",
+            "webRoot": "${workspaceFolder}/public"
+        },
+        {
+            "version": "stable",
+            "name": "Basket",
+            "request": "launch",
+            "type": "msedge",
+            "url": "http://sandbox.vezit.net/basket/",
+            "webRoot": "${workspaceFolder}/public"
+        },
+        {
+            "name": "Listen for XDebug",
+            "request": "launch",
+            "type": "php",
+            "port": 9003
+        },
+        {
+            "name": "Launch currently open script",
+            "type": "php",
+            "request": "launch",
+            "program": "${file}",
+            "cwd": "${fileDirname}",
+            "port": 9003
+        }
+    ]
+}
