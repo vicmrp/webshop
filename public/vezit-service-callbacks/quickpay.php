@@ -53,14 +53,14 @@ if (isset($_GET['order_id'])) {
 
 
 
-
+        global $g_domain_name;
         // Redirect to callback page
-        header("Location: http://vezit.net/callback/?order_id={$session_before_update->order->id}");
+        header("Location: http://$g_domain_name/callback/?order_id={$session_before_update->order->id}");
 
     } else {
 
         // in the callback page you can show a message to the customer that the payment was not accepted
-        header("Location: http://vezit.net/callback/?order_id={$session_before_update->order->id}");
+        header("Location: http://$g_domain_name/callback/?order_id={$session_before_update->order->id}");
     }
 
 }
