@@ -45,7 +45,7 @@ async function handlePayNow() {
 
     let quickpay_link = await SessionService.getPaymentLink();
 
-    if (quickpay_link.get_payment_link_response.payment_link === null) {
+    if (null === quickpay_link.get_payment_link_response.payment_link) {
         alert("Du skal udfylde alle felterne");
     } else {
         console.log("redirecting to quickpay");

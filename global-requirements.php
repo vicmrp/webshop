@@ -10,7 +10,6 @@
 // Dokumentation https://www.php.net/manual/en/language.variables.scope.php
 $g_postnord_apikey      = file_get_contents(__DIR__ . '/secret/postnord_apikey');
 $g_quickpay_apikey      = file_get_contents(__DIR__ . '/secret/quickpay_apikey');
-$g_quickpay_privatekey  = file_get_contents(__DIR__ . '/secret/quickpay_privatekey');
 $g_smtp_mail_credential = json_decode(file_get_contents(__DIR__ . '/secret/smtp_mail_credential.json'));
 $g_db_conn              = json_decode(file_get_contents(__DIR__ . '/secret/db_conn.json'));
 $g_order_id_length      = 20;
