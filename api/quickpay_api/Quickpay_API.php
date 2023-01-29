@@ -90,6 +90,7 @@ class Quickpay_API
     public function call_get_payment_link(int $id, string $order_id, int $amount): object
     {
         global $g_quickpay_apikey;
+        global $g_domain_name;
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -103,8 +104,8 @@ class Quickpay_API
             CURLOPT_CUSTOMREQUEST => "PUT",
             CURLOPT_POSTFIELDS => array(
                 'amount' => $amount
-                ,'continue_url' => "https://vezit.net/vezit-service-callbacks/quickpay.php?order_id=$order_id"
-                ,'cancel_url' => "https://vezit.net/callback?order_id=$order_id"
+                ,'continue_url' => "https://$g_domain_name/vezit-service-callbacks/quickpay.php?order_id=$order_id"
+                ,'cancel_url' => "https://$g_domain_name/callback?order_id=$order_id"
             ),
             CURLOPT_HTTPHEADER => array(
                 'Accept-Version: v10',
