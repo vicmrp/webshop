@@ -1,0 +1,120 @@
+/* inputs fields container */
+
+.main__input_fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 80%;
+    margin: 10px 0;
+}
+
+.main__input_fields label {
+    font-size: 18px;
+    margin: 10px 0;
+    width: 120px;
+    text-align: left;
+}
+
+.main__input_fields input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.main__input_fields input,
+.main__input_fields checkbox {
+    display: inline-block;
+    vertical-align: top;
+    width: calc(100% - 220px);
+    /* adjust as needed */
+}
+
+
+.main__input_fields i {
+    color: #0f0;
+}
+
+.terms-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+    margin: 10px 0;
+}
+
+.terms-container input {
+    flex-shrink: 0;
+    display: inline-block;
+    width: fit-content;
+}
+
+.terms-container label {
+    font-size: 18px;
+    margin: 10px 0;
+    width: 320px;
+    padding-left: 20px;
+    text-align: left;
+}
+
+
+/* inputs fields container */
+
+
+
+
+/* book info container */
+
+.main__book_info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+    margin: 10px 0;
+}
+
+.main__book_info h2 {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.main__book_info p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.main__book_info img {
+    /* width: 200px; */
+    height: 175px;
+    margin: 10px;
+}
+
+/* book info container */
+
+
+
+
+
+/* payment container */
+
+#price-tag {
+    padding-top: 50px;
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+#pay_now_btn {
+    background-color: blue;
+    color: #fff;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0;
+    width: 200px;
+    height: 44px;
+}
