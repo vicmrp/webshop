@@ -4,27 +4,3 @@
 /* The header element is a part of the global layout,                   */
 /* and should therefore be styled in the global-style.css file.         */
 
-
-.header-flex-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-}
-
-.header-flex-container>div {
-    margin: 10px;
-}
-
-button#header-logout-btn {
-    background-color: #ff0000;
-    /* Red color */
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 8px;
-    display: none;
-}
