@@ -1,3 +1,0 @@
-Prøv at lave descriptive programming
-
-Lav entity som hedder det samme som tabellen

@@ -1,7 +1,0 @@
-{
-    "require": {
-        "phpmailer/phpmailer": "^6.6",
-        "phpunit/phpunit": "*",
-        "symfony/var-dumper": "^6.0"
-    }
-}

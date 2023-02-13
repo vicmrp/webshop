@@ -1,15 +1,15 @@
 <?php
+// This file is acccessible from every class in this project. It is accessed through global-requirements.php
+// This means that every class has access to all global variables, function.
+// all global function is namespaced with "g_".
 
-//TODO lav en utility class saa library.php bliver Objekt Orienteret.
 
-// Alle globale functioner som ikke er en del af en klasse
-// skal ligge i denne fil,
 
-// globale funtioner skal have underscore foran
+
+// -------------- g_generate_random_string(int $length = 10, bool $lowercase = true) : string -------------- //
 
 function g_generate_random_string(int $length = 10, bool $lowercase = true)
 {
-    // $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $characters = '23456789abcdefghkmnpqrstuvwxyzABCDEFGHJKMNOPQRSTUVWXYZ'; // uden ijlo01IL
     $charactersLength = strlen($characters);
     $randomString = '';
@@ -23,59 +23,47 @@ function g_generate_random_string(int $length = 10, bool $lowercase = true)
 
 
 
-
-
-
-// -------------- _to_top_folder($top_folder) : string '../../' -------------- //
-// Denne funtion kan automatisk definere finde ud af hvor
-// mange undermapper den en fil ligger.
-// api/quickpay/callback.php skal require
-// classes/api/quickpay
-//
-// Derfor skal det sta saledes:
-// require '../../'classes/api/quickpay
-
-// implementering
-// looper fra nederste submappe op imod target mappe (puplic)
-// og tæller for hvert hop op ad.
-// I vores eksempel hopper vi to gange op.
-// Functionen hvil altsa retunere en string '../../'
-
-// svagheder. du ma ikke have en under mappe som har
-// samme navn som root folder.
-
-// parameter (root_folder)
-// function _to_top_folder($top_folder)
-// {
-//     return dirname(__FILE__);
-// }
-// -------------- _to_top_folder($top_folder) : string '../../' -------------- //
-
-
 // denne funtion benytter at en dirname(__FILE__) retunere
 // den fulde sti hen til der hvor filen ligger
 // derfor sa længe at library.php ligger i root (top folderen)
 // sa kan du benytte denne funtion til et relativt folder punkt
-function g_from_top_folder()
+
+// returns the full path to the top folder of the project
+// If the project is located here /var/www/victorswebframework.local
+// Then the function will return /var/www/victorswebframework.local
+function g_from_top_folder() : string 
 {
     return dirname(__FILE__);
 }
 
 
 
+// Define a function called "g_scandir" which takes in a string argument "$dir" and returns an array
 function g_scandir(string $dir): array
 {
+    // Use the "scandir" function to get a list of all files and directories in "$dir"
+    // Use "array_diff" to remove "." and ".." from the list, as they are not useful
+    // Use "array_values" to re-index the resulting array
+
+    // array_values(); for example, given an array $array = array('a' => 1, 'b' => 2, 'c' => 3), calling array_values($array) would return [1, 2, 3]. 
+    // The original keys are lost, and the values are re-indexed starting from zero.
     return array_values(array_diff(scandir($dir), array('..', '.')));
+
+
 }
 
 
 
-function _return_evaluated_user_credentials()
-{
-}
 
-function g_get_all_namespaces(array $folders)
+
+// -------------- g_get_all_namespaces(array $folders) : void -------------- //
+// This function will require all classes in the given folders and subfolders
+// This automates access to namespaces and classes
+// Now access a namespace, simply require global-requirements.php
+function g_get_all_namespaces(array $folders) : void
 {
+
+    // handles folders notation for windows and linux
     switch (PHP_OS) {
         case 'WINNT':
             $slash = '\\';
@@ -85,8 +73,10 @@ function g_get_all_namespaces(array $folders)
             break;
     }
 
+
+    // Loops through all folders and subfolders given in the array
+    // and requires all files, which should be a class.
     foreach ($folders as $folder) {
-        // ----- namespaces - inkludere alle klasserne ----- //
         $directories = new RecursiveDirectoryIterator(g_from_top_folder() . $slash . $folder);
         foreach (new RecursiveIteratorIterator($directories) as $filename) {
             try {
@@ -97,6 +87,8 @@ function g_get_all_namespaces(array $folders)
         }
     }
 }
+
+
 
 
 function g_find_object_by_id($id, $array_of_objects)
@@ -110,26 +102,6 @@ function g_find_object_by_id($id, $array_of_objects)
 }
 
 
-
-
-
-
-
-
-
-// TODO skal slettes, skal ikke bruges.
-// function g_generate_flat_dto_from_web_request(object $data, $dto) {
-
-//     $dto = new $dto();
-//     $std_object = $data;
-//     foreach ($std_object as $std_object_property => $std_object_value) {
-//         foreach ($dto as $dto_object_property => $dto_object_value) {
-//             if ($std_object_property == $dto_object_property)
-//                 $dto->$dto_object_property = $std_object_value;
-//         }
-//     }
-//     return $dto;
-// }
 
 
 
