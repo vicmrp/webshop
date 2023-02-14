@@ -1,15 +1,30 @@
-# Tillad ikke at kunne se fil struktur
-# Options -Indexes
+RewriteEngine On
 
-# allow Indexes
+# This code will check if HTTPS is not enabled (RewriteCond %{HTTPS} off), 
+# and if so, it will redirect to HTTPS (RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]).
+# The [L,R=301] flags indicate that this is a "last" rule (meaning that no more rules will be processed after this one), 
+# and that it should return a 301 status code (which indicates that the page has permanently moved to a new location).
+# 
+# Make sure to place this code at the beginning of your .htaccess file to ensure that it takes precedence over any other rules.
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+
+# Redirect all pages to app-is-down-msg
+# Redirect specific pages to app-is-down-msg
+RewriteRule ^(home|login|logout|callback|admin)/?$ /app-is-down-msg/ [L,R=301]
+
+
+# Tillad at kunne se filer i mappen - = ikke tillad at se filer i mappen + = tillad at se filer i mappen
 Options +Indexes
+# Options -Indexes
 
 # Order Deny,Allow
 # Deny from all
 
 # Allow from private IP ranges
 # Allow from 10.0.0.0/8
-Allow from 172.16.0.0/12
+# Allow from 172.16.0.0/12
 # Allow from 192.168.0.0/16
 
 # Quickpay - callback

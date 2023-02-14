@@ -5,3 +5,12 @@
 /* and should therefore be styled in the global-style.css file.         */
 
 
+.footer__text {
+    text-align: center;
+    color: black;
+  }
+
+  .footer__link {
+    text-decoration: underline;
+    color: black;
+  }
