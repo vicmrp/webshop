@@ -1,5 +1,6 @@
 /* Et skal kun bruge en - altså et id må kun bruges til et element */
 /* som udgangspunkt bruger man class'er til at style med og id til at scriptet med. */
+
 * {
     margin: 0;
     padding: 0;
@@ -8,3 +9,36 @@
     box-sizing: border-box;
 }
 
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+header {
+    /* styling for header goes here */
+    height: auto;
+}
+
+
+main {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+footer {
+    height: 50px;
+    background-color: lightgrey;
+    /* other styling for the footer */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
