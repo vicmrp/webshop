@@ -1,3 +1,15 @@
+# This code will check if HTTPS is not enabled (RewriteCond %{HTTPS} off), 
+# and if so, it will redirect to HTTPS (RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]).
+# The [L,R=301] flags indicate that this is a "last" rule (meaning that no more rules will be processed after this one), 
+# and that it should return a 301 status code (which indicates that the page has permanently moved to a new location).
+# 
+# Make sure to place this code at the beginning of your .htaccess file to ensure that it takes precedence over any other rules.
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+
+
 # Tillad ikke at kunne se fil struktur
 # Options -Indexes
 
