@@ -10,9 +10,11 @@ RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 
+# If the app is down, redirect all pages to app-is-down-msg
 # Redirect all pages to app-is-down-msg
 # Redirect specific pages to app-is-down-msg
-RewriteRule ^(home|login|logout|callback|admin)/?$ /app-is-down-msg/ [L,R=301]
+# 
+# RewriteRule ^(home|login|logout|callback|admin)/?$ /app-is-down-msg/ [L,R=301]
 
 
 # Tillad at kunne se filer i mappen - = ikke tillad at se filer i mappen + = tillad at se filer i mappen
