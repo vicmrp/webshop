@@ -9,15 +9,7 @@
             "name": "Home",
             "request": "launch",
             "type": "msedge",
-            "url": "http://sandbox.vezit.net/home/",
-            "webRoot": "${workspaceFolder}/public"
-        },
-        {
-            "version": "stable",
-            "name": "Basket",
-            "request": "launch",
-            "type": "msedge",
-            "url": "http://sandbox.vezit.net/basket/",
+            "url": "http://vezit.net/home/",
             "webRoot": "${workspaceFolder}/public"
         },
         {
