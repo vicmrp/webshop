@@ -24,15 +24,18 @@
 // Now $g_postnord_apikey is defined in this class or scope.
 // echo $g_postnord_apikey  >> <API-KEY>;
 
-$g_domain_name = basename(__DIR__);
+// A boolean that determines if the website is in sandbox mode or not.
+// Other global variables are set based on this variable.
+$g_sandbox_mode_enabled = (bool)json_decode(file_get_contents(__DIR__ . '/secret/sandbox.json'), false)->sandbox_mode_enabled;
 
-// if parent folder is 'sandbox.vezit.net' then set $g_quickpay_apikey to quickpay_apikey_sandbox'
+// if $g_sandbox_mode_enabled is true then set $g_quickpay_apikey to quickpay_apikey_sandbox'
 // else set $g_quickpay_apikey to quickpay_apikey
-$g_quickpay_apikey = file_get_contents(__DIR__ . '/secret/quickpay_apikey' . ($g_domain_name === 'sandbox.vezit.net' ? '_sandbox' : ''));
+$g_quickpay_apikey = file_get_contents(__DIR__ . '/secret/quickpay_apikey' . ($g_sandbox_mode_enabled ? '_sandbox' : ''));
 
-// if parent folder is 'sandbox.vezit.net' then set $g_db_conn to db_conn_sandbox'
+// if $g_sandbox_mode_enabled is true then set $g_db_conn to db_conn_sandbox'
 // else set $g_db_conn to db_conn
-$g_db_conn = json_decode(file_get_contents(__DIR__ . '/secret/db_conn' . ($g_domain_name === 'sandbox.vezit.net' ? '_sandbox' : '') . '.json'));
+$g_db_conn = json_decode(file_get_contents(__DIR__ . '/secret/db_conn' . ($g_sandbox_mode_enabled ? '_sandbox' : '') . '.json'));
+
 
 $g_smtp_mail_credential = json_decode(file_get_contents(__DIR__ . '/secret/smtp_mail_credential.json'));
 $g_order_id_length      = 20; // The length of the order id
