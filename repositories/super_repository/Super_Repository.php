@@ -82,7 +82,7 @@ class Super_Repository
 
 
     // -------- WRITE --------
-    public function insert_entity($object_to_be_inserted, $table, array $fields_to_ignore = []): bool
+    public function insert_entity(object $object_to_be_inserted, string $table, array $fields_to_ignore = []): bool
     {
         //WARNING vær opmærksom pa at $fields_to_ignore maske godt kan give problemer
 
