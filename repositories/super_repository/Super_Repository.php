@@ -14,7 +14,7 @@ class Super_Repository
 
 
 
-
+    // ------------ SINGLETON PATTERN ENDS HERE -------------- //
     public static function get_instance(Mysqli $mysqli = null)
     {
         // Laver en instance hvis den ikke findes.
@@ -38,7 +38,7 @@ class Super_Repository
     ) {
         self::$_times_instantiated++;
     }
-
+    // ------------ SINGLETON PATTERN ENDS HERE -------------- //
 
     // -------- READ --------
     public function get_all(string $table): array
