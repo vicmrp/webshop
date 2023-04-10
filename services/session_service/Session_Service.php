@@ -23,11 +23,11 @@ use vezit\models\session\order\Order;
 use vezit\models\session\shipment\address\Address as Shipment_Address;
 use vezit\models\session\shipment\Shipment;
 use vezit\repositories\product_repository\Product_Repository;
-use vezit\repositories\session_repository\Session_Repository;
+use vezit\repositories\order_repository\Order_Repository;
 use vezit\services\postnord_service\Postnord_Service;
 use vezit\services\quickpay_service\Quickpay_Service;
 use vezit\services\session_variables_service\Session_Variables_Service;
-
+use vezit\classes\error\Error;
 use vezit\dto\put_update_order_items_request\Put_Update_Order_Items_Request;
 use vezit\dto\put_update_order_items_response\Put_Update_Order_Items_Response;
 
@@ -42,47 +42,88 @@ use vezit\dto\put_update_shipment_response\Put_Update_Shipment_Response;
 
 require __DIR__ . '/../../global-requirements.php';
 
-class Session_Service
+class Session_Service 
 {
     private static $_times_instantiated = 0;
     private static $_instance = null;
 
 
 
-
+    // ------------ SINGLETON PATTERN -------------- //
     public static function get_instance(
-        Session_Repository              $session_repository         = null,
-        Product_Repository              $product_repository         = null,
-        Dawa_API                        $dawa_api                   = null,
-        Quickpay_Service                $quickpay_service           = null,
-        Session_Variables_Service       $session_variables_service  = null,
-    ) : Session_Service
-    {
-        return (null === self::$_instance) ? new Session_Service(
-
-            null === $session_repository         ? Session_Repository::get_instance()        : $session_repository
-            ,null === $product_repository        ? Product_Repository::get_instance()        : $product_repository
-            ,null === $dawa_api                  ? Dawa_API::get_instance()                  : $dawa_api
-            ,null === $quickpay_service          ? Quickpay_Service::get_instance()          : $quickpay_service
-            ,null === $session_variables_service ? Session_Variables_Service::get_instance() : $session_variables_service
-
-        ) : self::$_instance;
+        Order_Repository          $order_repository         = null,
+        Quickpay_Service          $quickpay_service         = null,
+        Session_Variables_Service $session_variables_service= null
+    ): Session_Service {
+        try {
+            if (null === self::$_instance) {
+                $order_repo = $order_repository ?? Order_Repository::get_instance();
+                $quickpay = $quickpay_service ?? Quickpay_Service::get_instance();
+                $session_vars = $session_variables_service ?? Session_Variables_Service::get_instance();
+                self::$_instance = new Session_Service($order_repo, $quickpay, $session_vars);
+            }
+            return self::$_instance;
+        } catch (\Exception $e) {
+            // Log the error message in the apache error log
+            Error::log($e->getMessage() . ' ' . $e->getTraceAsString());
+        
+            // Check if the server is in sandbox mode
+            global $g_sandbox_mode_enabled;
+            if ($g_sandbox_mode_enabled) {
+                // If the server is in sandbox mode, display the error message and callstack to the client
+                // This is useful for debugging
+                $errorJson = Error::toJson($e->getCode(), $e->getMessage(), [
+                    "callstack" => $e->getTraceAsString(),
+                    "file" => $e->getFile()
+                ]);
+                echo $errorJson;
+                exit;
+            } else {
+                // If the server is not in sandbox mode, display a generic error message to the client
+                // This is to prevent sensitive information from being displayed to the client
+                echo 'Internal server error';
+                exit;
+            }
+        }
     }
 
-    public static function destroy_instance() : void {
+    public static function destroy_instance(): void
+    {
         self::$_instance = null;
     }
 
     private function __construct(
-        private Session_Repository          $_session_repository
-        ,private Product_Repository         $_product_repository
-        ,private Dawa_API                   $_dawa_api
-        ,private Quickpay_Service           $_quickpay_service
-        ,private Session_Variables_Service  $_session_variables_service
+        private Order_Repository           $_session_repository,
+        private Quickpay_Service           $_quickpay_service,
+        private Session_Variables_Service  $_session_variables_service
     ) {
-        self::$_instance = $this;
-        self::$_times_instantiated++;
+        try {
+            self::$_instance = $this;
+            self::$_times_instantiated++;
+        } catch (\Exception $e) {
+            // Log the error message in the apache error log
+            Error::log($e->getMessage() . ' ' . $e->getTraceAsString());
+        
+            // Check if the server is in sandbox mode
+            global $g_sandbox_mode_enabled;
+            if ($g_sandbox_mode_enabled) {
+                // If the server is in sandbox mode, display the error message and callstack to the client
+                // This is useful for debugging
+                $errorJson = Error::toJson($e->getCode(), $e->getMessage(), [
+                    "callstack" => $e->getTraceAsString(),
+                    "file" => $e->getFile()
+                ]);
+                echo $errorJson;
+                exit;
+            } else {
+                // If the server is not in sandbox mode, display a generic error message to the client
+                // This is to prevent sensitive information from being displayed to the client
+                echo 'Internal server error';
+                exit;
+            }
+        }
     }
+    // ------------ SINGLETON PATTERN -------------- //
 
 
 
@@ -131,8 +172,7 @@ class Session_Service
 
 
 
-
-    public function get_session($order_id = null) : Get_Session_Response
+    public function get_session($order_id = null): Get_Session_Response
     {
 
         $get_session_response = $this->_session_variables_service->get_get_session_response($order_id);
@@ -183,7 +223,7 @@ class Session_Service
 
 
 
-    public function get_payment_link() : Get_Payment_Link_Response
+    public function get_payment_link(): Get_Payment_Link_Response
     {
         // Return a payment link if...
         $get_session_response = $this->_session_variables_service->get_get_session_response();
@@ -195,22 +235,21 @@ class Session_Service
 
             // Insert session to database
             $session_entity = new Session(
-                $session_id = null
-                ,$order_id  = $get_session_response->session->order->id
-                ,$datetime_created                               = null
-                ,$datetime_last_modified                         = null
-                ,$order_status_payment_accepted                  = $get_session_response->session->order->status->payment->accepted
-                ,$order_status_payment_currency                  = $get_session_response->session->order->status->payment->currency
-                ,$order_status_payment_amount                    = $get_session_response->session->order->status->payment->amount
-                ,$order_status_payment_quickpay_id               = $get_session_response->session->order->status->payment->quickpay_id
-                ,$order_status_email_invoice_sent_to_customer    = $get_session_response->session->order->status->email->invoice_sent_to_customer
-                ,$customer_fullname                              = $get_session_response->session->customer->fullname
-                ,$customer_tos_and_tac_has_been_accepted         = $get_session_response->session->customer->tos_and_tac_has_been_accepted
-                ,$customer_contact_email                         = $get_session_response->session->customer->contact->email
+                $session_id = null,
+                $order_id  = $get_session_response->session->order->id,
+                $datetime_created                               = null,
+                $datetime_last_modified                         = null,
+                $order_status_payment_accepted                  = $get_session_response->session->order->status->payment->accepted,
+                $order_status_payment_currency                  = $get_session_response->session->order->status->payment->currency,
+                $order_status_payment_amount                    = $get_session_response->session->order->status->payment->amount,
+                $order_status_payment_quickpay_id               = $get_session_response->session->order->status->payment->quickpay_id,
+                $order_status_email_invoice_sent_to_customer    = $get_session_response->session->order->status->email->invoice_sent_to_customer,
+                $customer_fullname                              = $get_session_response->session->customer->fullname,
+                $customer_tos_and_tac_has_been_accepted         = $get_session_response->session->customer->tos_and_tac_has_been_accepted,
+                $customer_contact_email                         = $get_session_response->session->customer->contact->email
             );
 
             $this->_session_repository->insert($session_entity);
-
         }
 
         $this->_session_variables_service->update_put_session_response($get_session_response);
@@ -250,7 +289,8 @@ class Session_Service
 
 
 
-    public function update_customer(Put_Update_Customer_Request $update_customer_request): Put_Update_Customer_Response {
+    public function update_customer(Put_Update_Customer_Request $update_customer_request): Put_Update_Customer_Response
+    {
 
 
         $session_response = $this->_session_variables_service->get_get_session_response();
@@ -359,44 +399,5 @@ class Session_Service
 
         // details are satisfied
         return true;
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

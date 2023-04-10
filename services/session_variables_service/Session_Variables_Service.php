@@ -17,7 +17,7 @@ use vezit\models\session\order\status\Status;
 use vezit\models\session\order\status\payment\Payment;
 use vezit\models\session\order\status\email\Email;
 use vezit\dto\get_payment_link_response\Get_Payment_Link_Response;
-use vezit\repositories\session_repository\Session_Repository;
+use vezit\repositories\order_repository\Order_Repository;
 
 require __DIR__ . '/../../global-requirements.php';
 
@@ -26,42 +26,42 @@ require __DIR__ . '/../../global-requirements.php';
 
 class Session_Variables_Service
 {
-    private static $_times_instantiated = 0;
-    private static $_times_destroyed = 0;
-    private static $_instance = null;
+    
 
+// ------------ SINGLETON PATTERN STARTS HERE -------------- //
+// Declare static properties
+private static $_times_instantiated = 0; // keeps track of how many times the class has been instantiated
+private static $_times_destroyed = 0; // keeps track of how many times the class has been destroyed
+private static $_instance = null; // the single instance of the class
 
-
-
-    public static function get_instance(Session_Repository $session_repository = null,)
-    {
-        return null === self::$_instance ? new Session_Variables_Service(
-            null === $session_repository ? Session_Repository::get_instance() : $session_repository,
-        ) : self::$_instance;
+// Returns the single instance of the class
+public static function get_instance(?Order_Repository $order_repository = null) {
+    // If the instance has not been created, create a new instance with the given order repository
+    if (null === self::$_instance) {
+        self::$_instance = new Session_Variables_Service(
+            $order_repository ?? Order_Repository::get_instance()
+        );
     }
+    // Return the single instance of the class
+    return self::$_instance;
+}
 
-
-
-    public static function destroy_instance(): void
-    {
-        if (null !== self::$_instance) {
-            self::$_times_destroyed++;
-            self::$_instance = null;
-        }
+// Destroys the instance of the class
+public static function destroy_instance(): void {
+    // If the instance has been created, destroy it and increment the times destroyed counter
+    if (null !== self::$_instance) {
+        self::$_times_destroyed++;
+        self::$_instance = null;
     }
+}
 
-
-
-    private function __construct(private Session_Repository $_session_repository)
-    {
-        self::$_instance = $this;
-        self::$_times_instantiated++;
-    }
-
-
-
-
-
+// Creates the instance of the class with the given order repository
+private function __construct(private Order_Repository $_order_repository) {
+    // Set the single instance of the class and increment the times instantiated counter
+    self::$_instance = $this;
+    self::$_times_instantiated++;
+}
+// ------------ SINGLETON PATTERN ENDS HERE -------------- //
 
 
 
@@ -204,7 +204,7 @@ class Session_Variables_Service
 
 
     // --------- session_response --------- //
-    public function get_get_session_response($order_id = null): Get_Session_Response
+    public function get_session_response($order_id = null): Get_Session_Response
     {
         $SESSION_RESPONSE = 'get_session_response';
 
@@ -225,9 +225,9 @@ class Session_Variables_Service
         // Get session from database if order_id is set
         if (null !== $order_id) {
 
-            $session_entity = $this->_session_repository->get_by_order_id($order_id);
+            $session_entity = $this->_order_repository->get_by_order_id($order_id);
 
-            $session_response = $this->get_get_session_response();
+            $session_response = $this->get_session_response();
 
             $session_response->session->customer = new Customer(
                 $fullname = $session_entity->customer_fullname,

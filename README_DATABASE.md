@@ -16,3 +16,7 @@ sandbox_user_vezit_net_v1_0_0
 The database contains orders table and orders_logs table 
 
 The current state of this project currently uses the following database version: 1.0.0
+
+
+Entity models explanation:
+The entity model will represent an entry int the database.

@@ -8,6 +8,7 @@ class Order {
         public ?string      $order_id = null,
         public ?\DateTime   $datetime_created = null,
         public ?\DateTime   $datetime_modified = null,
+        public ?bool        $anonymous = null,
         public ?string      $order_status_payment_currency = null,
         public ?int         $order_status_payment_total_amount = null,
         public ?string      $order_status_payment_quickpay_id = null,

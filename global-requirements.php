@@ -28,23 +28,41 @@
 // domain name based on the parent folder name
 $g_domain_name = basename(__DIR__);
 
+
+
 // A boolean that determines if the website is in sandbox mode or not.
 // Other global variables are set based on this variable.
+//
+// it is determined by the content of the file secret/sandbox.json
+// if the file contains the following:
+// {
+//    "sandbox_mode_enabled": true
+// }
+// then $g_sandbox_mode_enabled is true
 $g_sandbox_mode_enabled = (bool)json_decode(file_get_contents(__DIR__ . '/secret/sandbox.json'), false)->sandbox_mode_enabled;
+
+
 
 // if $g_sandbox_mode_enabled is true then set $g_quickpay_apikey to quickpay_apikey_sandbox'
 // else set $g_quickpay_apikey to quickpay_apikey
 $g_quickpay_apikey = file_get_contents(__DIR__ . '/secret/quickpay_apikey' . ($g_sandbox_mode_enabled ? '_sandbox' : ''));
 
-// variable that contains the current database version
-$g_db_version = "v_1_0_0";
+// Set the current database version
+$g_db_version = "v1_0_0";
 
-// if $g_sandbox_mode_enabled is true then set $g_db_conn to db_conn_sandbox'
-// else set $g_db_conn to db_conn
-$g_db_conn = json_decode(file_get_contents(__DIR__ . '/secret/db_conn' . ($g_sandbox_mode_enabled ? '_sandbox' : '') . '.json'));
+// Check if the sandbox mode is enabled
+$g_db_conn_file = '/secret/db_conn.json';
+if ($g_sandbox_mode_enabled) {
+// If sandbox mode is enabled, use the sandbox database connection configuration file
+$g_db_conn_file = '/secret/db_conn_sandbox.json';
+}
 
-// modify the g_db_conn object to include the database version
-$g_db_conn->dbname = $g_db_conn->dbname . '_' . $g_db_version;
+// Load the database connection configuration from the file
+$g_db_conn = json_decode(file_get_contents(__DIR__ . $g_db_conn_file));
+
+// Modify the database name to include the database version
+// For example, the database name will become user_vezit_net_v1_0_0
+$g_db_conn->dbname .= '_' . $g_db_version;
 
 
 $g_smtp_mail_credential = json_decode(file_get_contents(__DIR__ . '/secret/smtp_mail_credential.json'));

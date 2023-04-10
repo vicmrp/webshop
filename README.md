@@ -86,3 +86,9 @@ Maintaining codebase: With clear separation of abstraction layers and support fo
 Reusing code: The framework's page-based client-side structure allows for the reuse of code, specifically the header and footer, which can be updated in one central location, making it easier to maintain a consistent look and feel across multiple pages.
 
 
+
+Database:
+
+* For unittest, use the database unittest_testuser_vezit_net_vx_x_x.
+* For development mode, use the database sandbox_testuser_vezit_net_vx_x_x.
+* For production mode, use the database user_vezit_net_vx_x_x.

@@ -12,12 +12,14 @@ use vezit\entities\Orders;
 // It is a singleton class and should be instantiated using the get_instance() method.
 
 
+
 class Order_Repository
 {
 
 
     // ----------- SINGLETON PATTERN STARTS HERE ------------- //
-    private static $_times_instantiated = 0;
+    private static int $_times_instantiated = 0;
+    private static int $_times_destroyed = 0;
     private static $_instance = null;
 
     public static function get_instance(Super_Repository $super_repository = null)
@@ -36,6 +38,15 @@ class Order_Repository
         self::$_times_instantiated++;
     }
 
+    // Destroy the current instance of the Super_Repository class
+    public static function destroy_instance(): void
+    {
+        if (null !== self::$_instance) {
+            self::$_times_destroyed++;
+            self::$_instance = null;
+        }
+    }
+
     // ------------ SINGLETON PATTERN ENDS HERE -------------- //
 
 
@@ -51,7 +62,7 @@ class Order_Repository
     public function get_all($associative_key_foreach_object = 'order_id'): Orders
     {
         $orders = $this->_get_all_from__order_table($associative_key_foreach_object);
-        
+
         return $orders;
     }
 
@@ -126,16 +137,39 @@ class Order_Repository
 
 
 
-    private function _get_all_from__order_table($associative_key_foreach_object): Orders
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private function _get_all_from__order_table(string $associative_key_foreach_object): Orders
     {
         $raw_entitities = $this->_super_repository->get_all($table = "orders");
 
         $orders = new Orders();
         $orders_objects = [];
-
+        
         // Convert the raw entities to Order objects
-        array_walk($raw_entitities, function ($raw_entity) use ($orders_objects, $associative_key_foreach_object) : void {
-            $orders_objects += [$raw_entity[$associative_key_foreach_object] => $this->_construct_order_object_from_raw_entity($raw_entity)];
+        array_walk($raw_entitities, function ($raw_entity) use (&$orders_objects, $associative_key_foreach_object): void {
+            $orders_objects[$raw_entity[$associative_key_foreach_object]] = $this->_construct_order_object_from_raw_entity($raw_entity);
         });
 
         // Put the order_objects into the Orders object
@@ -182,11 +216,15 @@ class Order_Repository
 
     private function _construct_order_object_from_raw_entity($raw_entity): Order
     {
+        $datetime_created = \DateTime::createFromFormat('Y-m-d H:i:s', $raw_entity['datetime_created']);
+        $datetime_modified = \DateTime::createFromFormat('Y-m-d H:i:s', $raw_entity['datetime_modified']);
+    
         $order = new Order(
             $pk = $raw_entity['pk'],
             $order_id = $raw_entity['order_id'],
-            $datetime_created = $raw_entity['datetime_created'],
-            $datetime_modified = $raw_entity['datetime_modified'],
+            $datetime_created = $datetime_created,
+            $datetime_modified = $datetime_modified,
+            $anonymous = $raw_entity['anonymous'],
             $order_status_payment_currency = $raw_entity['order_status_payment_currency'],
             $order_status_payment_total_amount = $raw_entity['order_status_payment_total_amount'],
             $order_status_payment_quickpay_id = $raw_entity['order_status_payment_quickpay_id'],
@@ -195,9 +233,10 @@ class Order_Repository
             $customer_tos_and_tac_has_been_accepted = $raw_entity['customer_tos_and_tac_has_been_accepted'],
             $customer_contact_email = $raw_entity['customer_contact_email'],
         );
-
+    
         return $order;
     }
+
     // --------------- PRIVATE METHODS END HERE --------------- //
 
 }
