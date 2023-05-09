@@ -13,6 +13,7 @@ use vezit\entities\Session;
 use vezit\entities\Sessions;
 use vezit\entities\Session_Order_Items;
 use vezit\entities\Session_Order_Item;
+use vezit\entities\Order as Order_Entity;
 
 use vezit\models\session\customer\address\Address;
 use vezit\models\session\customer\company\Company;
@@ -175,7 +176,7 @@ class Session_Service
     public function get_session($order_id = null): Get_Session_Response
     {
 
-        $get_session_response = $this->_session_variables_service->get_get_session_response($order_id);
+        $get_session_response = $this->_session_variables_service->get_session_response($order_id);
         return $get_session_response;
     }
 
@@ -226,7 +227,7 @@ class Session_Service
     public function get_payment_link(): Get_Payment_Link_Response
     {
         // Return a payment link if...
-        $get_session_response = $this->_session_variables_service->get_get_session_response();
+        $get_session_response = $this->_session_variables_service->get_session_response();
 
         $get_payment_link_response = $this->_quickpay_service->get_payment_link($get_session_response);
 
@@ -234,22 +235,22 @@ class Session_Service
         if (null !== $get_payment_link_response->payment_link) {
 
             // Insert session to database
-            $session_entity = new Session(
-                $session_id = null,
-                $order_id  = $get_session_response->session->order->id,
+            $order_entity = new Order_Entity(
+                $pk = null,
+                $order_id = $get_session_response->session->order->id,
                 $datetime_created                               = null,
                 $datetime_last_modified                         = null,
-                $order_status_payment_accepted                  = $get_session_response->session->order->status->payment->accepted,
-                $order_status_payment_currency                  = $get_session_response->session->order->status->payment->currency,
-                $order_status_payment_amount                    = $get_session_response->session->order->status->payment->amount,
-                $order_status_payment_quickpay_id               = $get_session_response->session->order->status->payment->quickpay_id,
-                $order_status_email_invoice_sent_to_customer    = $get_session_response->session->order->status->email->invoice_sent_to_customer,
-                $customer_fullname                              = $get_session_response->session->customer->fullname,
-                $customer_tos_and_tac_has_been_accepted         = $get_session_response->session->customer->tos_and_tac_has_been_accepted,
-                $customer_contact_email                         = $get_session_response->session->customer->contact->email
+                $anonymous                                      = false,  
+                $order_status_payment_currency = $get_session_response->session->order->status->payment->currency,
+                $order_status_payment_total_amount = $get_session_response->session->order->status->payment->amount,
+                $order_status_payment_quickpay_id = $get_session_response->session->order->status->payment->quickpay_id,
+                $order_status_email_invoice_and_product_sent_to_customer = $get_session_response->session->order->status->email->invoice_sent_to_customer,
+                $customer_fullname = $get_session_response->session->customer->fullname,
+                $customer_tos_and_tac_has_been_accepted = $get_session_response->session->customer->tos_and_tac_has_been_accepted,
+                $customer_contact_email = $get_session_response->session->customer->contact->email,
             );
 
-            $this->_session_repository->insert($session_entity);
+            $this->_session_repository->insert($order_entity);
         }
 
         $this->_session_variables_service->update_put_session_response($get_session_response);
@@ -293,7 +294,7 @@ class Session_Service
     {
 
 
-        $session_response = $this->_session_variables_service->get_get_session_response();
+        $session_response = $this->_session_variables_service->get_session_response();
 
         $session_response->session->customer = new Customer(
             $fullname                           = $update_customer_request->fullname,
@@ -315,7 +316,7 @@ class Session_Service
 
         $this->_session_variables_service->update_put_session_response($session_response);
 
-        $update_customer_response = new Put_Update_Customer_Response($this->_session_variables_service->get_get_session_response()->session->customer);
+        $update_customer_response = new Put_Update_Customer_Response($this->_session_variables_service->get_session_response()->session->customer);
 
         return $update_customer_response;
     }

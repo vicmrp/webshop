@@ -10,10 +10,10 @@ require_once 'Mysqli_Test.php';
 class Super_Repository_Test extends TestCase
 {
 
-    private string $db_server = 'database-service';
+    private string $db_server = 'database';
     private string $db_user = 'testuser';
     private string $db_pass = 'Passw0rd';
-    private string $db_unittest_name_prefix = 'unittest_testuser_vezit_net_';
+    private string $db_unittest_name_prefix = 'sandbox_testuser_vezit_net_';
     private string $db_version;
 
     protected function setUp(): void

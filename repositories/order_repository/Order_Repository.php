@@ -92,7 +92,10 @@ class Order_Repository
 
 
 
-
+    public function update(Order $order): void
+    {
+        $this->_update__order_table($order);
+    }
 
 
 
@@ -138,6 +141,12 @@ class Order_Repository
 
 
 
+    function _update__order_table(Order $order): void
+    {
+        // Ignores these field because they created by the database
+        $fields_to_ignore = ['pk', 'datetime_created', 'datetime_modified'];
+        $this->_super_repository->update_entity($order, "orders", 'order_id', $order->order_id, $fields_to_ignore);
+    }
 
 
 

@@ -3,7 +3,7 @@
 require __DIR__.'/../../global-requirements.php';
 use vezit\classes\mail as Mail;
 use vezit\services\session_service\Session_Service;
-use vezit\repositories\session_repository\Session_Repository;
+use vezit\repositories\order_repository\Order_Repository;
 use vezit\services\quickpay_service\Quickpay_Service;
 use vezit\entities\Session;
 use vezit\entities\Sessions;
@@ -40,16 +40,22 @@ if (isset($_GET['order_id'])) {
 
 
         // Capture payment in quickpay
-        $quickpay_service->capture_payment($session_before_update->order->status->payment->quickpay_id, 14900);
+        $quickpay_service->capture_payment($session_before_update->order->status->payment->quickpay_id, 4900);
 
 
+
+        $order_repository = Order_Repository::get_instance();
+        $order_entity = $order_repository->get_by_order_id($order_id = $session_before_update->order->id);
+        $order_entity->order_status_payment_accepted = true;
+        $order_entity->order_status_email_invoice_sent_to_customer = true;
+        $order_repository->update($pk = $order_entity->session_pk, $order_entity = $order_entity);
         // Update session to database
-        $session_repository = Session_Repository::get_instance();
-        $session_entity = $session_repository->get_by_order_id($order_id = $session_before_update->order->id);
-        $session_entity->order_status_payment_accepted = true;
-        $session_entity->order_status_email_invoice_sent_to_customer = true;
-        $session_repository->update($pk = $session_entity->session_pk, $session_entity = $session_entity);
-
+        $order_repository = Order_Repository::get_instance();
+        $orders = $order_repository->get_all($order_id = $session_before_update->order->id);
+        $order = $orders->get()[$session_before_update->order->id];
+        $order->order_status_payment_accepted = true;
+        $order->order_status_email_invoice_sent_to_customer = true;
+        $order_repository->update($order);
 
 
 

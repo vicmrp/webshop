@@ -46,6 +46,30 @@
     margin: 10px 0;
 }
 
+.anonymous-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 80%;
+    margin: 10px 0;
+}
+
+.anonymous-container input {
+    flex-shrink: 0;
+    display: inline-block;
+    width: fit-content;
+}
+
+.anonymous-container label {
+    font-size: 18px;
+    margin: 10px 0;
+    width: 320px;
+    padding-left: 20px;
+    text-align: left;
+}
+
+
+
 .terms-container input {
     flex-shrink: 0;
     display: inline-block;

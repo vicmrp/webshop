@@ -48,7 +48,7 @@ $g_sandbox_mode_enabled = (bool)json_decode(file_get_contents(__DIR__ . '/secret
 $g_quickpay_apikey = file_get_contents(__DIR__ . '/secret/quickpay_apikey' . ($g_sandbox_mode_enabled ? '_sandbox' : ''));
 
 // Set the current database version
-$g_db_version = "v1_0_0";
+$g_db_version = "v1_0_1";
 
 // Check if the sandbox mode is enabled
 $g_db_conn_file = '/secret/db_conn.json';

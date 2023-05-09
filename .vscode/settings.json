@@ -2,5 +2,11 @@
     "files.exclude": {
         "**/.git": true
     },
-    "workbench.colorTheme": "Default Light+", // or "Default Dark+" or "Tokyo Night"
+    // "workbench.colorTheme": "Default Light+", // or "Default Dark+" or "Tokyo Night"
+    "workbench.colorTheme": "Default Dark+", // or "Default Dark+" or "Tokyo Night"
+
+    "php.executables": {
+        "v8.1": "/usr/local/bin/php"
+    },
+    "php.version": "v8.1"
 }

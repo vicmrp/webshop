@@ -11,21 +11,22 @@ class Mysqli
     // ------------ SINGLETON PATTERN STARTS HERE -------------- //
 
     // Declare static properties
-    private static $_times_instantiated = 0;
-    private static $_instance = null;
-
+    private static int $_times_instantiated = 0;
+    private static ?Mysqli $_instance = null;
+    
     // Return a new instance if not already instantiated
     public static function get_instance(string $db_host = null, string $db_user = null, string $db_pass = null, string $db_name = null)
     {
         // Create new instance if not already instantiated
-        return (null === self::$_instance) ? new Mysqli($db_host, $db_user, $db_pass, $db_name) : self::$_instance;
+        if (null === self::$_instance) {
+            self::$_instance = new Mysqli($db_host, $db_user, $db_pass, $db_name);
+        }
+
+        return self::$_instance;
     }
 
     private function __construct(private $_db_host = null, private $_db_user  = null, private $_db_pass = null, private $_db_name = null)
     {
-
-
-
 
 
 
@@ -106,7 +107,9 @@ class Mysqli
                 //         $g_db_conn->dbname
                 //     )
                 // )
+                
                 $this->_db_conn = new \mysqli($this->_db_host, $this->_db_user, $this->_db_pass, $this->_db_name);
+
             } else {
                 // Otherwise, the constructor will just use the global connection, which is useful for production and non-unit testing
                 global $g_db_conn;
